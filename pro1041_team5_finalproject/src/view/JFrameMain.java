@@ -47,34 +47,29 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Downloads\\image\\banhang (2).png")); // NOI18N
         jLabel3.setText("Bán hàng");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Downloads\\image\\sanpham.png")); // NOI18N
         jLabel4.setText("Sản phẩm");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Downloads\\image\\hoadon.png")); // NOI18N
         jLabel5.setText("Hóa đơn");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Documents\\pro1041_it173120_nhom5_finalproject\\pro1041_it17320_nhom5_finalproject\\src\\image\\nhanvien.png")); // NOI18N
         jLabel6.setText("Nhân viên");
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Downloads\\image\\khachhang.png")); // NOI18N
         jLabel7.setText("Khách hàng");
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Downloads\\image\\khuyenmai.png")); // NOI18N
         jLabel8.setText("Khuyến mãi");
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Documents\\pro1041_it173120_nhom5_finalproject\\pro1041_it17320_nhom5_finalproject\\src\\image\\doiMK.png")); // NOI18N
         jLabel9.setText("Đổi mật khẩu ");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Documents\\pro1041_it173120_nhom5_finalproject\\pro1041_it17320_nhom5_finalproject\\src\\image\\dang nhap.png")); // NOI18N
         jLabel10.setText("Đăng nhập");
 
-        jLabel11.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Documents\\pro1041_it173120_nhom5_finalproject\\pro1041_it17320_nhom5_finalproject\\src\\image\\dangxuat.png")); // NOI18N
         jLabel11.setText("Đăng xuất");
 
-        jLabel12.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Downloads\\image\\Home.png")); // NOI18N
         jLabel12.setText("Home");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -127,8 +122,6 @@ public class JFrameMain extends javax.swing.JFrame {
                 .addComponent(jLabel11))
         );
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrator\\Documents\\pro1041_it173120_nhom5_finalproject\\pro1041_it17320_nhom5_finalproject\\src\\image\\home.PNG")); // NOI18N
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Chào mừng đến với  DESTINYPC");
@@ -178,6 +171,12 @@ public class JFrameMain extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        FrameChiTietSanPham ctsp = new FrameChiTietSanPham();
+        ctsp.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments

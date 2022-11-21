@@ -4,16 +4,11 @@
  */
 package view;
 
-import Model.ChiTietSanPham;
-import Model.PhieuBaoHanh;
-import Model.PhieuBaoHanhCT;
-import Service.BaoHanhCTServices;
-import Service.ChiTietSanPhamService;
-import Service.Interface.BaoHanhCTInterface;
-import Service.Interface.ChiTietSanPhaminterface;
-import Service.Interface.PhieuBaoHanhInterface;
-import Service.PhieuBaoHanhServices;
-import ViewModel.BaoHanhCTViewModel;
+
+import model.PhieuBaoHanh;
+
+
+
 import ViewModel.PhieuBaoHanhViewModel;
 import java.sql.Date;
 import java.time.LocalDate;
