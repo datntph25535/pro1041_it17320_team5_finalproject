@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package ViewModel;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Admin
  */
-public class HoaDon {
+public class HoaDonVM {
 
     private String id;
     private String ma;
@@ -21,13 +21,13 @@ public class HoaDon {
     private double thanhTien;
     private String sdt;
     private String trangThai;
-    private String idnv;
-    private String idkh;
+//    private NhanVien idnv;
+//    private KhachHang idkh;
 
-    public HoaDon() {
+    public HoaDonVM() {
     }
 
-    public HoaDon(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, double thanhTien, String sdt, String trangThai) {
+    public HoaDonVM(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, double thanhTien, String sdt, String trangThai) {
         this.id = id;
         this.ma = ma;
         this.ngayThanhToan = ngayThanhToan;
@@ -56,22 +56,6 @@ public class HoaDon {
 
     public Date getNgayThanhToan() {
         return ngayThanhToan;
-    }
-
-    public String getIdnv() {
-        return idnv;
-    }
-
-    public void setIdnv(String idnv) {
-        this.idnv = idnv;
-    }
-
-    public String getIdkh() {
-        return idkh;
-    }
-
-    public void setIdkh(String idkh) {
-        this.idkh = idkh;
     }
 
     public void setNgayThanhToan(Date ngayThanhToan) {

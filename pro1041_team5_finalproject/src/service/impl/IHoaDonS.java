@@ -5,7 +5,7 @@
  */
 package service.impl;
 
-import Model.HoaDon;
+import model.HoaDon;
 import java.util.List;
 
 /**
