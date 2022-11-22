@@ -18,13 +18,6 @@ public interface IHoaDonS {
 
     Integer insertHD(HoaDon hd);
 
-<<<<<<< Updated upstream
-    List<HoaDon> searchHD(String ma);
-
-    List<HoaDon> searchHDTT(String tinhTrang);
-
-=======
->>>>>>> Stashed changes
     Integer updateHD(HoaDon hd, String ma);
 
     Integer deleteHD(String ma);

@@ -39,16 +39,11 @@ public class HoaDonRepo {
                 Date ngayTao = rs.getDate("NgayTao");
                 double thanhTien = rs.getDouble("ThanhTien");
                 String sdt = rs.getString("SDTKhachHang");
-<<<<<<< Updated upstream
-                String tt = rs.getString("TinhTrang");
 
-                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, thanhtien, sdt, tt);
-                listHD.add(hdv);
-=======
                 String trangThai = rs.getString("TrangThai");
                 HoaDon hd = new HoaDon(is, ma, ngaytt, ngaynhan, ngayTao, sdt, 0, trangThai);
                 lisst.add(hd);
->>>>>>> Stashed changes
+
             }
             return lisst;
         } catch (SQLException ex) {
@@ -141,12 +136,9 @@ public class HoaDonRepo {
         }
         return null;
     }
-<<<<<<< Updated upstream
-    public List<HoaDon> searchHDonTinhTrang(String tinhTrang) {
-=======
+
 
     public List<HoaDon> searchHDonTinhTrang(String trangThai) {
->>>>>>> Stashed changes
         List<HoaDon> listhd = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
