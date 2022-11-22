@@ -13,29 +13,28 @@ import java.util.Date;
  */
 public class HoaDon {
 
-    private String id;
+     private String id;
     private String ma;
     private Date ngayThanhToan;
     private Date ngayNhan;
     private Date ngayTao;
     private double thanhTien;
     private String sdt;
-    private String trangThai;
-//    private NhanVien nv;
-//    private KhachHang kh;
+    private String tinhTrang;
+    private String idNV;
+    private String idkh;
 
     public HoaDon() {
     }
 
-    public HoaDon(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, double thanhTien, String sdt, String trangThai) {
+    public HoaDon(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, String sdt, String tinhTrang) {
         this.id = id;
         this.ma = ma;
         this.ngayThanhToan = ngayThanhToan;
         this.ngayNhan = ngayNhan;
         this.ngayTao = ngayTao;
-        this.thanhTien = thanhTien;
         this.sdt = sdt;
-        this.trangThai = trangThai;
+        this.tinhTrang = tinhTrang;
     }
 
     public String getId() {
@@ -94,12 +93,12 @@ public class HoaDon {
         this.sdt = sdt;
     }
 
-    public String getTrangThai() {
-        return trangThai;
+    public String getTinhTrang() {
+        return tinhTrang;
     }
 
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
+    public void setTinhTrang(String tinhTrang) {
+        this.tinhTrang = tinhTrang;
     }
 
 }

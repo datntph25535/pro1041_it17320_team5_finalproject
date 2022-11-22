@@ -5,7 +5,7 @@
  */
 package service.impl;
 
-import Model.HoaDon;
+import model.HoaDon;
 import java.util.List;
 
 /**
@@ -15,6 +15,10 @@ import java.util.List;
 public interface IHoaDonS {
 
     List<HoaDon> getAll();
+
+    List<HoaDon> searchHD(String ma);
+
+    List<HoaDon> searchHDTT(String tinhTrang);
 
     Integer insertHD(HoaDon hd);
 
