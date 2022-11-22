@@ -7,10 +7,11 @@ package repository;
 
 import JDBC.JDBCUtil;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,31 +23,36 @@ import model.HoaDon;
  */
 public class HoaDonRepo {
 
-    public List<HoaDon> all() {
-        List<HoaDon> listHD = new ArrayList<>();
-
+    public List<HoaDon> allHD() {
+        List<HoaDon> lisst = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TinhTrang From HoaDon";
+            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TrangThai From HoaDon";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();
             while (rs.next()) {
-                String id = rs.getString("Id");
+                String is = rs.getString("Id");
                 String ma = rs.getString("Ma");
                 Date ngaytt = rs.getDate("NgayThanhToan");
                 Date ngaynhan = rs.getDate("NgayNhan");
-                Date ngaytao = rs.getDate("NgayTao");
-                double thanhtien = rs.getDouble("ThanhTien");
+                Date ngayTao = rs.getDate("NgayTao");
+                double thanhTien = rs.getDouble("ThanhTien");
                 String sdt = rs.getString("SDTKhachHang");
+<<<<<<< Updated upstream
                 String tt = rs.getString("TinhTrang");
 
                 HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, thanhtien, sdt, tt);
                 listHD.add(hdv);
+=======
+                String trangThai = rs.getString("TrangThai");
+                HoaDon hd = new HoaDon(is, ma, ngaytt, ngaynhan, ngayTao, sdt, 0, trangThai);
+                lisst.add(hd);
+>>>>>>> Stashed changes
             }
-            return listHD;
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
+            return lisst;
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonRepo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
 
@@ -56,10 +62,10 @@ public class HoaDonRepo {
         Integer kq = -1;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Insert into HoaDon " + "(Ma,NgayThanhToan,NgayNhan,NgayTao,SDTKhachHang,TinhTrang)" + " Values(?,?,?,?,?,?)";
+            String sql = "Insert into HoaDon " + "(Ma,NgayThanhToan,NgayNhan,NgayTao,SDTKhachHang,TrangThai)" + " Values(?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, hd.getMa());
-            ps.setDate(2, (java.sql.Date) hd.getNgayThanhToan());
+            ps.setDate(2, (java.sql.Date) hd.getNgaythanhToan());
             ps.setDate(3, (java.sql.Date) hd.getNgayNhan());
             ps.setDate(4, (java.sql.Date) hd.getNgayTao());
             ps.setString(5, hd.getSdt());
@@ -76,10 +82,10 @@ public class HoaDonRepo {
         Integer kq = -1;
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Update HoaDon Set NgayThanhToan=?,NgayNhan=?,NgayTao=?,SDTKhachHang=?,TinhTrang=? Where Ma=?";
+            String sql = "Update HoaDon Set NgayThanhToan=?,NgayNhan=?,NgayTao=?,SDTKhachHang=?,TrangThai=? Where Ma=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(6, ma);
-            ps.setDate(1, (java.sql.Date) hd.getNgayThanhToan());
+            ps.setDate(1, (java.sql.Date) hd.getNgaythanhToan());
             ps.setDate(2, (java.sql.Date) hd.getNgayNhan());
             ps.setDate(3, (java.sql.Date) hd.getNgayTao());
             ps.setString(4, hd.getSdt());
@@ -111,7 +117,7 @@ public class HoaDonRepo {
         List<HoaDon> listhd = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TinhTrang from HoaDon Where Ma=?";
+            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TrangThai from HoaDon Where Ma=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ma);
             ps.execute();
@@ -124,9 +130,9 @@ public class HoaDonRepo {
                 Date ngaytao = rs.getDate("NgayTao");
                 double thanhtien = rs.getDouble("ThanhTien");
                 String sdt = rs.getString("SDTKhachHang");
-                String tt = rs.getString("TinhTrang");
+                String tt = rs.getString("TrangThai");
 
-                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, sdt, tt);
+                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, sdt, 0, tt);
                 listhd.add(hdv);
             }
             return listhd;
@@ -135,13 +141,18 @@ public class HoaDonRepo {
         }
         return null;
     }
+<<<<<<< Updated upstream
     public List<HoaDon> searchHDonTinhTrang(String tinhTrang) {
+=======
+
+    public List<HoaDon> searchHDonTinhTrang(String trangThai) {
+>>>>>>> Stashed changes
         List<HoaDon> listhd = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TinhTrang from HoaDon Where TinhTrang=?";
+            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TrangThai from HoaDon Where TrangThai=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, tinhTrang);
+            ps.setString(1, trangThai);
             ps.execute();
             ResultSet rs = ps.getResultSet();
             while (rs.next()) {
@@ -154,7 +165,7 @@ public class HoaDonRepo {
                 String sdt = rs.getString("SDTKhachHang");
 //                String tt = rs.getString("TinhTrang");
 
-                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, sdt, tinhTrang);
+                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, sdt, 0, trangThai);
                 listhd.add(hdv);
             }
             return listhd;

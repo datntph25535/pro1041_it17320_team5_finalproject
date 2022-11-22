@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -15,25 +15,36 @@ public class HoaDon {
 
     private String id;
     private String ma;
-    private Date ngayThanhToan;
-    private Date ngayNhan;
     private Date ngayTao;
-    private double thanhTien;
+    private Date ngaythanhToan;
+    private Date ngayNhan;
     private String sdt;
+<<<<<<< Updated upstream
     private String trangThai;
     private String idnv;
     private String idkh;
+=======
+    private double thanhTien;
+    private String trangThai;
+    private String idNV;
+    private String idKH;
+>>>>>>> Stashed changes
 
     public HoaDon() {
     }
 
+<<<<<<< Updated upstream
     public HoaDon(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, String sdt, String trangThai) {
+=======
+    public HoaDon(String id, String ma, Date ngayTao, Date ngaythanhToan, Date ngayNhan, String sdt, double thanhTien, String trangThai) {
+>>>>>>> Stashed changes
         this.id = id;
         this.ma = ma;
-        this.ngayThanhToan = ngayThanhToan;
-        this.ngayNhan = ngayNhan;
         this.ngayTao = ngayTao;
+        this.ngaythanhToan = ngaythanhToan;
+        this.ngayNhan = ngayNhan;
         this.sdt = sdt;
+<<<<<<< Updated upstream
         this.trangThai = trangThai;
     }
 
@@ -45,6 +56,9 @@ public class HoaDon {
         this.ngayTao = ngayTao;
         this.thanhTien = thanhTien;
         this.sdt = sdt;
+=======
+        this.thanhTien = thanhTien;
+>>>>>>> Stashed changes
         this.trangThai = trangThai;
     }
 
@@ -64,10 +78,19 @@ public class HoaDon {
         this.ma = ma;
     }
 
-    public Date getNgayThanhToan() {
-        return ngayThanhToan;
+    public Date getNgayTao() {
+        return ngayTao;
     }
 
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public Date getNgaythanhToan() {
+        return ngaythanhToan;
+    }
+
+<<<<<<< Updated upstream
     public String getIdnv() {
         return idnv;
     }
@@ -86,6 +109,10 @@ public class HoaDon {
 
     public void setNgayThanhToan(Date ngayThanhToan) {
         this.ngayThanhToan = ngayThanhToan;
+=======
+    public void setNgaythanhToan(Date ngaythanhToan) {
+        this.ngaythanhToan = ngaythanhToan;
+>>>>>>> Stashed changes
     }
 
     public Date getNgayNhan() {
@@ -96,12 +123,12 @@ public class HoaDon {
         this.ngayNhan = ngayNhan;
     }
 
-    public Date getNgayTao() {
-        return ngayTao;
+    public String getSdt() {
+        return sdt;
     }
 
-    public void setNgayTao(Date ngayTao) {
-        this.ngayTao = ngayTao;
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
     }
 
     public double getThanhTien() {
@@ -112,20 +139,37 @@ public class HoaDon {
         this.thanhTien = thanhTien;
     }
 
-    public String getSdt() {
-        return sdt;
-    }
-
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
-    }
-
     public String getTrangThai() {
         return trangThai;
     }
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public String getIdNV() {
+        return idNV;
+    }
+
+    public void setIdNV(String idNV) {
+        this.idNV = idNV;
+    }
+
+<<<<<<< Updated upstream
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+=======
+    public String getIdKH() {
+        return idKH;
+    }
+
+    public void setIdKH(String idKH) {
+        this.idKH = idKH;
+>>>>>>> Stashed changes
     }
 
 }

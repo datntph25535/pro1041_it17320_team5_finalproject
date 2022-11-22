@@ -5,8 +5,8 @@
  */
 package service.impl;
 
-import model.HoaDon;
 import java.util.List;
+import model.HoaDon;
 
 /**
  *
@@ -18,11 +18,18 @@ public interface IHoaDonS {
 
     Integer insertHD(HoaDon hd);
 
+<<<<<<< Updated upstream
     List<HoaDon> searchHD(String ma);
 
     List<HoaDon> searchHDTT(String tinhTrang);
 
+=======
+>>>>>>> Stashed changes
     Integer updateHD(HoaDon hd, String ma);
 
     Integer deleteHD(String ma);
+
+    List<HoaDon> searchMaHDS(String ma);
+
+    List<HoaDon> searchTrangthai(String trangThai);
 }

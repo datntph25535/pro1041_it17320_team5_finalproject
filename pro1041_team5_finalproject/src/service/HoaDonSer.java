@@ -14,18 +14,17 @@ import service.impl.IHoaDonS;
  *
  * @author Admin
  */
-public class HoaDonService implements IHoaDonS {
+public class HoaDonSer implements IHoaDonS {
 
     private HoaDonRepo repo;
 
-    public HoaDonService() {
+    public HoaDonSer() {
         repo = new HoaDonRepo();
     }
 
     @Override
-
     public List<HoaDon> getAll() {
-        return this.repo.all();
+        return repo.allHD();
     }
 
     @Override
@@ -44,13 +43,13 @@ public class HoaDonService implements IHoaDonS {
     }
 
     @Override
-    public List<HoaDon> searchHD(String ma) {
+    public List<HoaDon> searchMaHDS(String ma) {
         return repo.searchHDon(ma);
     }
 
     @Override
-    public List<HoaDon> searchHDTT(String tinhTrang) {
-        return repo.searchHDonTinhTrang(tinhTrang);
+    public List<HoaDon> searchTrangthai(String trangThai) {
+        return repo.searchHDonTinhTrang(trangThai);
     }
 
 }
