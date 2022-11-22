@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.HoaDon;
 
 /**
@@ -102,6 +104,62 @@ public class HoaDonRepo {
             return kq;
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+    public List<HoaDon> searchHDon(String ma) {
+        List<HoaDon> listhd = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TinhTrang from HoaDon Where Ma=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ma);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+//                  String ma = rs.getString("Ma");
+                Date ngaytt = rs.getDate("NgayThanhToan");
+                Date ngaynhan = rs.getDate("NgayNhan");
+                Date ngaytao = rs.getDate("NgayTao");
+                double thanhtien = rs.getDouble("ThanhTien");
+                String sdt = rs.getString("SDTKhachHang");
+                String tt = rs.getString("TinhTrang");
+
+                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, sdt, tt);
+                listhd.add(hdv);
+            }
+            return listhd;
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public List<HoaDon> searchHDonTinhTrang(String tinhTrang) {
+        List<HoaDon> listhd = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select Id,Ma,NgayThanhToan,NgayNhan,NgayTao,ThanhTien,SDTKhachHang,TinhTrang from HoaDon Where TinhTrang=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, tinhTrang);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                  String ma = rs.getString("Ma");
+                Date ngaytt = rs.getDate("NgayThanhToan");
+                Date ngaynhan = rs.getDate("NgayNhan");
+                Date ngaytao = rs.getDate("NgayTao");
+                double thanhtien = rs.getDouble("ThanhTien");
+                String sdt = rs.getString("SDTKhachHang");
+//                String tt = rs.getString("TinhTrang");
+
+                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, sdt, tinhTrang);
+                listhd.add(hdv);
+            }
+            return listhd;
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonRepo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

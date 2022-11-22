@@ -27,6 +27,16 @@ public class HoaDon {
     public HoaDon() {
     }
 
+    public HoaDon(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, String sdt, String trangThai) {
+        this.id = id;
+        this.ma = ma;
+        this.ngayThanhToan = ngayThanhToan;
+        this.ngayNhan = ngayNhan;
+        this.ngayTao = ngayTao;
+        this.sdt = sdt;
+        this.trangThai = trangThai;
+    }
+
     public HoaDon(String id, String ma, Date ngayThanhToan, Date ngayNhan, Date ngayTao, double thanhTien, String sdt, String trangThai) {
         this.id = id;
         this.ma = ma;

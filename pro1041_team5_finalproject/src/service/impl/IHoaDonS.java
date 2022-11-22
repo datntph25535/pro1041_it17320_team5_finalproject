@@ -18,6 +18,10 @@ public interface IHoaDonS {
 
     Integer insertHD(HoaDon hd);
 
+    List<HoaDon> searchHD(String ma);
+
+    List<HoaDon> searchHDTT(String tinhTrang);
+
     Integer updateHD(HoaDon hd, String ma);
 
     Integer deleteHD(String ma);
