@@ -5,24 +5,20 @@
  */
 package service.impl;
 
-import model.Ram;
 import java.util.ArrayList;
-import java.util.List;
+import model.CardManHinh;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
-public interface RamInterface {
+public interface CardMHinterFace {
+    ArrayList<CardManHinh> getAll();
 
-    ArrayList<Ram> getAll();
+    void insert(CardManHinh card);
 
-    void insert(Ram ram);
-
-    void update(Ram ram, String id);
+    void update(CardManHinh card, String id);
 
     void delete(String id);
-
-    List<Ram> searchRam(String id);
-
+    
 }
