@@ -7,37 +7,39 @@ package service;
 
 import java.util.List;
 import model.HoaDonCT;
+import repository.HoaDonCTRepo;
 import service.impl.IHoaDonCT;
 
 /**
  *
  * @author Admin
  */
-public class HoaDonCTSer implements IHoaDonCT{
-private HoaDonCTSer repo;
+public class HoaDonCTSer implements IHoaDonCT {
+
+    private HoaDonCTRepo repo;
 
     public HoaDonCTSer() {
-        repo=new HoaDonCTSer();
+        repo = new HoaDonCTRepo();
     }
 
     @Override
     public List<HoaDonCT> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return repo.all();
     }
 
     @Override
     public Integer insertHDCT(HoaDonCT ct) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return repo.inserHDCTR(ct);
     }
 
     @Override
     public Integer updateHDCT(HoaDonCT ct, String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return repo.updateHDCTR(ct, id);
     }
 
     @Override
     public Integer deleteHDCT(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return repo.deleteHDR(id);
     }
-    
+
 }

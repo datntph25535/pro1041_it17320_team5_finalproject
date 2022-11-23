@@ -17,7 +17,7 @@ public class HoaDonCT {
     private double thanhTien;
     private HoaDon idHD;
 //    private LinhKien idLK;
-//    private ChiTietSP idCTSP;
+    private ChiTietSP idCTSP;
 
     public String getId() {
         return id;
@@ -31,6 +31,23 @@ public class HoaDonCT {
         this.soLuong = soLuong;
         this.gia = gia;
         this.thanhTien = thanhTien;
+    }
+
+    public HoaDonCT(String id, int soLuong, double gia, double thanhTien, HoaDon idHD, ChiTietSP idCTSP) {
+        this.id = id;
+        this.soLuong = soLuong;
+        this.gia = gia;
+        this.thanhTien = thanhTien;
+        this.idHD = idHD;
+        this.idCTSP = idCTSP;
+    }
+
+    public ChiTietSP getIdCTSP() {
+        return idCTSP;
+    }
+
+    public void setIdCTSP(ChiTietSP idCTSP) {
+        this.idCTSP = idCTSP;
     }
 
     public void setId(String id) {

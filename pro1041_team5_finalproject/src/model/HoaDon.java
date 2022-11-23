@@ -118,4 +118,9 @@ public class HoaDon {
         this.idkh = idkh;
     }
 
+    @Override
+    public String toString() {
+        return  ma ;
+    }
+
 }
