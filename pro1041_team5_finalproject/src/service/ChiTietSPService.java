@@ -6,7 +6,9 @@
 package service;
 
 import ViewModel.CTSPViewModel;
+import ViewModel.SanPhamBanHangViewModel;
 import java.util.ArrayList;
+import java.util.List;
 import model.ChiTietSP;
 import repository.ChiTietSPRepo;
 import service.impl.ChiTietSPInteface;
@@ -15,8 +17,8 @@ import service.impl.ChiTietSPInteface;
  *
  * @author Admin
  */
-public class ChiTietSPService implements ChiTietSPInteface{
-    
+public class ChiTietSPService implements ChiTietSPInteface {
+
     ChiTietSPRepo repo = new ChiTietSPRepo();
 
     @Override
@@ -43,5 +45,15 @@ public class ChiTietSPService implements ChiTietSPInteface{
     public ArrayList<CTSPViewModel> getListCTSPViewModel() {
         return repo.getListCTSPViewModel();
     }
-    
+
+    @Override
+    public List<SanPhamBanHangViewModel> getAllSPBH() {
+        return repo.getAllSPBH();
+    }
+
+    @Override
+    public boolean updateSoLuong(ChiTietSP ctsp, String id) {
+        return repo.updateSoLuong(ctsp, id);
+    }
+
 }

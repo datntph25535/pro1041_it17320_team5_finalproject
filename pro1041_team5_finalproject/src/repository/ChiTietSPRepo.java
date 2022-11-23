@@ -8,11 +8,13 @@ package repository;
 import model.ChiTietSP;
 import JDBC.JDBCUtil;
 import ViewModel.CTSPViewModel;
+import ViewModel.SanPhamBanHangViewModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,9 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class ChiTietSPRepo {
+    public static void main(String[] args) {
+        System.out.println(new ChiTietSPRepo().getAllSPBH());
+    }
 
     public ArrayList<ChiTietSP> getAll() {
         ArrayList<ChiTietSP> list = new ArrayList<>();
@@ -51,6 +56,33 @@ public class ChiTietSPRepo {
             ex.printStackTrace();
         }
         return list;
+    }
+
+    public List<SanPhamBanHangViewModel> getAllSPBH() {
+        String sql = "SELECT dbo.SanPham.Ma, dbo.SanPham.Ten, dbo.MauSac.Ten AS Expr1, dbo.DongSP.Ten AS Expr2, dbo.OCung.Ten AS Expr3, dbo.Pin.DungLuong, dbo.CPU.Ten AS Expr4, dbo.Ram.DungLuong AS Expr5, dbo.HeDieuHanh.Ten AS Expr6, dbo.ChiTietSP.SoLuongTon, \n"
+                + "             dbo.ChiTietSP.GiaBan\n"
+                + "FROM   dbo.CPU INNER JOIN\n"
+                + "             dbo.ChiTietSP ON dbo.CPU.Id = dbo.ChiTietSP.IdCPU INNER JOIN\n"
+                + "             dbo.DongSP ON dbo.ChiTietSP.IdDongsp = dbo.DongSP.Id INNER JOIN\n"
+                + "             dbo.HeDieuHanh ON dbo.ChiTietSP.IdHeDH = dbo.HeDieuHanh.Id INNER JOIN\n"
+                + "             dbo.MauSac ON dbo.ChiTietSP.IdMauSac = dbo.MauSac.Id INNER JOIN\n"
+                + "             dbo.OCung ON dbo.ChiTietSP.IdOCung = dbo.OCung.Id INNER JOIN\n"
+                + "             dbo.Pin ON dbo.ChiTietSP.IdPin = dbo.Pin.Id INNER JOIN\n"
+                + "             dbo.Ram ON dbo.ChiTietSP.IdRam = dbo.Ram.Id INNER JOIN\n"
+                + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id";
+        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ResultSet rs = ps.executeQuery();
+
+            List<SanPhamBanHangViewModel> list = new ArrayList<>();
+
+            while (rs.next()) {
+                list.add(new SanPhamBanHangViewModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getDouble(11)));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ArrayList<CTSPViewModel> getListCTSPViewModel() {
@@ -162,6 +194,18 @@ public class ChiTietSPRepo {
             ex.printStackTrace();
         }
 
+    }
+    public boolean updateSoLuong(ChiTietSP ct, String Id) {
+        String sql = "UPDATE ChiTietSP SET SoLuongTon=? WHERE Id =?";
+        int check = 0;
+        try (Connection con = new JDBCUtil().getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, ct.getSoLuongTon());
+            ps.setObject(2, Id);
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
     }
 
 }
