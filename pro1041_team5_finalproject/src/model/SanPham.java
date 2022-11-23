@@ -60,6 +60,11 @@ public class SanPham {
         this.serial = serial;
     }
 
+    @Override
+    public String toString() {
+        return maSP;
+    }
+
     
     
     

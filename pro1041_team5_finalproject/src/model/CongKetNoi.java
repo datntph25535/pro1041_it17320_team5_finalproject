@@ -48,4 +48,11 @@ public class CongKetNoi {
         this.ten = ten;
     }
 
+    @Override
+    public String toString() {
+        return ten;
+    }
+    
+    
+
 }
