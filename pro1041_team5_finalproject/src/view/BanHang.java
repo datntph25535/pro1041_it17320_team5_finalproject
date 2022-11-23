@@ -7,9 +7,13 @@ package view;
 import ViewModel.SanPhamBanHangViewModel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.HoaDonCT;
 import service.ChiTietSPService;
+import service.HoaDonCTSer;
 import service.impl.ChiTietSPInteface;
+import service.impl.IHoaDonCT;
 
 /**
  *
@@ -21,6 +25,10 @@ public class BanHang extends javax.swing.JFrame {
     List<SanPhamBanHangViewModel> listSPCT = new ArrayList<>();
     ChiTietSPInteface ctspSevices ;
     
+    DefaultTableModel dtmHDCT = new DefaultTableModel();
+    List<HoaDonCT> listHDCT = new ArrayList<>();
+    IHoaDonCT hdctServices = new HoaDonCTSer();
+    
     public BanHang() {
         initComponents();
         dtmCTSP = (DefaultTableModel) tblSP.getModel();
@@ -28,13 +36,19 @@ public class BanHang extends javax.swing.JFrame {
         listSPCT = ctspSevices.getAllSPBH();
         showData(listSPCT);
         
+        dtmHDCT = (DefaultTableModel) tblHDCT.getModel();
+        listHDCT = hdctServices.getAll();
+        
+        
     }
     private void showData(List<SanPhamBanHangViewModel> litSp) {
-dtmCTSP.setRowCount(0);
+       dtmCTSP.setRowCount(0);
         for (SanPhamBanHangViewModel s : litSp) {
             dtmCTSP.addRow(s.toDataRow());
         }
     }
+     
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -425,7 +439,18 @@ dtmCTSP.setRowCount(0);
     }//GEN-LAST:event_tblHDCTMouseClicked
 
     private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
-        int row = tblSP.getSelectedRow();
+       
+        String txtSoLuong = JOptionPane.showInputDialog(this, "Số lượng", "0");
+        try {
+             int soLuong = Integer.valueOf(txtSoLuong);
+             int row = tblSP.getSelectedRow();
+             SanPhamBanHangViewModel sp = listSPCT.get(row);
+          
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng = số");
+
+        }
         
     }//GEN-LAST:event_tblSPMouseClicked
 
@@ -515,4 +540,6 @@ dtmCTSP.setRowCount(0);
     private javax.swing.JTable tblHDCT;
     private javax.swing.JTable tblSP;
     // End of variables declaration//GEN-END:variables
+
+   
 }
