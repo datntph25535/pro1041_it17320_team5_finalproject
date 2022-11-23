@@ -3,28 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package service.impl;
 
-import ViewModel.CTSPViewModel;
-import model.SanPham;
 import java.util.ArrayList;
+import model.OCung;
 
 /**
  *
  * @author Admin
  */
-public interface SanPhamInterface {
+public interface OCungInterface {
     
-    ArrayList<SanPham> getAll();
+     ArrayList<OCung> getAll();
     
-    void insert(SanPham sp);
+    void insert(OCung oc);
     
-    void update(SanPham sp, String maSP);
+    void update(OCung oc, String ma);
     
-    void delete(String maSP);
+    void delete(String ma);
     
-   
-    
-
 }

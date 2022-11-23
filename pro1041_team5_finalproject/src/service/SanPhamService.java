@@ -6,6 +6,7 @@
 
 package service;
 
+import ViewModel.CTSPViewModel;
 import model.SanPham;
 import repository.SanPhamRepo;
 import service.impl.SanPhamInterface;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 public class SanPhamService implements SanPhamInterface{
     
-    SanPhamRepo spr = new SanPhamRepo();
+     SanPhamRepo spr = new SanPhamRepo();
 
     @Override
     public ArrayList<SanPham> getAll() {
@@ -39,16 +40,7 @@ public class SanPhamService implements SanPhamInterface{
         spr.delete(maSP);
     }
 
-    @Override
-    public SanPham getListByMa(String ma) {
-        return spr.getListByMa(ma);
-    }
+    
 
-    @Override
-    public SanPham getListByTen(String ten) {
-        return spr.getListByTen(ten);
-    }
-    
-    
 
 }
