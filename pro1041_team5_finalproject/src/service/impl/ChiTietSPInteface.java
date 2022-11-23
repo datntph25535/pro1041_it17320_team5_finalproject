@@ -3,28 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package service.impl;
 
 import ViewModel.CTSPViewModel;
-import model.SanPham;
 import java.util.ArrayList;
+import model.ChiTietSP;
 
 /**
  *
  * @author Admin
  */
-public interface SanPhamInterface {
+public interface ChiTietSPInteface {
     
-    ArrayList<SanPham> getAll();
+    ArrayList<ChiTietSP> getAll();
     
-    void insert(SanPham sp);
+    void insert(ChiTietSP ctsp);
     
-    void update(SanPham sp, String maSP);
+    void update(ChiTietSP ctsp, String id);
     
-    void delete(String maSP);
+    void delete(String id);
     
-   
+    ArrayList<CTSPViewModel> getListCTSPViewModel();
     
-
 }

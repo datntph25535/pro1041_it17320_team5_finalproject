@@ -3,28 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package service.impl;
 
-import ViewModel.CTSPViewModel;
-import model.SanPham;
 import java.util.ArrayList;
+import model.DongSP;
 
 /**
  *
  * @author Admin
  */
-public interface SanPhamInterface {
+public interface DongSPInterface {
+     ArrayList<DongSP> getAll();
     
-    ArrayList<SanPham> getAll();
+    void insert (DongSP dsp);
     
-    void insert(SanPham sp);
+    void update(DongSP dsp, String ma);
     
-    void update(SanPham sp, String maSP);
-    
-    void delete(String maSP);
-    
-   
-    
-
+    void delete(String ma);
 }
