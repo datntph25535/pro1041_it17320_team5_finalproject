@@ -54,7 +54,7 @@ public class HoaDonCTRepo {
         }
         return null;
     }
-
+//
     public Integer inserHDCTR(HoaDonCT hdct) {
         Integer kq = -1;
         try {
