@@ -537,10 +537,8 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         String card = cbCard.getSelectedItem().toString();
         String hdh = cbHDH.getSelectedItem().toString();
         String serial = cbSerial.getSelectedItem().toString();
-        ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, mau, dongsp, ocung, dongsp, pin, cpu, ram, card, hdh, masp);
+        ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, mau, dongsp, ocung, ckn, pin, cpu, ram, card, hdh, masp);
         qlctsp.insert(ctsp);
-        loadTable();
-        clearForm();
         JOptionPane.showMessageDialog(this, "thêm thành công");
         loadTable();
         clearForm();
