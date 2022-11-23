@@ -11,19 +11,24 @@ import java.sql.Date;
  *
  * @author PC
  */
-public class KhachHang {
+public class NhanVien {
     private String id;
     private String ma;
     private String hoTen;
     private Date ngaySinh;
     private String gioiTinh;
-    private String sdt;
+    private String sdt;  
     private String email;
+    private String cmnd; 
+    private String diaChi;
+    private String matKhau;
+    private String chucVu;
+    private int trangThai;
 
-    public KhachHang() {
+    public NhanVien() {
     }
 
-    public KhachHang(String id, String ma, String hoTen, Date ngaySinh, String gioiTinh, String sdt, String email) {
+    public NhanVien(String id, String ma, String hoTen, Date ngaySinh, String gioiTinh, String sdt, String email, String cmnd, String diaChi, String matKhau, String chucVu, int trangThai) {
         this.id = id;
         this.ma = ma;
         this.hoTen = hoTen;
@@ -31,6 +36,11 @@ public class KhachHang {
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
         this.email = email;
+        this.cmnd = cmnd;
+        this.diaChi = diaChi;
+        this.matKhau = matKhau;
+        this.chucVu = chucVu;
+        this.trangThai = trangThai;
     }
 
     public String getId() {
@@ -87,6 +97,46 @@ public class KhachHang {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCmnd() {
+        return cmnd;
+    }
+
+    public void setCmnd(String cmnd) {
+        this.cmnd = cmnd;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
+    public String getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(String chucVu) {
+        this.chucVu = chucVu;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
     
 }
