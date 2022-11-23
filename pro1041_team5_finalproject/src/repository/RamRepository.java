@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +21,8 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class RamRepository {
-    
-    public ArrayList<Ram> getAll(){
+
+    public ArrayList<Ram> getAll() {
         ArrayList<Ram> list = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
@@ -29,12 +30,11 @@ public class RamRepository {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();
-            while (rs.next()) {                
+            while (rs.next()) {
                 String id = rs.getString(1);
                 String ma = rs.getString(2);
-                String loaiRam = rs.getString(3);
-                double dungLuong = rs.getDouble(4);
-                Ram ram = new Ram(id, ma, loaiRam, dungLuong);
+                double dungLuong = rs.getDouble(3);
+                Ram ram = new Ram(id, ma, dungLuong);
                 list.add(ram);
             }
         } catch (SQLException ex) {
@@ -42,47 +42,69 @@ public class RamRepository {
         }
         return list;
     }
-    
-    public void insert(Ram ram){
+
+    public void insert(Ram ram) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "insert into Ram (Ma, LoaiRam, DungLuong) values(?,?,?)";
+            String sql = "insert into Ram (Ma, DungLuong) values(?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ram.getMa());
-            ps.setString(2, ram.getLoaiRam());
-            ps.setDouble(3, ram.getDungLuong());
+            ps.setDouble(2, ram.getDungLuong());
             ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    public void update(Ram ram, String ma){
+
+    public void update(Ram ram, String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "update Ram set Ma = ?, LoaiRam = ?, DungLuong = ? where Ma = ?";
+            String sql = "update Ram set Ma = ?, DungLuong = ? where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ram.getMa());
-            ps.setString(2, ram.getLoaiRam());
-            ps.setDouble(3, ram.getDungLuong());
-            ps.setString(4, ma);
+            ps.setDouble(2, ram.getDungLuong());
+            ps.setString(3, ram.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    public void delete(String ma){
+
+    public void delete(String id) {
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "delete from Ram where Ma = ?";
+            String sql = "delete from Ram where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public List<Ram> searchRAM(String ma) {
+        List<Ram> listRam = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select Id,Ma,DungLuong Where Ma=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ma);
             ps.executeUpdate();
-        } catch (SQLException ex) {
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                double dungLuong = rs.getDouble("DungLuong");
+                Ram ram = new Ram(id, ma, dungLuong);
+                listRam.add(ram);
+            }
+            return listRam;
+        } catch (Exception ex) {
+            // Logger.getLogger(HoaDonRepo.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
-        
+        return null;
     }
-    
 }

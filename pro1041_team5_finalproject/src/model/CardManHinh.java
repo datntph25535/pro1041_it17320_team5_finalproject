@@ -7,24 +7,13 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
-
-public class Ram {
-
+public class CardManHinh {
 
     private String id;
     private String ma;
-    private double dungLuong;
-
-    public Ram() {
-    }
-
-    public Ram(String id, String ma, double dungLuong) {
-        this.id = id;
-        this.ma = ma;
-        this.dungLuong = dungLuong;
-    }
+    private String loaiCard;
 
     public String getId() {
         return id;
@@ -42,17 +31,22 @@ public class Ram {
         this.ma = ma;
     }
 
-
-    public double getDungLuong() {
-        return dungLuong;
+    public String getLoaiCard() {
+        return loaiCard;
     }
 
-    public void setDungLuong(double dungLuong) {
-        this.dungLuong = dungLuong;
+    public void setLoaiCard(String loaiCard) {
+        this.loaiCard = loaiCard;
     }
 
-    @Override
-    public String toString() {
-        return "  "+dungLuong;
+    public CardManHinh() {
     }
+
+    public CardManHinh(String id, String ma, String loaiCard) {
+        this.id = id;
+        this.ma = ma;
+        this.loaiCard = loaiCard;
+    }
+
+    
 }

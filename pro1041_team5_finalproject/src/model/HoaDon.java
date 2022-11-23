@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class HoaDon {
 
-     private String id;
+    private String id;
     private String ma;
     private Date ngayThanhToan;
     private Date ngayNhan;

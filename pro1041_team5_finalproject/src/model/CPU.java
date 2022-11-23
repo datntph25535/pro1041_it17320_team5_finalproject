@@ -7,23 +7,20 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
-
-public class Ram {
-
-
+public class CPU {
     private String id;
     private String ma;
-    private double dungLuong;
+    private String ten;
 
-    public Ram() {
+    public CPU() {
     }
 
-    public Ram(String id, String ma, double dungLuong) {
+    public CPU(String id, String ma, String ten) {
         this.id = id;
         this.ma = ma;
-        this.dungLuong = dungLuong;
+        this.ten = ten;
     }
 
     public String getId() {
@@ -42,17 +39,13 @@ public class Ram {
         this.ma = ma;
     }
 
-
-    public double getDungLuong() {
-        return dungLuong;
+    public String getTen() {
+        return ten;
     }
 
-    public void setDungLuong(double dungLuong) {
-        this.dungLuong = dungLuong;
+    public void setTen(String ten) {
+        this.ten = ten;
     }
-
-    @Override
-    public String toString() {
-        return "  "+dungLuong;
-    }
+    
+    
 }
