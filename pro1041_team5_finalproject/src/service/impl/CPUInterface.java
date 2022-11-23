@@ -5,24 +5,20 @@
  */
 package service.impl;
 
-import model.Ram;
 import java.util.ArrayList;
-import java.util.List;
+import model.CPU;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
-public interface RamInterface {
+public interface CPUInterface {
 
-    ArrayList<Ram> getAll();
+    ArrayList<CPU> getAll();
 
-    void insert(Ram ram);
+    void insert(CPU cpu);
 
-    void update(Ram ram, String id);
+    void update(CPU cpu, String id);
 
     void delete(String id);
-
-    List<Ram> searchRam(String id);
-
 }
