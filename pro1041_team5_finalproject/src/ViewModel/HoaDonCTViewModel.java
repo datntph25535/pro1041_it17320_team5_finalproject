@@ -5,6 +5,7 @@
  */
 package ViewModel;
 
+import model.ChiTietSP;
 import model.HoaDon;
 
 /**
@@ -20,7 +21,7 @@ public class HoaDonCTViewModel {
     private double thanhTien;
     private HoaDon idHD;
 //    private LinhKien idLK;
-//    private ChiTietSP idCTSP;
+    private ChiTietSP idCTSP;
 
     public HoaDonCTViewModel() {
     }
