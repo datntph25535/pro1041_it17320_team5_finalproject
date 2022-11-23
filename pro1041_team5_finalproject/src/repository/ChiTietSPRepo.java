@@ -159,6 +159,8 @@ public class ChiTietSPRepo {
             String sql = "delete from  ChiTietSP where Id = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
+            ps.executeUpdate();
+            System.out.println("a");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

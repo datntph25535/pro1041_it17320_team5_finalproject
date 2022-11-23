@@ -47,6 +47,7 @@ public class JFrameBH extends javax.swing.JFrame {
         
         
         
+        
     }
      private void showBH(List<PhieuBaoHanhViewModel> list) {
         dtmBH.setRowCount(0);
