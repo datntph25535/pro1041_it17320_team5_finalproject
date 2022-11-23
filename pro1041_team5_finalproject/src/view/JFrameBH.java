@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import service.BaoHanhServices;
 import service.impl.BaoHanhInterface;
 
@@ -43,6 +44,7 @@ public class JFrameBH extends javax.swing.JFrame {
         showBH(bhSer.getAll());
         txtIDBH.disable();
        
+        AutoCompleteDecorator.decorate(cboIDHDCT);
         
         
         
