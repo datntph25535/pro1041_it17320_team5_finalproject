@@ -48,4 +48,11 @@ public class Pin {
         this.dungLuong = dungLuong;
     }
 
+    @Override
+    public String toString() {
+        return dungLuong;
+    }
+    
+    
+
 }

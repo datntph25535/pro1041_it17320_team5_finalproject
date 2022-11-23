@@ -50,4 +50,11 @@ public class Hedieuhanh {
               return new Object[]{id,ma,tenHDH};
           } 
 
+    @Override
+    public String toString() {
+        return tenHDH;
+    }
+
+          
+          
 }

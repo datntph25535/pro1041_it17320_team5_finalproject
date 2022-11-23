@@ -151,6 +151,7 @@ public class ChiTietSPRepo {
             ps.setString(11, ctsp.getIdCardMH());
             ps.setString(12, ctsp.getIdHeDH());
             ps.setString(13, ctsp.getIdSP());
+            ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -190,6 +191,7 @@ public class ChiTietSPRepo {
             String sql = "delete from  ChiTietSP where Id = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
+            ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

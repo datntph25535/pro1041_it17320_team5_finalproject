@@ -33,7 +33,7 @@ public class RamRepository {
             while (rs.next()) {
                 String id = rs.getString(1);
                 String ma = rs.getString(2);
-                double dungLuong = rs.getDouble(3);
+                String dungLuong = rs.getString(3);
                 Ram ram = new Ram(id, ma, dungLuong);
                 list.add(ram);
             }
@@ -49,7 +49,7 @@ public class RamRepository {
             String sql = "insert into Ram (Ma, DungLuong) values(?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ram.getMa());
-            ps.setDouble(2, ram.getDungLuong());
+            ps.setString(2, ram.getDungLuong());
             ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -63,7 +63,7 @@ public class RamRepository {
             String sql = "update Ram set Ma = ?, DungLuong = ? where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ram.getMa());
-            ps.setDouble(2, ram.getDungLuong());
+            ps.setString(2, ram.getDungLuong());
             ps.setString(3, ram.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -96,7 +96,7 @@ public class RamRepository {
             ResultSet rs = ps.getResultSet();
             while (rs.next()) {
                 String id = rs.getString("Id");
-                double dungLuong = rs.getDouble("DungLuong");
+                String dungLuong = rs.getString("DungLuong");
                 Ram ram = new Ram(id, ma, dungLuong);
                 listRam.add(ram);
             }

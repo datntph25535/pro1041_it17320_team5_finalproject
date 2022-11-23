@@ -502,8 +502,6 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         String idcard = card.getId();
         String idhdh = hdh.getId();
 
-        System.out.println(idSP);
-
         ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, idms, iddsp, idoc, idkn, idpin, idcpu, idram, idcard, idhdh, idSP);
         qlctsp.insert(ctsp);
         loadTable();
