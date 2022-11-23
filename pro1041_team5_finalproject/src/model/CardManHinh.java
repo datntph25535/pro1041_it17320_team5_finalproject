@@ -48,5 +48,12 @@ public class CardManHinh {
         this.loaiCard = loaiCard;
     }
 
+    @Override
+    public String toString() {
+        return ""+loaiCard;
+    }
+
+    
+    
     
 }

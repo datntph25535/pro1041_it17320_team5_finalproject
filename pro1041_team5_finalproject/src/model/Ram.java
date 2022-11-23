@@ -15,12 +15,12 @@ public class Ram {
 
     private String id;
     private String ma;
-    private double dungLuong;
+    private String dungLuong;
 
     public Ram() {
     }
 
-    public Ram(String id, String ma, double dungLuong) {
+    public Ram(String id, String ma, String dungLuong) {
         this.id = id;
         this.ma = ma;
         this.dungLuong = dungLuong;
@@ -43,11 +43,11 @@ public class Ram {
     }
 
 
-    public double getDungLuong() {
+    public String getDungLuong() {
         return dungLuong;
     }
 
-    public void setDungLuong(double dungLuong) {
+    public void setDungLuong(String dungLuong) {
         this.dungLuong = dungLuong;
     }
 

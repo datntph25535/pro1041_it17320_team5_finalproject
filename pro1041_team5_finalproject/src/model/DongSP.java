@@ -47,6 +47,11 @@ public class DongSP {
     public void setTen(String ten) {
         this.ten = ten;
     }
+
+    @Override
+    public String toString() {
+        return ""+ten;
+    }
     
     
     

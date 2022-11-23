@@ -48,4 +48,11 @@ public class MauSac {
         this.ten = ten;
     }
 
+    @Override
+    public String toString() {
+        return ""+ten;
+    }
+    
+    
+
 }

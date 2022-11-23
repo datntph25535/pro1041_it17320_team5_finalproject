@@ -24,7 +24,7 @@ public class OCungRepo {
         ArrayList<OCung> list = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Select * from CongKetNoi";
+            String sql = "Select * from OCung";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();

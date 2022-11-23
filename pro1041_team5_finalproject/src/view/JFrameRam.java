@@ -27,6 +27,7 @@ public class JFrameRam extends javax.swing.JFrame {
     public JFrameRam() {
         initComponents();
         this.RamSer = new RamService();
+        loadTable();
     }
 
     private void loadTable() {
@@ -51,21 +52,8 @@ public class JFrameRam extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không để trống");
             return null;
         }
-        double dungluong = -1;
-        try {
-            dungluong = Double.parseDouble(dungLuong);
-            if (dungluong < 0) {
-                JOptionPane.showMessageDialog(this,
-                        "Giá phải là số dương");
-                return null;
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this,
-                    "Giá phải là số");
-            return null;
-        }
-        Ram ram = new Ram(id, ma, dungluong);
+        
+        Ram ram = new Ram(id, ma, dungLuong);
         return ram;
     }
 

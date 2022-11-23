@@ -9,6 +9,7 @@ package model;
  * @author Administrator
  */
 public class Hedieuhanh {
+
     private String id;
     private String ma;
     private String tenHDH;
@@ -45,9 +46,16 @@ public class Hedieuhanh {
     public void setTenHDH(String tenHDH) {
         this.tenHDH = tenHDH;
     }
+
+    public Object[] toDataRow() {
+        return new Object[]{id, ma, tenHDH};
+    }
+
+    @Override
+    public String toString() {
+        return ""+tenHDH;
+    }
     
-          public Object[] toDataRow(){
-              return new Object[]{id,ma,tenHDH};
-          } 
+    
 
 }

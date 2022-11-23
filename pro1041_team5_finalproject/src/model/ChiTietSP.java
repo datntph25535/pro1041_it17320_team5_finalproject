@@ -46,6 +46,8 @@ public class ChiTietSP {
         this.IdSP = IdSP;
     }
 
+    
+
     public String getId() {
         return id;
     }

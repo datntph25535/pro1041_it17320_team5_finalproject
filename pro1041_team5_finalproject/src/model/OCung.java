@@ -57,6 +57,12 @@ public class OCung {
     public void setDungLuong(String dungLuong) {
         this.dungLuong = dungLuong;
     }
+
+    @Override
+    public String toString() {
+        return ""+dungLuong;
+    }
+    
     
     
     

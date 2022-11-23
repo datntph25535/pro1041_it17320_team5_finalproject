@@ -119,6 +119,7 @@ public class ChiTietSPRepo {
             ps.setString(11, ctsp.getIdCardMH());
             ps.setString(12, ctsp.getIdHeDH());
             ps.setString(13, ctsp.getIdSP());
+            ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
