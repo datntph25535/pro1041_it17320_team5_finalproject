@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author Admin
  */
+
 public class RamService implements RamInterface{
     
     RamRepository repo = new RamRepository();

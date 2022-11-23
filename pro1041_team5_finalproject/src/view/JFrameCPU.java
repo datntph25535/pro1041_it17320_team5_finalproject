@@ -14,6 +14,7 @@ import service.impl.CPUInterface;
 /**
  *
  * @author DELL
+ * 
  */
 public class JFrameCPU extends javax.swing.JFrame {
 

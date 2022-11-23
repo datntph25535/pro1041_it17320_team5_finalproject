@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @author Admin
  */
+
 public interface RamInterface {
 
     ArrayList<Ram> getAll();

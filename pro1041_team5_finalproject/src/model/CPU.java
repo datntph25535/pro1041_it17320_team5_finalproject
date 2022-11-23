@@ -10,6 +10,7 @@ package model;
  * @author DELL
  */
 public class CPU {
+    
     private String id;
     private String ma;
     private String ten;

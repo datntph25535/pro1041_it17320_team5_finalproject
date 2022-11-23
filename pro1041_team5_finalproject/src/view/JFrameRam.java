@@ -258,6 +258,7 @@ public class JFrameRam extends javax.swing.JFrame {
         this.txtMa.setText("");
         this.txtDL.setText("");
     }
+    
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         // TODO add your handling code here:
         Ram ram = this.getFormData();

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import model.CardManHinh;
 
 /**
- *
+ *\
  * @author DELL
  */
 public interface CardMHinterFace {

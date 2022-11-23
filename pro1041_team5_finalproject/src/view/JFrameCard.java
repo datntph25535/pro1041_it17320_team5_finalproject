@@ -14,6 +14,7 @@ import service.impl.CardMHinterFace;
 /**
  *
  * @author DELL
+ * 
  */
 public class JFrameCard extends javax.swing.JFrame {
 

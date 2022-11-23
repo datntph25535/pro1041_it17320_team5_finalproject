@@ -14,6 +14,7 @@ import service.impl.CPUInterface;
  *
  * @author DELL
  */
+
 public class CPUService implements CPUInterface {
 
     CPURepo repo = new CPURepo();

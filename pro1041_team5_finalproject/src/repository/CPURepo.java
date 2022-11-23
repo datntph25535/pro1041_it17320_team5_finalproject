@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.CPU;
 
+
 /**
  *
  * @author DELL

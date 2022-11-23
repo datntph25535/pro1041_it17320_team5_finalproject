@@ -14,6 +14,7 @@ public class CardManHinh {
     private String id;
     private String ma;
     private String loaiCard;
+    
 
     public String getId() {
         return id;
