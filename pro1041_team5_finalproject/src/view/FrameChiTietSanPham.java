@@ -18,15 +18,36 @@ import service.SanPhamService;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import model.CPU;
+import model.CardManHinh;
 import model.ChiTietSP;
+import model.CongKetNoi;
 import model.DongSP;
+import model.Hedieuhanh;
+import model.MauSac;
 import model.OCung;
+import model.Pin;
+import model.Ram;
+import service.CPUService;
+import service.CardMHService;
 import service.ChiTietSPService;
+import service.CongKetNoiSer;
 import service.DongSPService;
+import service.HeDHServices;
+import service.MauSacSer;
 import service.OCungService;
+import service.PinSer;
+import service.RamService;
+import service.impl.CPUInterface;
+import service.impl.CardMHinterFace;
 import service.impl.ChiTietSPInteface;
 import service.impl.DongSPInterface;
+import service.impl.HeDHInterface;
+import service.impl.ICongKetNoiS;
+import service.impl.IMauSac;
+import service.impl.IPinSer;
 import service.impl.OCungInterface;
+import service.impl.RamInterface;
 
 /**
  *
@@ -42,8 +63,14 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     ChiTietSPInteface qlctsp = new ChiTietSPService();
     DongSPInterface qldsp = new DongSPService();
     OCungInterface qloc = new OCungService();
-    
-
+    RamInterface qlram = new RamService();
+    IMauSac qlms = new MauSacSer();
+    IPinSer qlpin = new PinSer();
+    SanPhamInterface qlsp =new SanPhamService();
+    HeDHInterface qlhdh = new HeDHServices();
+    ICongKetNoiS qlkn = new CongKetNoiSer();
+    CPUInterface qlcpu = new CPUService();
+    CardMHinterFace qlcard = new CardMHService();
     public FrameChiTietSanPham() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -53,6 +80,29 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         addCBRam();
         addCBDongSP();
         addCBOCung();
+        addCBCPU();
+        addCBCard();
+        addCBMS();
+        addCBPin();
+        addCBSeri();
+        addCBHDH();
+        addCBKN();
+        addCBSP();
+        
+    }
+    
+    void addCBCPU(){
+        dfcb = (DefaultComboBoxModel) cbCPU.getModel();
+        for(CPU cpu : qlcpu.getAll()){
+            dfcb.addElement(cpu);
+        }
+    }
+    
+    void addCBCard(){
+        dfcb = (DefaultComboBoxModel) cbCard.getModel();
+        for(CardManHinh ca: qlcard.getAll()){
+            dfcb.addElement(ca);
+        }
     }
     
     void addCBDongSP(){
@@ -72,7 +122,51 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     
 
     void addCBRam() {
-       
+       dfcb = (DefaultComboBoxModel) cbRam.getModel();
+       for(Ram ram : qlram.getAll()){
+           dfcb.addElement(ram);
+       }
+    }
+    
+    void addCBMS(){
+        dfcb = (DefaultComboBoxModel) cbMauSac.getModel();
+        for(MauSac ms : qlms.all()){
+            dfcb.addElement(ms);
+        }
+    }
+    
+    void addCBPin(){
+        dfcb = (DefaultComboBoxModel) cbPin.getModel();
+        for(Pin pin : qlpin.getList()){
+            dfcb.addElement(pin);
+        }
+    }
+    
+    void addCBSeri(){
+        dfcb = (DefaultComboBoxModel) cbSerial.getModel();
+        for(SanPham sp : qlsp.getAll()){
+            dfcb.addElement(sp.getSerial());
+        }
+    }
+    void addCBSP(){
+        dfcb = (DefaultComboBoxModel) cbMa.getModel();
+        for(SanPham sp : qlsp.getAll()){
+            dfcb.addElement(sp);
+        }
+    }
+    
+    void addCBHDH(){
+        dfcb = (DefaultComboBoxModel) cbHDH.getModel();
+        for(Hedieuhanh hdh : qlhdh.getAll()){
+            dfcb.addElement(hdh);
+        }
+    }
+    
+    void addCBKN(){
+        dfcb = (DefaultComboBoxModel) cbCKN.getModel();
+        for(CongKetNoi kn : qlkn.getall()){
+            dfcb.addElement(kn);
+        }
     }
 
     void loadTable() {
@@ -390,20 +484,33 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        String masp = cbMa.getSelectedItem().toString();
+        SanPham sp = (SanPham) cbMa.getSelectedItem();
         double giaBan = Double.parseDouble(txtGiaBan.getText());
         int slt = Integer.parseInt(txtSL.getText());
-        String mau = cbMauSac.getSelectedItem().toString();
-        String dongsp = cbDongSP.getSelectedItem().toString();
-        String ocung = cbOCung.getSelectedItem().toString();
-        String ckn = cbCKN.getSelectedItem().toString();
-        String pin = cbPin.getSelectedItem().toString();
-        String cpu = cbCPU.getSelectedItem().toString();
-        String ram = cbRam.getSelectedItem().toString();
-        String card = cbCard.getSelectedItem().toString();
-        String hdh = cbHDH.getSelectedItem().toString();
-        String serial = cbSerial.getSelectedItem().toString();
-        ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, mau, dongsp, ocung, dongsp, pin, cpu, ram, card, hdh, masp);
+        MauSac ms = (MauSac) cbMauSac.getSelectedItem();
+        DongSP dsp = (DongSP) cbDongSP.getSelectedItem();
+        OCung ocung = (OCung) cbOCung.getSelectedItem();
+        CongKetNoi ckn = (CongKetNoi) cbCKN.getSelectedItem();
+        Pin pin = (Pin) cbPin.getSelectedItem();
+        CPU cpu = (CPU) cbCPU.getSelectedItem();
+        Ram ram = (Ram) cbRam.getSelectedItem();
+        CardManHinh card = (CardManHinh) cbCard.getSelectedItem();
+        Hedieuhanh hdh = (Hedieuhanh) cbHDH.getSelectedItem();
+        
+        String idSP = sp.getIdSP();
+        String idms = ms.getId();
+        String iddsp = dsp.getId();
+        String idoc = ocung.getId();
+        String idkn = ckn.getId();
+        String idpin = pin.getId();
+        String idcpu = cpu.getId();
+        String idram = ram.getId();
+        String idcard = card.getId();
+        String idhdh = hdh.getId();
+        
+        System.out.println(idSP);
+        
+        ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, idms, iddsp, idoc, idkn, idpin, idcpu, idram, idcard, idhdh, idSP);
         qlctsp.insert(ctsp);
         loadTable();
         clearForm();
@@ -430,10 +537,8 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         String card = cbCard.getSelectedItem().toString();
         String hdh = cbHDH.getSelectedItem().toString();
         String serial = cbSerial.getSelectedItem().toString();
-        ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, mau, dongsp, ocung, dongsp, pin, cpu, ram, card, hdh, masp);
+        ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, mau, dongsp, ocung, ckn, pin, cpu, ram, card, hdh, masp);
         qlctsp.insert(ctsp);
-        loadTable();
-        clearForm();
         JOptionPane.showMessageDialog(this, "thêm thành công");
         loadTable();
         clearForm();
@@ -486,6 +591,10 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrameChiTietSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

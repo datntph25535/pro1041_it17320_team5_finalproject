@@ -5,24 +5,24 @@
  */
 package service.impl;
 
+import model.NhanVien;
 import java.util.ArrayList;
-import model.KhachHang;
 
 /**
  *
  * @author PC
  */
-public interface KhachHangInter {
+public interface NhanVienInterface {
     
-    ArrayList<KhachHang> getList();
+    ArrayList<NhanVien> getList();
     
-    void insert(KhachHang kh);
+    void insert(model.NhanVien nv);
     
-    void delete(String ma);
+    void delete(String id);
     
-    void update(String id, KhachHang kh);
+    void update(String id, NhanVien nv);
     
-    KhachHang searchByMa(String ma);
+    NhanVien searchByMa(String manv);
     
-    KhachHang searchByTen(String ten);
+    NhanVien searchByTen(String tennv);
 }
