@@ -4,30 +4,49 @@
  */
 package view;
 
+import ViewModel.HoaDonViewModel;
 import ViewModel.SanPhamBanHangViewModel;
+import ViewModel.TBGioHang;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.HoaDon;
 import model.HoaDonCT;
+import repository.BanHangRepo;
 import service.ChiTietSPService;
 import service.HoaDonCTSer;
+import service.HoaDonService;
 import service.impl.ChiTietSPInteface;
 import service.impl.IHoaDonCT;
+import service.impl.IHoaDonS;
 
 /**
  *
  * @author Administrator
  */
 public class BanHang extends javax.swing.JFrame {
-
+    
     DefaultTableModel dtmCTSP = new DefaultTableModel();
     List<SanPhamBanHangViewModel> listSPCT = new ArrayList<>();
-    ChiTietSPInteface ctspSevices ;
-    
+    ChiTietSPInteface ctspSevices;
+    private ArrayList<TBGioHang> lishGH = new ArrayList<>();
     DefaultTableModel dtmHDCT = new DefaultTableModel();
     List<HoaDonCT> listHDCT = new ArrayList<>();
     IHoaDonCT hdctServices = new HoaDonCTSer();
+    IHoaDonS qlhd = new HoaDonService();
+    BanHangRepo qlbh = new BanHangRepo();
     
     public BanHang() {
         initComponents();
@@ -38,17 +57,41 @@ public class BanHang extends javax.swing.JFrame {
         
         dtmHDCT = (DefaultTableModel) tblHDCT.getModel();
         listHDCT = hdctServices.getAll();
-        
-        
+        loadTableHD(qlbh.getListHoaDon());
     }
+    
     private void showData(List<SanPhamBanHangViewModel> litSp) {
-       dtmCTSP.setRowCount(0);
+        dtmCTSP.setRowCount(0);
         for (SanPhamBanHangViewModel s : litSp) {
             dtmCTSP.addRow(s.toDataRow());
         }
     }
-     
     
+    void updateGH(TBGioHang gh) {
+        TBGioHang ghSearch = qlbh.updateGH(lishGH, gh.getMaSP());
+        if (ghSearch != null) {
+            ghSearch.setSoLuong(gh.getSoLuong());
+        }
+        
+    }
+    
+    void ghiFile() throws FileNotFoundException, IOException {
+        File file = new File("dataObject.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        for (TBGioHang gh : lishGH) {
+            oos.writeObject(gh);
+        }
+        fos.close();
+        oos.close();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,7 +117,7 @@ public class BanHang extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        btnTaoHD = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -93,7 +136,7 @@ public class BanHang extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tbHD = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -157,13 +200,13 @@ public class BanHang extends javax.swing.JFrame {
 
         tblHDCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã sp", "Tên sp", "Giá", "Số lương", "Tổng tiền", ""
+                "Mã sp", "Tên sp", "Giá", "Số lương", "Tổng tiền"
             }
         ));
         tblHDCT.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -198,7 +241,12 @@ public class BanHang extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton3.setText("Tạo Hóa đơn");
+        btnTaoHD.setText("Tạo Hóa đơn");
+        btnTaoHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoHDActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("In HD + thanh toán");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -269,7 +317,7 @@ public class BanHang extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButton3))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(btnTaoHD)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -306,13 +354,10 @@ public class BanHang extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel9)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -332,13 +377,13 @@ public class BanHang extends javax.swing.JFrame {
                     .addComponent(jRadioButton3))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(btnTaoHD)
                     .addComponent(jButton4)
                     .addComponent(jButton2))
                 .addGap(20, 20, 20))
         );
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tbHD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -357,7 +402,7 @@ public class BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tbHD);
 
         jTabbedPane1.addTab("Hóa Đơn", jScrollPane3);
 
@@ -410,7 +455,7 @@ public class BanHang extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 87, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(66, 66, 66)
+                .addGap(51, 51, 51)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -435,24 +480,87 @@ public class BanHang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHDCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHDCTMouseClicked
-        
+        int coun = tblHDCT.getRowCount();
+        if (coun == 0) {
+            return;
+        }
+        int choice = JOptionPane.showConfirmDialog(this, "bạn có muốn xóa sản phẩm khỏi giỏ hàng?", "", JOptionPane.YES_OPTION);
+        String slxoa = JOptionPane.showInputDialog("nhập số lượng sản phẩm muốn xóa");
+        try {
+            Integer.parseInt(slxoa);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "nhập số");
+            return;
+        }
+        if (choice == JOptionPane.YES_OPTION) {
+            int row = tblHDCT.getSelectedRow();
+            int rowsp = tblSP.getSelectedRow();
+            int sl = Integer.parseInt(tblHDCT.getValueAt(row, 3).toString());
+            int slXoa = Integer.parseInt(slxoa);
+            int count = tblSP.getRowCount();
+            for (int i = 0; i < count; i++) {
+                if (tblHDCT.getValueAt(row, 0).toString().equals(tblSP.getValueAt(i, 0))) {
+                    int slton = Integer.parseInt(tblSP.getValueAt(i, 9).toString());
+                    tblSP.setValueAt(slXoa + slton, i, 9);
+                    tblHDCT.setValueAt(sl - slXoa, row, 3);
+                    String ma = tblHDCT.getValueAt(row, 0).toString();
+                    String ten = tblHDCT.getValueAt(row, 1).toString();
+                    double gia = Double.parseDouble(tblHDCT.getValueAt(row, 2).toString());
+                    int slsp = Integer.parseInt(tblHDCT.getValueAt(row, 3).toString());
+                    TBGioHang gh = new TBGioHang(ma, ten, slsp, gia, 0);
+                    if (slsp == 0) {
+                        int rowModel = tblHDCT.convertRowIndexToModel(i);
+                        dtmHDCT.removeRow(rowModel);
+                        lishGH.remove(i);
+                        
+                    }
+                    updateGH(gh);
+                    
+                }
+            }
+            
+        }
+
     }//GEN-LAST:event_tblHDCTMouseClicked
 
     private void tblSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPMouseClicked
-       
-        String txtSoLuong = JOptionPane.showInputDialog(this, "Số lượng", "0");
+        int count = tblHDCT.getRowCount();
+        String txtSoLuong = JOptionPane.showInputDialog("nhập số lượng");
         try {
-             int soLuong = Integer.valueOf(txtSoLuong);
-             int row = tblSP.getSelectedRow();
-             SanPhamBanHangViewModel sp = listSPCT.get(row);
-          
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng = số");
-
+            Integer.valueOf(txtSoLuong);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "nhập số");
+            return;
         }
+        int soLuong = Integer.valueOf(txtSoLuong);
+        int row = tblSP.getSelectedRow();
+        int slton = Integer.parseInt(tblSP.getValueAt(row, 9).toString());
+//             SanPhamBanHangViewModel sp = listSPCT.get(row);
+        if (soLuong > slton) {
+            JOptionPane.showMessageDialog(this, "không đủ sản phẩm");
+            return;
+        }
+        String ma = tblSP.getValueAt(row, 0).toString();
+        String ten = tblSP.getValueAt(row, 1).toString();
+        double gia = Double.parseDouble(tblSP.getValueAt(row, 10).toString());
+        TBGioHang gh = new TBGioHang(ma, ten, soLuong, gia, 0);
+        lishGH.add(gh);
+        tblSP.setValueAt(slton - soLuong, row, 9);
+        loadTableGiahang(lishGH);
         
+
     }//GEN-LAST:event_tblSPMouseClicked
+    
+    void loadTableGiahang(ArrayList<TBGioHang> list) {
+        DefaultTableModel dftb = new DefaultTableModel();
+        dftb = (DefaultTableModel) tblHDCT.getModel();
+        dftb.setRowCount(0);
+        for (TBGioHang gh : list) {
+            dftb.addRow(new Object[]{
+                gh.getMaSP(), gh.getTenSP(), gh.getDonGia(), gh.getSoLuong(), gh.getTongTien()
+            });
+        }
+    }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -462,6 +570,42 @@ public class BanHang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+    private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHDActionPerformed
+        // TODO add your handling code here:
+        HoaDonViewModel hd = new HoaDonViewModel();
+        long millis = System.currentTimeMillis();
+        String maHD = this.maTuSinh();
+        Date date = new Date(millis);
+        hd.setMaHD(maHD);
+        hd.setMaNV("nv01");
+        hd.setNgayTao(date);
+        hd.setTrangThai("Chưa thanh toán");
+        qlbh.insertHDR(hd);
+        loadTableHD(qlbh.getListHoaDon());
+    }//GEN-LAST:event_btnTaoHDActionPerformed
+
+    
+    void loadTableHD(ArrayList<HoaDonViewModel> list){
+        DefaultTableModel dftb = new DefaultTableModel();
+        dftb = (DefaultTableModel) tbHD.getModel();
+        dftb.setRowCount(0);
+        for(HoaDonViewModel hd : list){
+            dftb.addRow(new Object[]{
+                hd.getMaHD(), hd.getNgayTao(), hd.getMaNV(), hd.getTrangThai()
+            });
+        }
+    }
+    
+    public String maTuSinh() {
+        String ma = null;
+        Random ran = new Random();
+        int ren = ThreadLocalRandom.current().nextInt();
+        List<HoaDon> list = qlhd.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            ma = "HD0" + ren;
+        }
+        return ma;
+    }
     /**
      * @param args the command line arguments
      */
@@ -501,10 +645,10 @@ public class BanHang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTaoHD;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -531,15 +675,14 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tbHD;
     private javax.swing.JTable tblHDCT;
     private javax.swing.JTable tblSP;
     // End of variables declaration//GEN-END:variables
 
-   
 }
