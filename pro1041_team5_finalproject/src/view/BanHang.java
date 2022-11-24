@@ -117,7 +117,11 @@ public class BanHang extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
+<<<<<<< Updated upstream
         btnTaoHD = new javax.swing.JButton();
+=======
+        btnTaoHoaDon = new javax.swing.JButton();
+>>>>>>> Stashed changes
         jButton4 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -191,9 +195,9 @@ public class BanHang extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(33, 33, 33))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Giỏ hàng"));
@@ -241,10 +245,17 @@ public class BanHang extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+<<<<<<< Updated upstream
         btnTaoHD.setText("Tạo Hóa đơn");
         btnTaoHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaoHDActionPerformed(evt);
+=======
+        btnTaoHoaDon.setText("Tạo Hóa đơn");
+        btnTaoHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoHoaDonActionPerformed(evt);
+>>>>>>> Stashed changes
             }
         });
 
@@ -317,7 +328,11 @@ public class BanHang extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButton3))
                             .addGroup(jPanel6Layout.createSequentialGroup()
+<<<<<<< Updated upstream
                                 .addComponent(btnTaoHD)
+=======
+                                .addComponent(btnTaoHoaDon)
+>>>>>>> Stashed changes
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -377,7 +392,11 @@ public class BanHang extends javax.swing.JFrame {
                     .addComponent(jRadioButton3))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+<<<<<<< Updated upstream
                     .addComponent(btnTaoHD)
+=======
+                    .addComponent(btnTaoHoaDon)
+>>>>>>> Stashed changes
                     .addComponent(jButton4)
                     .addComponent(jButton2))
                 .addGap(20, 20, 20))
@@ -570,6 +589,7 @@ public class BanHang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+<<<<<<< Updated upstream
     private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHDActionPerformed
         // TODO add your handling code here:
         HoaDonViewModel hd = new HoaDonViewModel();
@@ -606,6 +626,13 @@ public class BanHang extends javax.swing.JFrame {
         }
         return ma;
     }
+=======
+    private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnTaoHoaDonActionPerformed
+
+>>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */
@@ -645,7 +672,11 @@ public class BanHang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< Updated upstream
     private javax.swing.JButton btnTaoHD;
+=======
+    private javax.swing.JButton btnTaoHoaDon;
+>>>>>>> Stashed changes
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
