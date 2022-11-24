@@ -56,4 +56,14 @@ public class ChiTietSPService implements ChiTietSPInteface {
         return repo.updateSoLuong(ctsp, id);
     }
 
+    @Override
+    public List<SanPhamBanHangViewModel> searchTenSP(String ten) {
+        return repo.searchTen(ten);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> searchMa(String ma) {
+        return repo.searchMa(ma);
+    }
+
 }
