@@ -162,11 +162,6 @@ public class ChiTietSP {
     public void setIdSP(String IdSP) {
         this.IdSP = IdSP;
     }
-
-    @Override
-    public String toString() {
-        return  id ;
-    }
     
     
     

@@ -93,10 +93,5 @@ public class PhieuBaoHanh {
         this.IDhdct = IDhdct;
     }
 
-    @Override
-    public String toString() {
-        return  ma ;
-    }
-
     
 }
