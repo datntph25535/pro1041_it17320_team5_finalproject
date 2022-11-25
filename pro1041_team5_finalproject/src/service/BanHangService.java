@@ -6,8 +6,10 @@
 package service;
 
 import ViewModel.HoaDonViewModel;
+import ViewModel.SanPhamBanHangViewModel;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import java.util.List;
 import model.KhachHang;
 import repository.BanHangRepo;
 import service.impl.BanHangInterface;
@@ -42,6 +44,16 @@ public class BanHangService implements BanHangInterface{
     @Override
     public KhachHang getListSDT(String sdt) {
         return repo.getListSDT(sdt);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> searchMa(String ma) {
+        return repo.searchMa(ma);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> searchTen(String ten) {
+        return repo.searchTen(ten);
     }
     
     

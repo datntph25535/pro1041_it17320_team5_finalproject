@@ -6,8 +6,10 @@
 package service.impl;
 
 import ViewModel.HoaDonViewModel;
+import ViewModel.SanPhamBanHangViewModel;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import java.util.List;
 import model.KhachHang;
 
 /**
@@ -23,6 +25,10 @@ public interface BanHangInterface {
     TBGioHang updateGH(ArrayList<TBGioHang> list, String ma);
     
     KhachHang getListSDT(String sdt);
+    
+    List<SanPhamBanHangViewModel> searchMa(String ma);
+    
+    List<SanPhamBanHangViewModel> searchTen(String ten);
     
     
     

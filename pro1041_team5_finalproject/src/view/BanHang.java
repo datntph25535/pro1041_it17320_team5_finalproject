@@ -8,6 +8,7 @@ import ViewModel.CTSPViewModel;
 import ViewModel.HoaDonViewModel;
 import ViewModel.SanPhamBanHangViewModel;
 import ViewModel.TBGioHang;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -179,8 +180,7 @@ public class BanHang extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSP = new javax.swing.JTable();
-
-        jButton1 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         cbMau = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         cbDSP = new javax.swing.JComboBox<>();
@@ -191,8 +191,7 @@ public class BanHang extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         cbHdh = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
-        txtTimKiem = new javax.swing.JTextField();
-
+        txtSearch = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHDCT = new javax.swing.JTable();
@@ -301,7 +300,6 @@ public class BanHang extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbMau, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
@@ -317,7 +315,6 @@ public class BanHang extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12))
-
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -326,9 +323,9 @@ public class BanHang extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cbHdh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1)
+                                .addComponent(btnTimKiem)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTimKiem)))
+                                .addComponent(txtSearch)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -336,7 +333,6 @@ public class BanHang extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-
                     .addComponent(jLabel8)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
@@ -349,11 +345,10 @@ public class BanHang extends javax.swing.JFrame {
                     .addComponent(cbOCung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbHdh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTimKiem)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Giỏ hàng"));
@@ -844,6 +839,27 @@ public class BanHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbDSPActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        if (txtSearch.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nhập mã hoặc tên để tìm kiếm");
+            showData(listSPCT);
+            return;
+        } else {
+            ArrayList<SanPhamBanHangViewModel> listctsp = (ArrayList<SanPhamBanHangViewModel>) qlbh.searchMa(txtSearch.getText().trim());
+            ArrayList<SanPhamBanHangViewModel> listct = (ArrayList<SanPhamBanHangViewModel>) qlbh.searchTen(txtSearch.getText().trim());
+
+            if (!listctsp.isEmpty()) {
+                showData(listctsp);
+            } else if (!listct.isEmpty()) {
+                showData(listct);
+            } else {
+                showData(listSPCT);
+            }
+
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
 
     void loadTableHD(ArrayList<HoaDonViewModel> list) {
         DefaultTableModel dftb = new DefaultTableModel();
@@ -907,7 +923,7 @@ public class BanHang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTaoHD;
-
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoaSP;
     private javax.swing.JButton btnXoaTatCa;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -917,8 +933,6 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbMau;
     private javax.swing.JComboBox<String> cbOCung;
     private javax.swing.JComboBox<String> cbRam;
-    private javax.swing.JButton jButton1;
-
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -943,7 +957,6 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-
     private javax.swing.JLabel lbNhanVien;
     private javax.swing.JLabel lbTienThua;
     private javax.swing.JLabel lbTongTien;
@@ -952,9 +965,8 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JTable tblSP;
     private javax.swing.JTextField txtGiamGia;
     private javax.swing.JTextField txtKhachhang;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtTienKhachDua;
-    private javax.swing.JTextField txtTimKiem;
-
     // End of variables declaration//GEN-END:variables
 
 }
