@@ -81,14 +81,16 @@ public class ChiTietSPService implements ChiTietSPInteface {
     public List<SanPhamBanHangViewModel> getHDH(String mau) {
         return repo.getHDH(mau);
 
+    }
+
+    @Override
     public List<SanPhamBanHangViewModel> searchTenSP(String ten) {
-        return repo.searchTen(ten);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<SanPhamBanHangViewModel> searchMa(String ma) {
-        return repo.searchMa(ma);
-
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
