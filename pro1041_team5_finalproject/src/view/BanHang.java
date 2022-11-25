@@ -874,7 +874,6 @@ public class BanHang extends javax.swing.JFrame {
 
     public String maTuSinh() {
         String ma = null;
-        Random ran = new Random();
         int ren = ThreadLocalRandom.current().nextInt();
         List<HoaDon> list = qlhd.getAll();
         for (int i = 0; i < list.size(); i++) {
