@@ -72,6 +72,7 @@ public class ChiTietSPRepo {
                 + "             dbo.Ram ON dbo.ChiTietSP.IdRam = dbo.Ram.Id INNER JOIN\n"
                 + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id";
         try (Connection con = JDBCUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+
             ResultSet rs = ps.executeQuery();
 
             List<SanPhamBanHangViewModel> list = new ArrayList<>();
@@ -101,6 +102,8 @@ public class ChiTietSPRepo {
         try (Connection con = JDBCUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);) {
             ps.setString(1, mau);
+
+
             ResultSet rs = ps.executeQuery();
 
             List<SanPhamBanHangViewModel> list = new ArrayList<>();
@@ -241,7 +244,11 @@ public class ChiTietSPRepo {
         return check > 0;
     }
 
+
     public List<SanPhamBanHangViewModel> getDongSP(String mau) {
+
+    public List<SanPhamBanHangViewModel> searchMa(String ma) {
+
         String sql = "SELECT dbo.SanPham.Ma, dbo.SanPham.Ten, dbo.MauSac.Ten AS Expr1, dbo.DongSP.Ten AS Expr2, dbo.OCung.DungLuong AS Expr3, dbo.Pin.DungLuong, dbo.CPU.Ten AS Expr4, dbo.Ram.DungLuong AS Expr5, dbo.HeDieuHanh.Ten AS Expr6, dbo.ChiTietSP.SoLuongTon, \n"
                 + "             dbo.ChiTietSP.GiaBan\n"
                 + "FROM   dbo.CPU INNER JOIN\n"
@@ -252,10 +259,13 @@ public class ChiTietSPRepo {
                 + "             dbo.OCung ON dbo.ChiTietSP.IdOCung = dbo.OCung.Id INNER JOIN\n"
                 + "             dbo.Pin ON dbo.ChiTietSP.IdPin = dbo.Pin.Id INNER JOIN\n"
                 + "             dbo.Ram ON dbo.ChiTietSP.IdRam = dbo.Ram.Id INNER JOIN\n"
+
                 + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id where DongSP.Ten = ?";
         try (Connection con = JDBCUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);) {
             ps.setString(1, mau);
+
+              
             ResultSet rs = ps.executeQuery();
 
             List<SanPhamBanHangViewModel> list = new ArrayList<>();
@@ -269,9 +279,13 @@ public class ChiTietSPRepo {
         }
         return null;
     }
+
     
 
     public List<SanPhamBanHangViewModel> getOCung(String mau) {
+
+
+
         String sql = "SELECT dbo.SanPham.Ma, dbo.SanPham.Ten, dbo.MauSac.Ten AS Expr1, dbo.DongSP.Ten AS Expr2, dbo.OCung.DungLuong AS Expr3, dbo.Pin.DungLuong, dbo.CPU.Ten AS Expr4, dbo.Ram.DungLuong AS Expr5, dbo.HeDieuHanh.Ten AS Expr6, dbo.ChiTietSP.SoLuongTon, \n"
                 + "             dbo.ChiTietSP.GiaBan\n"
                 + "FROM   dbo.CPU INNER JOIN\n"
@@ -282,10 +296,14 @@ public class ChiTietSPRepo {
                 + "             dbo.OCung ON dbo.ChiTietSP.IdOCung = dbo.OCung.Id INNER JOIN\n"
                 + "             dbo.Pin ON dbo.ChiTietSP.IdPin = dbo.Pin.Id INNER JOIN\n"
                 + "             dbo.Ram ON dbo.ChiTietSP.IdRam = dbo.Ram.Id INNER JOIN\n"
+
                 + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id where OCung.DungLuong = ?";
         try (Connection con = JDBCUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);) {
             ps.setString(1, mau);
+
+           
+
             ResultSet rs = ps.executeQuery();
 
             List<SanPhamBanHangViewModel> list = new ArrayList<>();
@@ -299,6 +317,7 @@ public class ChiTietSPRepo {
         }
         return null;
     }
+
 
     public List<SanPhamBanHangViewModel> getRam(String mau) {
         String sql = "SELECT dbo.SanPham.Ma, dbo.SanPham.Ten, dbo.MauSac.Ten AS Expr1, dbo.DongSP.Ten AS Expr2, dbo.OCung.DungLuong AS Expr3, dbo.Pin.DungLuong, dbo.CPU.Ten AS Expr4, dbo.Ram.DungLuong AS Expr5, dbo.HeDieuHanh.Ten AS Expr6, dbo.ChiTietSP.SoLuongTon, \n"
@@ -357,5 +376,6 @@ public class ChiTietSPRepo {
         }
         return null;
     }
+
 
 }

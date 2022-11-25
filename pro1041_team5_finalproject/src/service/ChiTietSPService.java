@@ -57,6 +57,7 @@ public class ChiTietSPService implements ChiTietSPInteface {
     }
 
     @Override
+
     public List<SanPhamBanHangViewModel> getMau(String mau) {
         return repo.getMau(mau);
     }
@@ -79,6 +80,15 @@ public class ChiTietSPService implements ChiTietSPInteface {
     @Override
     public List<SanPhamBanHangViewModel> getHDH(String mau) {
         return repo.getHDH(mau);
+
+    public List<SanPhamBanHangViewModel> searchTenSP(String ten) {
+        return repo.searchTen(ten);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> searchMa(String ma) {
+        return repo.searchMa(ma);
+
     }
 
 }

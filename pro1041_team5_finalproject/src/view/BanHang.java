@@ -65,6 +65,7 @@ public class BanHang extends javax.swing.JFrame {
     ChiTietSPInteface qlctsp = new ChiTietSPService();
     KhachHangInter qlkh = new KhachHangService();
 
+
     public BanHang() {
 
         initComponents();
@@ -72,7 +73,9 @@ public class BanHang extends javax.swing.JFrame {
         ctspSevices = new ChiTietSPService();
         listSPCT = ctspSevices.getAllSPBH();
         showData(listSPCT);
+
         addCBMS();
+
         dtmHDCT = (DefaultTableModel) tblHDCT.getModel();
         listHDCT = hdctServices.getAll();
         loadTableHD(qlbh.getListHoaDon());
@@ -109,12 +112,14 @@ public class BanHang extends javax.swing.JFrame {
         }
     }
 
+
     private void showData(List<SanPhamBanHangViewModel> litSp) {
         dtmCTSP.setRowCount(0);
         for (SanPhamBanHangViewModel s : litSp) {
             dtmCTSP.addRow(s.toDataRow());
         }
     }
+
 
     private void showDataMau() {
         String mau = cbMau.getSelectedItem().toString();
@@ -132,11 +137,32 @@ public class BanHang extends javax.swing.JFrame {
         }
     }
 
+
     void updateGH(TBGioHang gh) {
         TBGioHang ghSearch = qlbh.updateGH(lishGH, gh.getMaSP());
         if (ghSearch != null) {
             ghSearch.setSoLuong(gh.getSoLuong());
         }
+
+
+    }
+
+    void ghiFile() throws FileNotFoundException, IOException {
+        File file = new File("dataObject.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        for (TBGioHang gh : lishGH) {
+            oos.writeObject(gh);
+        }
+        fos.close();
+        oos.close();
 
     }
 
@@ -153,6 +179,7 @@ public class BanHang extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSP = new javax.swing.JTable();
+
         jButton1 = new javax.swing.JButton();
         cbMau = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
@@ -165,6 +192,7 @@ public class BanHang extends javax.swing.JFrame {
         cbHdh = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
+
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHDCT = new javax.swing.JTable();
@@ -217,7 +245,12 @@ public class BanHang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblSP);
 
-        jButton1.setText("Tìm Kiếm");
+        btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         cbMau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
         cbMau.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -268,6 +301,7 @@ public class BanHang extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbMau, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
@@ -283,6 +317,7 @@ public class BanHang extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12))
+
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -301,6 +336,7 @@ public class BanHang extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+
                     .addComponent(jLabel8)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
@@ -317,6 +353,7 @@ public class BanHang extends javax.swing.JFrame {
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Giỏ hàng"));
@@ -598,6 +635,7 @@ public class BanHang extends javax.swing.JFrame {
 
     private void tblHDCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHDCTMouseClicked
 
+     
 
     }//GEN-LAST:event_tblHDCTMouseClicked
 
@@ -667,6 +705,7 @@ public class BanHang extends javax.swing.JFrame {
         qlbh.insertHDR(hd);
         loadTableHD(qlbh.getListHoaDon());
     }//GEN-LAST:event_btnTaoHDActionPerformed
+
 
     private void cbMauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbMauMouseClicked
         // TODO add your handling code here:
@@ -805,6 +844,7 @@ public class BanHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbDSPActionPerformed
 
+
     void loadTableHD(ArrayList<HoaDonViewModel> list) {
         DefaultTableModel dftb = new DefaultTableModel();
         dftb = (DefaultTableModel) tbHD.getModel();
@@ -867,6 +907,7 @@ public class BanHang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTaoHD;
+
     private javax.swing.JButton btnXoaSP;
     private javax.swing.JButton btnXoaTatCa;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -877,6 +918,7 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbOCung;
     private javax.swing.JComboBox<String> cbRam;
     private javax.swing.JButton jButton1;
+
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -901,6 +943,7 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+
     private javax.swing.JLabel lbNhanVien;
     private javax.swing.JLabel lbTienThua;
     private javax.swing.JLabel lbTongTien;
@@ -911,6 +954,7 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JTextField txtKhachhang;
     private javax.swing.JTextField txtTienKhachDua;
     private javax.swing.JTextField txtTimKiem;
+
     // End of variables declaration//GEN-END:variables
 
 }
