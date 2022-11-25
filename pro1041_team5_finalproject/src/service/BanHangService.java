@@ -8,6 +8,7 @@ package service;
 import ViewModel.HoaDonViewModel;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import model.KhachHang;
 import repository.BanHangRepo;
 import service.impl.BanHangInterface;
 
@@ -36,6 +37,11 @@ public class BanHangService implements BanHangInterface{
 
     public BanHangService() {
         repo = new BanHangRepo();
+    }
+
+    @Override
+    public KhachHang getListSDT(String sdt) {
+        return repo.getListSDT(sdt);
     }
     
     

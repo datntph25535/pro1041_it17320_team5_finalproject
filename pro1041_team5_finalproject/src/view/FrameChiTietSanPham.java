@@ -6,6 +6,7 @@
 package view;
 
 import ViewModel.CTSPViewModel;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import model.SanPham;
@@ -56,7 +57,6 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     /**
      * Creates new form FrameChiTietSanPham
      */
-    DefaultComboBoxModel dfcb = new DefaultComboBoxModel();
     DefaultTableModel dftb = new DefaultTableModel();
     ChiTietSPInteface qlctsp = new ChiTietSPService();
     DongSPInterface qldsp = new DongSPService();
@@ -69,93 +69,134 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     ICongKetNoiS qlkn = new CongKetNoiSer();
     CPUInterface qlcpu = new CPUService();
     CardMHinterFace qlcard = new CardMHService();
+    DefaultComboBoxModel dcbmSP;
+    DefaultComboBoxModel dcbmMS;
+    DefaultComboBoxModel dcbmDSP;
+    DefaultComboBoxModel dcbmOC;
+    DefaultComboBoxModel dcbmPin;
+    DefaultComboBoxModel dcbmhDH;
+    DefaultComboBoxModel dcbmCKN;
+    DefaultComboBoxModel dcbmRAM;
+    DefaultComboBoxModel dcbmCPU;
+    DefaultComboBoxModel dcbmCard;
+    List<CTSPViewModel> listCTSP;
+    List<SanPham> listSP;
+    List<MauSac> listMS;
+    List<DongSP> listDSP;
+    List<OCung> listOC;
+    List<Pin> listPin;
+    List<Hedieuhanh> listhdh;
+    List<CongKetNoi> listckn;
+    List<Ram> listram;
+    List<CPU> listcpu;
+    List<CardManHinh> listCr;
 
     public FrameChiTietSanPham() {
         initComponents();
         this.setLocationRelativeTo(null);
+        listCTSP = qlctsp.getListCTSPViewModel();
 
         loadTable();
 
+        listram = qlram.getAll();
         addCBRam();
+
+        listDSP = qldsp.getAll();
         addCBDongSP();
+
+        listOC = qloc.getAll();
         addCBOCung();
+
+        listcpu = qlcpu.getAll();
         addCBCPU();
+
+        listCr = qlcard.getAll();
         addCBCard();
+
+        listMS = qlms.all();
         addCBMS();
+
+        listPin = qlpin.getList();
         addCBPin();
+
+        listhdh = qlhdh.getAll();
         addCBHDH();
+
+        listckn = qlkn.getall();
         addCBKN();
-        addCBSP();
+
+        listSP = qlsp.getAll();
+        addCBSP(listSP);
 
     }
 
     void addCBCPU() {
-        dfcb = (DefaultComboBoxModel) cbCPU.getModel();
-        for (CPU cpu : qlcpu.getAll()) {
-            dfcb.addElement(cpu);
+        dcbmCPU = (DefaultComboBoxModel) cbCPU.getModel();
+        for (CPU cpu : listcpu) {
+            dcbmCPU.addElement(cpu);
         }
     }
 
     void addCBCard() {
-        dfcb = (DefaultComboBoxModel) cbCard.getModel();
-        for (CardManHinh ca : qlcard.getAll()) {
-            dfcb.addElement(ca);
+        dcbmCard = (DefaultComboBoxModel) cbCard.getModel();
+        for (CardManHinh ca : listCr) {
+            dcbmCard.addElement(ca);
         }
     }
 
     void addCBDongSP() {
-        dfcb = (DefaultComboBoxModel) cbDongSP.getModel();
-        for (DongSP dsp : qldsp.getAll()) {
-            dfcb.addElement(dsp);
+        dcbmDSP = (DefaultComboBoxModel) cbDongSP.getModel();
+        for (DongSP dsp : listDSP) {
+            dcbmDSP.addElement(dsp);
         }
     }
 
     void addCBOCung() {
-        dfcb = (DefaultComboBoxModel) cbOCung.getModel();
-        for (OCung oc : qloc.getAll()) {
-            dfcb.addElement(oc);
+        dcbmOC = (DefaultComboBoxModel) cbOCung.getModel();
+        for (OCung oc : listOC) {
+            dcbmOC.addElement(oc);
         }
     }
 
     void addCBRam() {
-        dfcb = (DefaultComboBoxModel) cbRam.getModel();
-        for (Ram ram : qlram.getAll()) {
-            dfcb.addElement(ram);
+        dcbmRAM = (DefaultComboBoxModel) cbRam.getModel();
+        for (Ram ram : listram) {
+            dcbmRAM.addElement(ram);
         }
     }
 
     void addCBMS() {
-        dfcb = (DefaultComboBoxModel) cbMauSac.getModel();
-        for (MauSac ms : qlms.all()) {
-            dfcb.addElement(ms);
+        dcbmMS = (DefaultComboBoxModel) cbMauSac.getModel();
+        for (MauSac ms : listMS) {
+            dcbmMS.addElement(ms);
         }
     }
 
     void addCBPin() {
-        dfcb = (DefaultComboBoxModel) cbPin.getModel();
-        for (Pin pin : qlpin.getList()) {
-            dfcb.addElement(pin);
+        dcbmPin = (DefaultComboBoxModel) cbPin.getModel();
+        for (Pin pin : listPin) {
+            dcbmPin.addElement(pin);
         }
     }
 
-    void addCBSP() {
-        dfcb = (DefaultComboBoxModel) cbMa.getModel();
-        for (SanPham sp : qlsp.getAll()) {
-            dfcb.addElement(sp);
+    void addCBSP(List<SanPham> listSP) {
+        dcbmSP = (DefaultComboBoxModel) cbMa.getModel();
+        for (SanPham sanPham : listSP) {
+            dcbmSP.addElement(sanPham);
         }
     }
 
     void addCBHDH() {
-        dfcb = (DefaultComboBoxModel) cbHDH.getModel();
-        for (Hedieuhanh hdh : qlhdh.getAll()) {
-            dfcb.addElement(hdh);
+        dcbmhDH = (DefaultComboBoxModel) cbHDH.getModel();
+        for (Hedieuhanh hdh : listhdh) {
+            dcbmhDH.addElement(hdh);
         }
     }
 
     void addCBKN() {
-        dfcb = (DefaultComboBoxModel) cbCKN.getModel();
-        for (CongKetNoi kn : qlkn.getall()) {
-            dfcb.addElement(kn);
+        dcbmCKN = (DefaultComboBoxModel) cbCKN.getModel();
+        for (CongKetNoi kn : listckn) {
+            dcbmCKN.addElement(kn);
         }
     }
 
@@ -220,6 +261,16 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         cbCKN = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         lbID = new javax.swing.JLabel();
+        btnMS = new javax.swing.JButton();
+        btnSP = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        btnOC = new javax.swing.JButton();
+        btnPin = new javax.swing.JButton();
+        btnCKN = new javax.swing.JButton();
+        btnhdh = new javax.swing.JButton();
+        btnCra = new javax.swing.JButton();
+        btnRam = new javax.swing.JButton();
+        btnCPu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -304,6 +355,76 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
         lbID.setText("-");
 
+        btnMS.setText("+");
+        btnMS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMSActionPerformed(evt);
+            }
+        });
+
+        btnSP.setText("+");
+        btnSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSPActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("+");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        btnOC.setText("+");
+        btnOC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOCActionPerformed(evt);
+            }
+        });
+
+        btnPin.setText("+");
+        btnPin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPinActionPerformed(evt);
+            }
+        });
+
+        btnCKN.setText("+");
+        btnCKN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCKNActionPerformed(evt);
+            }
+        });
+
+        btnhdh.setText("+");
+        btnhdh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnhdhActionPerformed(evt);
+            }
+        });
+
+        btnCra.setText("+");
+        btnCra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCraActionPerformed(evt);
+            }
+        });
+
+        btnRam.setText("+");
+        btnRam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRamActionPerformed(evt);
+            }
+        });
+
+        btnCPu.setText("+");
+        btnCPu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCPuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -335,34 +456,56 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
                                 .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbMa, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbID))))
+                                    .addComponent(lbID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cbPin, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addComponent(btnXoa)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTimKiem)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnOC)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cbHDH, 0, 134, Short.MAX_VALUE)
-                                            .addComponent(txtSL))))
-                                .addGap(116, 116, 116)
+                                            .addComponent(jButton3)
+                                            .addComponent(btnSP)
+                                            .addComponent(btnMS))
+                                        .addGap(90, 90, 90)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(cbPin, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(cbHDH, 0, 134, Short.MAX_VALUE)
+                                                    .addComponent(txtSL))))
+                                        .addGap(21, 21, 21)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btnhdh)
+                                            .addComponent(btnPin))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jLabel18)
                                     .addComponent(jLabel19)
                                     .addComponent(jLabel13)
-                                    .addComponent(jLabel5))
+                                    .addComponent(jLabel5)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(44, 44, 44)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel18))))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbCard, javax.swing.GroupLayout.Alignment.TRAILING, 0, 135, Short.MAX_VALUE)
@@ -370,91 +513,101 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
                                     .addComponent(cbRam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lbTrangThai)
                                     .addComponent(cbCKN, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(btnXoa)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnTimKiem)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCKN)
+                                    .addComponent(btnCra)
+                                    .addComponent(btnRam)
+                                    .addComponent(btnCPu)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(340, 340, 340)
-                        .addComponent(jLabel15)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel15)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(cbPin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(lbID)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(cbCKN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addComponent(jLabel15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(cbPin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(lbID)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(cbCKN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCKN)
+                                .addComponent(btnPin)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(cbHDH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnhdh))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cbRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnRam)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel18)
+                                    .addComponent(cbCPU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCPu))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel19)
+                                    .addComponent(cbCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCra))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(lbTrangThai)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(cbHDH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(txtSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(cbRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(cbCPU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19)
-                            .addComponent(cbCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(lbTrangThai)))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel12)
+                            .addComponent(btnSP))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(cbMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMS))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(cbDongSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbDongSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(cbOCung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(56, 56, 56)
+                            .addComponent(cbOCung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOC))))
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
                     .addComponent(btnSua)
                     .addComponent(btnXoa)
                     .addComponent(btnTimKiem)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -466,13 +619,26 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         int row = tb.getSelectedRow();
-        lbID.setText(tb.getValueAt(row, 0).toString());
-        cbMa.setSelectedItem(tb.getValueAt(row, 1).toString());
-        cbMauSac.setSelectedItem(tb.getValueAt(row, 2).toString()); 
-        if (Integer.parseInt(tb.getValueAt(row, 10).toString()) == 0) {
-            lbTrangThai.setText("Còn hàng");
-        } else {
+        CTSPViewModel ctsp = listCTSP.get(row);
+
+        txtGiaBan.setText(ctsp.getGiaBan() + "");
+        txtSL.setText(ctsp.getSoLuongTon() + "");
+        lbID.setText(ctsp.getId());
+        cbCKN.setSelectedItem(ctsp.getCongKetNoi());
+        cbCPU.setSelectedItem(ctsp.getCPU());
+        cbCard.setSelectedItem(ctsp.getCardMH());
+        cbDongSP.setSelectedItem(ctsp.getDongsp());
+        cbHDH.setSelectedItem(ctsp.getHeDH());
+        cbMa.setSelectedItem(ctsp.getMaSP());
+        cbMauSac.setSelectedItem(ctsp.getMauSac());
+        cbOCung.setSelectedItem(ctsp.getOCung());
+        cbPin.setSelectedItem(ctsp.getPin());
+        cbRam.setSelectedItem(ctsp.getRam());
+        if (Integer.parseInt(txtSL.getText()) == 0) {
             lbTrangThai.setText("Hết hàng");
+        } else {
+
+            lbTrangThai.setText("Còn hàng");
         }
     }//GEN-LAST:event_tbMouseClicked
 
@@ -547,6 +713,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "xóa thành công");
         loadTable();
         clearForm();
+
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
@@ -556,6 +723,75 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         OCung oc = (OCung) cbOCung.getSelectedItem();
         System.out.println(oc.getId());
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnCPuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCPuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCPuActionPerformed
+
+    private void btnSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSPActionPerformed
+        // TODO add your handling code here:
+        FrameSanpham sp = new FrameSanpham();
+        sp.setVisible(true);
+        sp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBSP(listSP);
+
+    }//GEN-LAST:event_btnSPActionPerformed
+
+    private void btnMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMSActionPerformed
+        MauSacForm ms = new MauSacForm();
+        ms.setVisible(true);
+        ms.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBMS();
+    }//GEN-LAST:event_btnMSActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        FrameDongSP dsp = new FrameDongSP();
+        dsp.setVisible(true);
+        dsp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBDongSP();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOCActionPerformed
+        FrameOCung oc = new FrameOCung();
+        oc.setVisible(true);
+        oc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBDongSP();
+    }//GEN-LAST:event_btnOCActionPerformed
+
+    private void btnPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPinActionPerformed
+        PinForm pin = new PinForm();
+        pin.setVisible(true);
+        pin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBPin();
+    }//GEN-LAST:event_btnPinActionPerformed
+
+    private void btnhdhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhdhActionPerformed
+        HeDHFrame hdh = new HeDHFrame();
+        hdh.setVisible(true);
+        hdh.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBHDH();
+    }//GEN-LAST:event_btnhdhActionPerformed
+
+    private void btnCKNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCKNActionPerformed
+        CongKetNoiFrame ckn = new CongKetNoiFrame();
+        ckn.setVisible(true);
+        ckn.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBKN();
+    }//GEN-LAST:event_btnCKNActionPerformed
+
+    private void btnRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRamActionPerformed
+        JFrameRam ram = new JFrameRam();
+        ram.setVisible(true);
+        ram.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBRam();
+    }//GEN-LAST:event_btnRamActionPerformed
+
+    private void btnCraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCraActionPerformed
+        JFrameCard cr = new JFrameCard();
+        cr.setVisible(true);
+        cr.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addCBCard();
+    }//GEN-LAST:event_btnCraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -590,6 +826,14 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -600,10 +844,19 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCKN;
+    private javax.swing.JButton btnCPu;
+    private javax.swing.JButton btnCra;
+    private javax.swing.JButton btnMS;
+    private javax.swing.JButton btnOC;
+    private javax.swing.JButton btnPin;
+    private javax.swing.JButton btnRam;
+    private javax.swing.JButton btnSP;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa;
+    private javax.swing.JButton btnhdh;
     private javax.swing.JComboBox<String> cbCKN;
     private javax.swing.JComboBox<String> cbCPU;
     private javax.swing.JComboBox<String> cbCard;
@@ -614,6 +867,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbOCung;
     private javax.swing.JComboBox<String> cbPin;
     private javax.swing.JComboBox<String> cbRam;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;

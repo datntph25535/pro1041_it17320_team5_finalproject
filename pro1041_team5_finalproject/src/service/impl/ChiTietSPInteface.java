@@ -35,4 +35,16 @@ public interface ChiTietSPInteface {
 
     ArrayList<CTSPViewModel> getListCTSPViewModel();
 
+    
+    List<SanPhamBanHangViewModel> getMau(String mau);
+    
+    List<SanPhamBanHangViewModel> getDongSP(String mau);
+    
+    List<SanPhamBanHangViewModel> getOCung(String mau);
+    
+    List<SanPhamBanHangViewModel> getRam(String mau);
+    
+    List<SanPhamBanHangViewModel> getHDH(String mau);
+    
+
 }
