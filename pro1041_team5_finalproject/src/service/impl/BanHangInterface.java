@@ -8,6 +8,7 @@ package service.impl;
 import ViewModel.HoaDonViewModel;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import model.KhachHang;
 
 /**
  *
@@ -20,6 +21,8 @@ public interface BanHangInterface {
     ArrayList<HoaDonViewModel> getListHoaDon();
     
     TBGioHang updateGH(ArrayList<TBGioHang> list, String ma);
+    
+    KhachHang getListSDT(String sdt);
     
     
     

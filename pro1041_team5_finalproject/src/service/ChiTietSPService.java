@@ -56,4 +56,29 @@ public class ChiTietSPService implements ChiTietSPInteface {
         return repo.updateSoLuong(ctsp, id);
     }
 
+    @Override
+    public List<SanPhamBanHangViewModel> getMau(String mau) {
+        return repo.getMau(mau);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> getDongSP(String mau) {
+        return repo.getDongSP(mau);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> getOCung(String mau) {
+        return repo.getOCung(mau);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> getRam(String mau) {
+        return repo.getRam(mau);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> getHDH(String mau) {
+        return repo.getHDH(mau);
+    }
+
 }

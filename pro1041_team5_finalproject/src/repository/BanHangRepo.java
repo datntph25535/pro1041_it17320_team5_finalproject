@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.KhachHang;
 
 /**
  *
@@ -92,6 +93,31 @@ public class BanHangRepo {
             }
         }
         return ghsearch;
+    }
+    
+    public KhachHang getListSDT(String sdt) {
+        KhachHang KH = null;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select * from KhachHang where Sdt=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sdt);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("Ma");
+                String hoTen = rs.getString("HoTen");
+                Date ngaySinh = rs.getDate("NgaySinh");
+                String gioiTinh = rs.getString("GioiTinh");
+                String email = rs.getString("Email");
+                KH = new KhachHang(id, ma, hoTen, ngaySinh, gioiTinh, sdt, email);
+              
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(NhanVienRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return KH;
     }
 
 }
