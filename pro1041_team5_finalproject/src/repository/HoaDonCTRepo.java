@@ -25,36 +25,28 @@ public class HoaDonCTRepo {
         List<HoaDonCT> listHd = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "select hd.Ma as 'Ma HD',ctsp.Id as'IdCTSP',SoLuong,DonGia,SoLuong*DonGia as'ThanhTien' from HoaDonChiTiet hdct join HoaDon hd on hd.Id=hdct.IdHD \n"
-                    + "join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP";
+            String sql = "select * from HoaDonChiTiet";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();
             while (rs.next()) {
-                String ma = rs.getString("Ma HD");
-                HoaDon hd = new HoaDon();
-                hd.setMa(ma);
-                String isct = rs.getString("IdCTSP");
-                ChiTietSP ctsp = new ChiTietSP();
-                ctsp.setId(isct);
+                String idCTSP = rs.getString("IdCTSP");
+                String idHD = rs.getString("IdHD");
                 int sl = rs.getInt("SoLuong");
                 double dgia = rs.getDouble("DonGia");
                 double thanhTien=rs.getDouble("ThanhTien");
-                HoaDonCT hdv = new HoaDonCT();
-                hdv.setIdHD(hd);
-                hdv.setIdCTSP(ctsp);
-                hdv.setSoLuong(sl);
-                hdv.setGia(dgia);
-                hdv.setThanhTien(thanhTien);
-//                hdv.setTienKM(tienKM);
-                listHd.add(hdv);
-
+                HoaDonCT hd = new HoaDonCT("", sl, dgia, thanhTien, idHD, idCTSP);
+                listHd.add(hd);
             }
             return listHd;
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+     
+     public static void main(String[] args) {
+        new HoaDonCTRepo().all();
     }
 //
     public Integer inserHDCTR(HoaDonCT hdct) {
@@ -63,17 +55,10 @@ public class HoaDonCTRepo {
             Connection conn = JDBCUtil.getConnection();
             String sql = "Insert into HoaDonChiTiet " + "(IdHD,IdCTSP,SoLuong,DonGia)" + " Values(?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            String idhd = null;
-            if (hdct.getIdHD()!= null) {
-                idhd = hdct.getIdHD().getId();
-            }
-            String idctSP = null;
-
-            if (hdct.getIdCTSP()!= null) {
-                idctSP = hdct.getIdCTSP().getId();
-            }
-            ps.setString(1, idhd);
-            ps.setString(2, idctSP);
+          
+           
+            ps.setString(1, hdct.getIdHD());
+            ps.setString(2, hdct.getIdCTSP());
             ps.setInt(3, hdct.getSoLuong());
             ps.setDouble(4, hdct.getGia());
             kq = ps.executeUpdate();

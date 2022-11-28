@@ -17,23 +17,25 @@ public class HoaDonCTViewModel {
     private String id;
     private int soLuong;
     private double gia;
-
     private double thanhTien;
-    private HoaDon idHD;
-//    private LinhKien idLK;
-    private ChiTietSP idCTSP;
+    private String idHD;
+    private String idCTSP;
 
     public HoaDonCTViewModel() {
     }
 
-    public HoaDonCTViewModel(String id, int soLuong, double gia, double thanhTien, HoaDon idHD) {
+    public HoaDonCTViewModel(String id, int soLuong, double gia, double thanhTien, String idHD, String idCTSP) {
         this.id = id;
         this.soLuong = soLuong;
         this.gia = gia;
         this.thanhTien = thanhTien;
         this.idHD = idHD;
+        this.idCTSP = idCTSP;
     }
 
+    
+
+    
     public String getId() {
         return id;
     }
@@ -59,19 +61,36 @@ public class HoaDonCTViewModel {
     }
 
     public double getThanhTien() {
-        return thanhTien;
+        return soLuong * gia;
     }
 
     public void setThanhTien(double thanhTien) {
         this.thanhTien = thanhTien;
     }
 
-    public HoaDon getIdHD() {
+    public String getIdHD() {
         return idHD;
     }
 
-    public void setIdHD(HoaDon idHD) {
+    public void setIdHD(String idHD) {
         this.idHD = idHD;
     }
+
+    public String getIdCTSP() {
+        return idCTSP;
+    }
+
+    public void setIdCTSP(String idCTSP) {
+        this.idCTSP = idCTSP;
+    }
+
+    @Override
+    public String toString() {
+        return idHD + idCTSP;
+    }
+
+   
+    
+    
 
 }

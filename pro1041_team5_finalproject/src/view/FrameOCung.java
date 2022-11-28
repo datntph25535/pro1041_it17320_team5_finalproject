@@ -75,6 +75,11 @@ public class FrameOCung extends javax.swing.JFrame {
                 "Mã", "Tên", "Dung lượng"
             }
         ));
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb);
 
         btnThem.setText("Thêm");
@@ -188,6 +193,10 @@ public class FrameOCung extends javax.swing.JFrame {
         qloc.delete(ma);
         loadTable();
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbMouseClicked
 
     /**
      * @param args the command line arguments

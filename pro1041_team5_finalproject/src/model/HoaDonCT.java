@@ -15,9 +15,8 @@ public class HoaDonCT {
     private int soLuong;
     private double gia;
     private double thanhTien;
-    private HoaDon idHD;
-//    private LinhKien idLK;
-    private ChiTietSP idCTSP;
+    private String idHD;
+    private String idCTSP;
 
     public String getId() {
         return id;
@@ -33,7 +32,7 @@ public class HoaDonCT {
         this.thanhTien = thanhTien;
     }
 
-    public HoaDonCT(String id, int soLuong, double gia, double thanhTien, HoaDon idHD, ChiTietSP idCTSP) {
+    public HoaDonCT(String id, int soLuong, double gia, double thanhTien, String idHD, String idCTSP) {
         this.id = id;
         this.soLuong = soLuong;
         this.gia = gia;
@@ -42,11 +41,11 @@ public class HoaDonCT {
         this.idCTSP = idCTSP;
     }
 
-    public ChiTietSP getIdCTSP() {
+    public String getIdCTSP() {
         return idCTSP;
     }
 
-    public void setIdCTSP(ChiTietSP idCTSP) {
+    public void setIdCTSP(String idCTSP) {
         this.idCTSP = idCTSP;
     }
 
@@ -78,19 +77,12 @@ public class HoaDonCT {
         this.thanhTien = thanhTien;
     }
 
-    public HoaDonCT(String id, int soLuong, double gia, double thanhTien, HoaDon idHD) {
-        this.id = id;
-        this.soLuong = soLuong;
-        this.gia = gia;
-        this.thanhTien = thanhTien;
-        this.idHD = idHD;
-    }
 
-    public HoaDon getIdHD() {
+    public String getIdHD() {
         return idHD;
     }
 
-    public void setIdHD(HoaDon idHD) {
+    public void setIdHD(String idHD) {
         this.idHD = idHD;
     }
 

@@ -100,31 +100,22 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
         listram = qlram.getAll();
         addCBRam();
-
         listDSP = qldsp.getAll();
         addCBDongSP();
-
         listOC = qloc.getAll();
         addCBOCung();
-
         listcpu = qlcpu.getAll();
         addCBCPU();
-
         listCr = qlcard.getAll();
         addCBCard();
-
         listMS = qlms.all();
         addCBMS();
-
         listPin = qlpin.getList();
         addCBPin();
-
         listhdh = qlhdh.getAll();
         addCBHDH();
-
         listckn = qlkn.getall();
         addCBKN();
-
         listSP = qlsp.getAll();
         addCBSP(listSP);
 
@@ -132,6 +123,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBCPU() {
         dcbmCPU = (DefaultComboBoxModel) cbCPU.getModel();
+        dcbmCPU.removeAllElements();
         for (CPU cpu : listcpu) {
             dcbmCPU.addElement(cpu);
         }
@@ -139,6 +131,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBCard() {
         dcbmCard = (DefaultComboBoxModel) cbCard.getModel();
+        dcbmCard.removeAllElements();
         for (CardManHinh ca : listCr) {
             dcbmCard.addElement(ca);
         }
@@ -146,6 +139,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBDongSP() {
         dcbmDSP = (DefaultComboBoxModel) cbDongSP.getModel();
+        dcbmDSP.removeAllElements();
         for (DongSP dsp : listDSP) {
             dcbmDSP.addElement(dsp);
         }
@@ -153,6 +147,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBOCung() {
         dcbmOC = (DefaultComboBoxModel) cbOCung.getModel();
+        dcbmOC.removeAllElements();
         for (OCung oc : listOC) {
             dcbmOC.addElement(oc);
         }
@@ -160,6 +155,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBRam() {
         dcbmRAM = (DefaultComboBoxModel) cbRam.getModel();
+        dcbmRAM.removeAllElements();
         for (Ram ram : listram) {
             dcbmRAM.addElement(ram);
         }
@@ -167,6 +163,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBMS() {
         dcbmMS = (DefaultComboBoxModel) cbMauSac.getModel();
+        dcbmMS.removeAllElements();
         for (MauSac ms : listMS) {
             dcbmMS.addElement(ms);
         }
@@ -181,6 +178,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBSP(List<SanPham> listSP) {
         dcbmSP = (DefaultComboBoxModel) cbMa.getModel();
+        dcbmSP.removeAllElements();
         for (SanPham sanPham : listSP) {
             dcbmSP.addElement(sanPham);
         }
@@ -188,6 +186,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBHDH() {
         dcbmhDH = (DefaultComboBoxModel) cbHDH.getModel();
+        dcbmhDH.removeAllElements();
         for (Hedieuhanh hdh : listhdh) {
             dcbmhDH.addElement(hdh);
         }
@@ -195,6 +194,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
     void addCBKN() {
         dcbmCKN = (DefaultComboBoxModel) cbCKN.getModel();
+        dcbmCKN.removeAllElements();
         for (CongKetNoi kn : listckn) {
             dcbmCKN.addElement(kn);
         }
@@ -271,6 +271,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         btnCra = new javax.swing.JButton();
         btnRam = new javax.swing.JButton();
         btnCPu = new javax.swing.JButton();
+        btnReLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -425,6 +426,13 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
             }
         });
 
+        btnReLoad.setText("Reload");
+        btnReLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReLoadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -457,14 +465,16 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbMa, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lbID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addComponent(btnXoa)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnTimKiem)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnReLoad))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,20 +515,20 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
                                         .addGap(44, 44, 44)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel17)
-                                            .addComponent(jLabel18))))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbCard, javax.swing.GroupLayout.Alignment.TRAILING, 0, 135, Short.MAX_VALUE)
-                                    .addComponent(cbCPU, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbRam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbTrangThai)
-                                    .addComponent(cbCKN, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCKN)
-                                    .addComponent(btnCra)
-                                    .addComponent(btnRam)
-                                    .addComponent(btnCPu)))))
+                                            .addComponent(jLabel18))))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbCard, javax.swing.GroupLayout.Alignment.TRAILING, 0, 135, Short.MAX_VALUE)
+                            .addComponent(cbCPU, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbRam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbTrangThai)
+                            .addComponent(cbCKN, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCKN)
+                            .addComponent(btnCra)
+                            .addComponent(btnRam)
+                            .addComponent(btnCPu)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(340, 340, 340)
                         .addComponent(jLabel15)))
@@ -606,7 +616,8 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
                     .addComponent(btnSua)
                     .addComponent(btnXoa)
                     .addComponent(btnTimKiem)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReLoad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -696,7 +707,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         String hdh = cbHDH.getSelectedItem().toString();
         ChiTietSP ctsp = new ChiTietSP("", giaBan, slt, 0, mau, dongsp, ocung, ckn, pin, cpu, ram, card, hdh, masp);
         qlctsp.insert(ctsp);
-        JOptionPane.showMessageDialog(this, "thêm thành công");
+        JOptionPane.showMessageDialog(this, "sửa thành công");
         loadTable();
         clearForm();
     }//GEN-LAST:event_btnSuaActionPerformed
@@ -793,6 +804,20 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         addCBCard();
     }//GEN-LAST:event_btnCraActionPerformed
 
+    private void btnReLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReLoadActionPerformed
+        // TODO add your handling code here:
+        addCBRam();
+        addCBDongSP();
+        addCBOCung();
+        addCBCPU();
+        addCBCard();
+        addCBMS();
+        addCBPin();
+        addCBHDH();
+        addCBKN();
+        addCBSP(listSP);
+    }//GEN-LAST:event_btnReLoadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -851,6 +876,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     private javax.swing.JButton btnOC;
     private javax.swing.JButton btnPin;
     private javax.swing.JButton btnRam;
+    private javax.swing.JButton btnReLoad;
     private javax.swing.JButton btnSP;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;

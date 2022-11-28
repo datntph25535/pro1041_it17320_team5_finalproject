@@ -22,10 +22,7 @@ public class BanHangService implements BanHangInterface{
     
     BanHangRepo repo;
 
-    @Override
-    public ArrayList<TBGioHang> getListGioHang() {
-        return repo.getListGioHang();
-    }
+   
 
     @Override
     public ArrayList<HoaDonViewModel> getListHoaDon() {
@@ -54,6 +51,11 @@ public class BanHangService implements BanHangInterface{
     @Override
     public List<SanPhamBanHangViewModel> searchTen(String ten) {
         return repo.searchTen(ten);
+    }
+
+    @Override
+    public ArrayList<TBGioHang> getListGioHang(String idHD) {
+        return repo.getListGioHang(idHD);
     }
     
     

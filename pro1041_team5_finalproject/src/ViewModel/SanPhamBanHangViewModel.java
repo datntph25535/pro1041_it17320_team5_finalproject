@@ -9,6 +9,7 @@ package ViewModel;
  * @author Administrator
  */
 public class SanPhamBanHangViewModel {
+    private String idCTSP;
     private String ma;
      private String teSP;
     private String tenMauSac;
@@ -24,7 +25,8 @@ public class SanPhamBanHangViewModel {
     public SanPhamBanHangViewModel() {
     }
 
-    public SanPhamBanHangViewModel(String ma, String teSP, String tenMauSac, String tenDongsp, String tenOCung, String Pin, String CPU, String Ram, String HeDH, int soLuong, double giaBan) {
+    public SanPhamBanHangViewModel(String idCTSP, String ma, String teSP, String tenMauSac, String tenDongsp, String tenOCung, String Pin, String CPU, String Ram, String HeDH, int soLuong, double giaBan) {
+        this.idCTSP = idCTSP;
         this.ma = ma;
         this.teSP = teSP;
         this.tenMauSac = tenMauSac;
@@ -37,6 +39,16 @@ public class SanPhamBanHangViewModel {
         this.soLuong = soLuong;
         this.giaBan = giaBan;
     }
+
+    public String getIdCTSP() {
+        return idCTSP;
+    }
+
+    public void setIdCTSP(String idCTSP) {
+        this.idCTSP = idCTSP;
+    }
+
+    
 
     public String getMa() {
         return ma;
@@ -128,8 +140,9 @@ public class SanPhamBanHangViewModel {
 
     @Override
     public String toString() {
-        return "SanPhamBanHangViewModel{" + "ma=" + ma + ", teSP=" + teSP + ", tenMauSac=" + tenMauSac + ", tenDongsp=" + tenDongsp + ", tenOCung=" + tenOCung + ", Pin=" + Pin + ", CPU=" + CPU + ", Ram=" + Ram + ", HeDH=" + HeDH + ", soLuong=" + soLuong + ", giaBan=" + giaBan + '}';
+        return idCTSP;
     }
+    
     
     public Object[] toDataRow(){
         return new Object[]{ma, teSP, tenMauSac, tenDongsp, tenOCung,Pin, CPU, Ram,  HeDH,soLuong,  giaBan};

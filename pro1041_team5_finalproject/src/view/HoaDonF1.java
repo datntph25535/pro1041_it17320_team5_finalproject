@@ -182,8 +182,8 @@ public class HoaDonF1 extends javax.swing.JFrame {
 
         }
         HoaDonCT ct = new HoaDonCT();
-        ct.setIdHD(hd);
-        ct.setIdCTSP(ctsp);
+        ct.setIdHD(hd.getId());
+        ct.setIdCTSP(ctsp.getId());
         ct.setGia(donGia);
         ct.setSoLuong(sl);
         return ct;

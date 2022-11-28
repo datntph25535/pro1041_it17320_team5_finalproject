@@ -169,6 +169,11 @@ public class CTSPViewModel {
     public void setMaSP(String maSP) {
         this.maSP = maSP;
     }
+
+    @Override
+    public String toString() {
+        return id;
+    }
     
     
     
