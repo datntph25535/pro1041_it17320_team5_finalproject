@@ -17,16 +17,31 @@ public class HoaDonViewModel {
     private Date ngayTao;
     private String maNV;
     private String trangThai;
+    private String idHD;
+    
 
     public HoaDonViewModel() {
     }
 
-    public HoaDonViewModel(String maHD, Date ngayTao, String maNV, String trangThai) {
+    public HoaDonViewModel(String maHD, Date ngayTao, String maNV, String trangThai, String idHD) {
         this.maHD = maHD;
         this.ngayTao = ngayTao;
         this.maNV = maNV;
         this.trangThai = trangThai;
+        this.idHD = idHD;
     }
+
+   
+
+    public String getIdHD() {
+        return idHD;
+    }
+
+    public void setIdHD(String idHD) {
+        this.idHD = idHD;
+    }
+    
+    
 
     public String getMaHD() {
         return maHD;
@@ -53,7 +68,7 @@ public class HoaDonViewModel {
     }
 
     public String getTrangThai() {
-        return "Chờ thanh toán";
+        return trangThai;
     }
 
     public void setTrangThai(String trangThai) {

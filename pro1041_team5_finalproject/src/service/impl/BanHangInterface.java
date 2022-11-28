@@ -18,7 +18,7 @@ import model.KhachHang;
  */
 public interface BanHangInterface {
     
-    ArrayList<TBGioHang> getListGioHang();
+    ArrayList<TBGioHang> getListGioHang(String idHD);
     
     ArrayList<HoaDonViewModel> getListHoaDon();
     

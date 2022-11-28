@@ -11,22 +11,56 @@ package ViewModel;
  */
 public class TBGioHang {
     
+    private String id;
     private String maSP;
     private String tenSP;
     private int soLuong;
     private double donGia;
     private double tongTien;
+    private String idHD;
+    private String idCTSP;
 
     public TBGioHang() {
     }
 
-    public TBGioHang(String maSP, String tenSP, int soLuong, double donGia, double tongTien) {
+    public TBGioHang(String id, String maSP, String tenSP, int soLuong, double donGia, double tongTien, String idHD, String idCTSP) {
+        this.id = id;
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.soLuong = soLuong;
         this.donGia = donGia;
         this.tongTien = tongTien;
+        this.idHD = idHD;
+        this.idCTSP = idCTSP;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    
+
+    public String getIdHD() {
+        return idHD;
+    }
+
+    public void setIdHD(String idHD) {
+        this.idHD = idHD;
+    }
+
+    public String getIdCTSP() {
+        return idCTSP;
+    }
+
+    public void setIdCTSP(String idCTSP) {
+        this.idCTSP = idCTSP;
+    }
+
+   
 
     public String getMaSP() {
         return maSP;
@@ -66,6 +100,11 @@ public class TBGioHang {
 
     public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
+    }
+
+    @Override
+    public String toString() {
+        return "TBGioHang{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", soLuong=" + soLuong + ", donGia=" + donGia + ", tongTien=" + tongTien + ", idHD=" + idHD + ", idCTSP=" + idCTSP + '}';
     }
     
     
