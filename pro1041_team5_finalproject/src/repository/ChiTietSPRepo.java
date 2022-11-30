@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class ChiTietSPRepo {
 
     public static void main(String[] args) {
-        new ChiTietSPRepo().getAllSPBH();
+        System.out.println(new ChiTietSPRepo().getOCung("256GB"));;
     }
 
     public ArrayList<ChiTietSP> getAll() {
@@ -136,6 +136,7 @@ public class ChiTietSPRepo {
         }
         return null;
     }
+    
     public List<SanPhamBanHangViewModel> getOCung(String oc) {
         String sql = "SELECT dbo.SanPham.Ma, dbo.SanPham.Ten, dbo.MauSac.Ten AS Expr1, dbo.DongSP.Ten AS Expr2, dbo.OCung.DungLuong AS Expr3, dbo.Pin.DungLuong, dbo.CPU.Ten AS Expr4, dbo.Ram.DungLuong AS Expr5, dbo.HeDieuHanh.Ten AS Expr6, dbo.ChiTietSP.SoLuongTon, \n"
                 + "             dbo.ChiTietSP.GiaBan\n"
@@ -147,7 +148,7 @@ public class ChiTietSPRepo {
                 + "             dbo.OCung ON dbo.ChiTietSP.IdOCung = dbo.OCung.Id INNER JOIN\n"
                 + "             dbo.Pin ON dbo.ChiTietSP.IdPin = dbo.Pin.Id INNER JOIN\n"
                 + "             dbo.Ram ON dbo.ChiTietSP.IdRam = dbo.Ram.Id INNER JOIN\n"
-                + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id where OCung.DungLuong = ?";
+                + "             dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id where Ocung.DungLuong = ?";
         try (Connection con = JDBCUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);) {
             ps.setString(1, oc);
@@ -162,7 +163,7 @@ public class ChiTietSPRepo {
         }
         return null;
     }
-
+    
     public ArrayList<CTSPViewModel> getListCTSPViewModel() {
         ArrayList<CTSPViewModel> list = new ArrayList<>();
         try {
