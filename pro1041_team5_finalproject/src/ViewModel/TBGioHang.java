@@ -10,7 +10,7 @@ package ViewModel;
  * @author Admin
  */
 public class TBGioHang {
-    
+
     private String id;
     private String maSP;
     private String tenSP;
@@ -42,8 +42,6 @@ public class TBGioHang {
         this.id = id;
     }
 
-    
-
     public String getIdHD() {
         return idHD;
     }
@@ -59,8 +57,6 @@ public class TBGioHang {
     public void setIdCTSP(String idCTSP) {
         this.idCTSP = idCTSP;
     }
-
-   
 
     public String getMaSP() {
         return maSP;
@@ -104,10 +100,7 @@ public class TBGioHang {
 
     @Override
     public String toString() {
-        return "TBGioHang{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", soLuong=" + soLuong + ", donGia=" + donGia + ", tongTien=" + tongTien + ", idHD=" + idHD + ", idCTSP=" + idCTSP + '}';
+        return "{\n Hoá đơn chi tiết : " + "\n Mã sản phẩm : " + maSP + ", \n Tên sản phẩm : " + tenSP + ",\n Số lượng = " + soLuong + ",\n Giá = " + donGia + ",\n Thành tiền = " + tongTien + "\n}";
     }
-    
-    
-    
-    
+
 }

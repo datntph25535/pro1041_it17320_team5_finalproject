@@ -6,15 +6,19 @@
 package repository;
 
 import JDBC.JDBCUtil;
+import ViewModel.HoaDonVM;
+import ViewModel.TBGioHang;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.HoaDon;
+import model.KhachHang;
 
 /**
  *
@@ -41,7 +45,7 @@ public class HoaDonRepo {
                 String sdt = rs.getString("SDTKhachHang");
                 String tt = rs.getString("TrangThai");
 
-                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, 0, sdt, tt);
+                HoaDon hdv = new HoaDon(id, ma, ngaytt, ngaynhan, ngaytao, thanhtien, sdt, tt);
                 listHD.add(hdv);
             }
             return listHD;
@@ -50,6 +54,497 @@ public class HoaDonRepo {
         }
         return null;
 
+    }
+
+    public List<HoaDonVM> getListHDV() {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+//search theo trạng thái
+
+    public List<HoaDonVM> SearchTrangThai(String trangThai) {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "where hd.TrangThai = ?\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, trangThai);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, trangThai, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+    ///tìm theo ten hoặc ma sp
+
+    public ArrayList<TBGioHang> SearchTenSP(String ten, String mahd) {
+        ArrayList<TBGioHang> list = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select hdct.Id,hd.Ma as'mahd',sp.Ma as'masp',sp.Ten as 'tensp',hdct.SoLuong,hdct.DonGia,hdct.SoLuong*hdct.DonGia as 'thanhtien',IdHD,IdCTSP from HoaDonChiTiet hdct \n"
+                    + " join HoaDon hd on hd.Id=hdct.IdHD \n"
+                    + " join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP\n"
+                    + " join SanPham sp on sp.Id=ctsp.IdSP\n"
+                    + "Where sp.Ten=? and hd.Ma=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ten);
+            ps.setString(2, mahd);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String masp = rs.getString("masp");
+                double gia = rs.getDouble("DonGia");
+                double thanhtien = rs.getDouble("thanhtien");
+                int sl = rs.getInt("SoLuong");
+                String idhd = rs.getString("IdHD");
+                String idctsp = rs.getString("IdCTSP");
+                TBGioHang hdct = new TBGioHang(id, masp, ten, sl, gia, thanhtien, idhd, idctsp);
+                list.add(hdct);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<TBGioHang> SearchMaSP(String masp, String mahd) {
+        ArrayList<TBGioHang> list = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select hdct.Id,hd.Ma as'mahd',sp.Ma as'masp',sp.Ten as 'tensp',hdct.SoLuong,hdct.DonGia,hdct.SoLuong*hdct.DonGia as 'thanhtien',IdHD,IdCTSP from HoaDonChiTiet hdct \n"
+                    + " join HoaDon hd on hd.Id=hdct.IdHD \n"
+                    + " join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP\n"
+                    + " join SanPham sp on sp.Id=ctsp.IdSP\n"
+                    + "Where sp.Ma=? and hd.Ma=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, masp);
+            ps.setString(2, mahd);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String tensp = rs.getString("tensp");
+                double gia = rs.getDouble("DonGia");
+                double thanhtien = rs.getDouble("thanhtien");
+                int sl = rs.getInt("SoLuong");
+                String idhd = rs.getString("IdHD");
+                String idctsp = rs.getString("IdCTSP");
+                TBGioHang hdct = new TBGioHang(id, masp, tensp, sl, gia, thanhtien, idhd, idctsp);
+                list.add(hdct);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    //lấy mã hd trên tb hoá đơn
+    public ArrayList<TBGioHang> getListHDCT(String mahd) {
+        ArrayList<TBGioHang> list = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select hdct.Id,hd.Ma as'mahd',sp.Ma as'masp',sp.Ten as 'tensp',hdct.SoLuong,hdct.DonGia,hdct.SoLuong*hdct.DonGia as 'thanhtien',IdHD,IdCTSP from HoaDonChiTiet hdct \n"
+                    + " join HoaDon hd on hd.Id=hdct.IdHD \n"
+                    + " join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP\n"
+                    + " join SanPham sp on sp.Id=ctsp.IdSP\n"
+                    + "Where hd.Ma=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, mahd);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String masp = rs.getString("masp");
+                String tensp = rs.getString("tensp");
+                double gia = rs.getDouble("DonGia");
+                double thanhtien = rs.getDouble("thanhtien");
+                int sl = rs.getInt("SoLuong");
+                String idhd = rs.getString("IdHD");
+                String idctsp = rs.getString("IdCTSP");
+                TBGioHang hdct = new TBGioHang(id, masp, tensp, sl, gia, thanhtien, idhd, idctsp);
+                list.add(hdct);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    ///search theo khoảng tiền
+    public List<HoaDonVM> searchkhoangTien() {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
+                    + "Having SUM(ct.ThanhTien)  between 0 and 100";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonVM> searchkhoangTien2() {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
+                    + "Having SUM(ct.ThanhTien)  between 100 and 500";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonVM> searchkhoangTien3() {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
+                    + "Having SUM(ct.ThanhTien)  between 500 and 1000";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonVM> searchkhoangTien4() {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
+                    + "Having SUM(ct.ThanhTien) > 1000";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+//sdt search
+
+    public List<KhachHang> getSDTVM() {
+        List<KhachHang> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select Sdt from KhachHang";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String sdt = rs.getString("Sdt");
+                KhachHang kh = new KhachHang();
+                kh.setSdt(sdt);
+                listHDVM.add(kh);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<KhachHang> getHoTen() {
+        List<KhachHang> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select HoTen from KhachHang";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String hoten = rs.getString("HoTen");
+                KhachHang kh = new KhachHang();
+                kh.setHoTen(hoten);
+                listHDVM.add(kh);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonVM> searchSDT(String sdt) {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "Where kh.sdt=?\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sdt);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+///
+
+    public List<HoaDonVM> searchThangV(int thang) {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "Where MONTH(NgayTao)=?\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, thang);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+                String sdt = rs.getString("Sdt");
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonVM> searchNamV(int nam) {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as 'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "Where YEAR(NgayTao)=?\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, nam);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+                String sdt = rs.getString("Sdt");
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, (java.sql.Date) ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
     }
 
     public Integer insertHDR(HoaDon hd) {
@@ -165,6 +660,7 @@ public class HoaDonRepo {
         }
         return null;
     }
+
     public List<HoaDon> searchNam(int nam) {
         List<HoaDon> listhdd = new ArrayList<>();
         try {
@@ -176,7 +672,7 @@ public class HoaDonRepo {
             ResultSet rs = ps.getResultSet();
             while (rs.next()) {
                 String id = rs.getString("Id");
-                  String ma = rs.getString("Ma");
+                String ma = rs.getString("Ma");
                 Date ngaytt = rs.getDate("NgayThanhToan");
                 Date ngaynhan = rs.getDate("NgayNhan");
                 Date ngaytao = rs.getDate("NgayTao");
@@ -193,7 +689,8 @@ public class HoaDonRepo {
         }
         return null;
     }
-     public List<HoaDon> searchThang(int thang) {
+
+    public List<HoaDon> searchThang(int thang) {
         List<HoaDon> listhdd = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
@@ -204,7 +701,7 @@ public class HoaDonRepo {
             ResultSet rs = ps.getResultSet();
             while (rs.next()) {
                 String id = rs.getString("Id");
-                  String ma = rs.getString("Ma");
+                String ma = rs.getString("Ma");
                 Date ngaytt = rs.getDate("NgayThanhToan");
                 Date ngaynhan = rs.getDate("NgayNhan");
                 Date ngaytao = rs.getDate("NgayTao");

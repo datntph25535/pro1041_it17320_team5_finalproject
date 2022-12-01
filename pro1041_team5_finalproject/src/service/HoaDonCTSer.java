@@ -5,6 +5,7 @@
  */
 package service;
 
+import ViewModel.HoaDonCTViewModel;
 import java.util.List;
 import model.HoaDonCT;
 import repository.HoaDonCTRepo;
@@ -40,6 +41,16 @@ public class HoaDonCTSer implements IHoaDonCT {
     @Override
     public Integer deleteHDCT(String id) {
         return repo.deleteHDR(id);
+    }
+
+    @Override
+    public List<HoaDonCTViewModel> allHDCTV() {
+        return repo.allHDCT();
+    }
+
+    @Override
+    public List<HoaDonCTViewModel> allHDCTVM(String id) {
+        return repo.allHDCTV(id);
     }
 
 }
