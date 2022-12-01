@@ -5,6 +5,7 @@
  */
 package service.impl;
 
+import ViewModel.HoaDonCTViewModel;
 import java.util.List;
 import model.HoaDonCT;
 
@@ -22,4 +23,7 @@ public interface IHoaDonCT {
 
     Integer deleteHDCT(String id);
 
+    List<HoaDonCTViewModel> allHDCTV();
+
+    List<HoaDonCTViewModel> allHDCTVM(String id);
 }

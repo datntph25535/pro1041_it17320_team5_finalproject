@@ -5,8 +5,12 @@
  */
 package service.impl;
 
+import ViewModel.HoaDonVM;
+import ViewModel.TBGioHang;
+import java.util.ArrayList;
 import model.HoaDon;
 import java.util.List;
+import model.KhachHang;
 
 /**
  *
@@ -23,10 +27,45 @@ public interface IHoaDonS {
     List<HoaDon> searchHDTT(String tinhTrang);
 
     List<HoaDon> searchThang(int thang);
+//search ql hoá đơn
+
+    List<HoaDonVM> searchThangVM(int thang);
+
+    List<HoaDonVM> searchNamVM(int nam);
+
+    List<KhachHang> getSDTvm();
+
+    List<KhachHang> getHTenKH();
+
+    List<HoaDonVM> searchSDTVM(String sdt);
+///////////////////////
+//seach theo khoang tien
+
+    List<HoaDonVM> searchkhoangTien1();
+
+    List<HoaDonVM> searchkhoangTien2();
+
+    List<HoaDonVM> searchkhoangTien3();
+
+    List<HoaDonVM> searchkhoangTien4();
 
     List<HoaDon> searchNam(int nam);
+//lấy mã
+
+    ArrayList<TBGioHang> getListHDCTVM(String mahd);
+///search trạng thái
+
+    List<HoaDonVM> SearchTrangThaiVM(String trangThai);
+//search ma/ten sp 
+
+    ArrayList<TBGioHang> SearchTenSPVm(String ten, String mahd);
+
+    ArrayList<TBGioHang> SearchMaSPVm(String masp, String mahd);
 
     Integer updateHD(HoaDon hd, String ma);
 
     Integer deleteHD(String ma);
+
+    List<HoaDonVM> getListHD();
+
 }

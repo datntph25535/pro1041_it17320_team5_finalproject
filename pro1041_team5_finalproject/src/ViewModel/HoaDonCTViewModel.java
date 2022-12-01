@@ -20,8 +20,23 @@ public class HoaDonCTViewModel {
     private double thanhTien;
     private String idHD;
     private String idCTSP;
+    private String masp;
+    private String tensp;
+    private String mahd;
 
     public HoaDonCTViewModel() {
+    }
+
+    public HoaDonCTViewModel(String id, int soLuong, double gia, double thanhTien, String idHD, String idCTSP, String masp, String tensp, String mahd) {
+        this.id = id;
+        this.soLuong = soLuong;
+        this.gia = gia;
+        this.thanhTien = thanhTien;
+        this.idHD = idHD;
+        this.idCTSP = idCTSP;
+        this.masp = masp;
+        this.tensp = tensp;
+        this.mahd = mahd;
     }
 
     public HoaDonCTViewModel(String id, int soLuong, double gia, double thanhTien, String idHD, String idCTSP) {
@@ -33,9 +48,30 @@ public class HoaDonCTViewModel {
         this.idCTSP = idCTSP;
     }
 
-    
+    public String getMasp() {
+        return masp;
+    }
 
-    
+    public void setMasp(String masp) {
+        this.masp = masp;
+    }
+
+    public String getTensp() {
+        return tensp;
+    }
+
+    public void setTensp(String tensp) {
+        this.tensp = tensp;
+    }
+
+    public String getMahd() {
+        return mahd;
+    }
+
+    public void setMahd(String mahd) {
+        this.mahd = mahd;
+    }
+
     public String getId() {
         return id;
     }
@@ -88,9 +124,5 @@ public class HoaDonCTViewModel {
     public String toString() {
         return idHD + idCTSP;
     }
-
-   
-    
-    
 
 }
