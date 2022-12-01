@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.HoaDon;
 import model.HoaDonCT;
 import model.KhachHang;
 
@@ -219,6 +220,7 @@ public class BanHangRepo {
 
     }
     
+    
     public void upDateHD(String idHD){
         try {
             Connection conn = JDBCUtil.getConnection();
@@ -289,5 +291,61 @@ public class BanHangRepo {
 
         }
 
+    }
+    
+    public String getIdKH(String sdt){
+        String idKH = null;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select Id from KhachHang where Sdt = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sdt);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {
+                idKH = rs.getString("Id");
+            }
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BanHangRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idKH;
+    }
+    public String getIdNV(String maNV){
+        String idNV = null;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select Id from NhanVien where Ma = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, maNV);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {
+                idNV = rs.getString("Id");
+            }
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(BanHangRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idNV;
+    }
+    
+    public void ThanhToan(HoaDon hd, String id){
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "update HoaDon set TrangThai = ?, NgayThanhToan = ?, NgayNhan = ?, SDTKhachHang = ?, ThanhTien = ?, IdNV = ?, IdKH = ?  where Id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "Đã thanh toán");
+            ps.setDate(2, (Date) hd.getNgayThanhToan());
+            ps.setDate(3, (Date) hd.getNgayNhan());
+            ps.setString(4, hd.getSdt());
+            ps.setDouble(5, hd.getThanhTien());
+            ps.setString(6, hd.getIdNV());
+            ps.setString(7, hd.getIdkh());
+            ps.setString(8, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BanHangRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

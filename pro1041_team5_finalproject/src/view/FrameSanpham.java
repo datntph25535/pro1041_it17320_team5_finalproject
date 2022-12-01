@@ -24,6 +24,7 @@ public class FrameSanpham extends javax.swing.JFrame {
     
     public FrameSanpham() {
         initComponents();
+        loadTable();
     }
     
     void loadTable(){
