@@ -130,4 +130,9 @@ public class HoaDonVM {
         this.tongTien = tongTien;
     }
 
+    @Override
+    public String toString() {
+        return tennv;
+    }
+
 }

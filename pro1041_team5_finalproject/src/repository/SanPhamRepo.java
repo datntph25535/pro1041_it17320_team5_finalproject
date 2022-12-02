@@ -54,14 +54,14 @@ public class SanPhamRepo {
             ps.setString(1, sp.getMaSP());
             ps.setString(2, sp.getTenSP());
             ps.setString(3, sp.getSerial());
-            ps.execute();
+            ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         }
     }
 
     public static void main(String[] args) {
-       
+
     }
 
     public void update(SanPham sp, String maSP) {
@@ -90,9 +90,5 @@ public class SanPhamRepo {
             Logger.getLogger(SanPhamRepo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    
-
-    
 
 }

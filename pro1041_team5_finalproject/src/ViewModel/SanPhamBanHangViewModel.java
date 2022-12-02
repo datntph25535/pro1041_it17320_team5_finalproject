@@ -9,9 +9,10 @@ package ViewModel;
  * @author Administrator
  */
 public class SanPhamBanHangViewModel {
+
     private String idCTSP;
     private String ma;
-     private String teSP;
+    private String teSP;
     private String tenMauSac;
     private String tenDongsp;
     private String tenOCung;
@@ -47,8 +48,6 @@ public class SanPhamBanHangViewModel {
     public void setIdCTSP(String idCTSP) {
         this.idCTSP = idCTSP;
     }
-
-    
 
     public String getMa() {
         return ma;
@@ -142,10 +141,9 @@ public class SanPhamBanHangViewModel {
     public String toString() {
         return idCTSP;
     }
-    
-    
-    public Object[] toDataRow(){
-        return new Object[]{ma, teSP, tenMauSac, tenDongsp, tenOCung,Pin, CPU, Ram,  HeDH,soLuong,  giaBan};
+
+    public Object[] toDataRow() {
+        return new Object[]{ma, teSP, tenMauSac, tenDongsp, tenOCung, Pin, CPU, Ram, HeDH, soLuong, String.format("%.0f", giaBan)};
     }
-    
+
 }
