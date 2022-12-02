@@ -16,7 +16,7 @@ import service.DangNhapService;
 public class frameDangNhap extends javax.swing.JFrame {
 
     private DangNhapService dangNhapService = new DangNhapService();
-    
+
     public frameDangNhap() {
         initComponents();
         setLocationRelativeTo(null);
@@ -122,16 +122,16 @@ public class frameDangNhap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean getData(){
+    private boolean getData() {
         String user = txt_user.getText().trim();
         String pass = String.valueOf(pf_pass.getPassword()).trim();
-        if(user.length() == 0 || pass.length() == 0){
+        if (user.length() == 0 || pass.length() == 0) {
             JOptionPane.showMessageDialog(this, "Không được để trống");
             return false;
         }
         return true;
     }
-    
+
     private void pf_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pf_passActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pf_passActionPerformed
@@ -141,30 +141,31 @@ public class frameDangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_userActionPerformed
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        if(getData()){
+        
+        if (getData()) {
             Account dangNhap = dangNhapService.account(txt_user.getText(), pf_pass.getText());
-            if(dangNhap == null){
+            if (dangNhap == null) {
                 JOptionPane.showMessageDialog(this, "Sai tài khoản");
                 return;
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                if(dangNhap.getRole().equals("QuanLy")){
+                if (dangNhap.getRole().equals("QuanLy")) {
                     BanHang bh = new BanHang();
                     bh.setVisible(true);
                     dispose();
-                }else{
+                } else {
                     FrameNhanVien nv = new FrameNhanVien();
                     nv.setVisible(true);
                     dispose();
                 }
-                    
+
             }
         }
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
         int conf = JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát không");
-        if(conf == JOptionPane.YES_OPTION){
+        if (conf == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Thoát chương trình");
             System.exit(0);
         }
