@@ -5,7 +5,6 @@
  */
 package view;
 
-import ChucNang.QLBH;
 
 /**
  *
@@ -14,8 +13,7 @@ import ChucNang.QLBH;
 public class main {
     
     public static void main(String[] args) {
-        QLBH qlbh = new QLBH();
-        qlbh.setVisible(true);
+       
     }
     
 }

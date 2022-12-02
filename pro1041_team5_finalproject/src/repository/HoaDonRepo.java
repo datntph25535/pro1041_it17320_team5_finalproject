@@ -239,7 +239,7 @@ public class HoaDonRepo {
                     + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
                     + "\n"
                     + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
-                    + "Having SUM(ct.ThanhTien)  between 0 and 100";
+                    + "Having SUM(ct.ThanhTien) < 10000000";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();
@@ -278,7 +278,7 @@ public class HoaDonRepo {
                     + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
                     + "\n"
                     + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
-                    + "Having SUM(ct.ThanhTien)  between 100 and 500";
+                    + "Having SUM(ct.ThanhTien)  between 10000000 and 49999999";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();
@@ -317,7 +317,7 @@ public class HoaDonRepo {
                     + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
                     + "\n"
                     + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
-                    + "Having SUM(ct.ThanhTien)  between 500 and 1000";
+                    + "Having SUM(ct.ThanhTien)  between 50000000 and 100000000";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();
@@ -356,7 +356,7 @@ public class HoaDonRepo {
                     + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
                     + "\n"
                     + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma\n"
-                    + "Having SUM(ct.ThanhTien) > 1000";
+                    + "Having SUM(ct.ThanhTien) > 100000000";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             ResultSet rs = ps.getResultSet();

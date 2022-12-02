@@ -28,7 +28,7 @@ public class BaoHanhRepo {
                 + "      ,[HoTenKH]\n"
                 + "      ,[IdHDCT]\n"
                 + "  FROM [dbo].[PhieuBaoHanh]";
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement pstm = con.prepareStatement(sql)) {
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             ResultSet rs = pstm.executeQuery();
             List<PhieuBaoHanhViewModel> listBH = new ArrayList<>();
             while (rs.next()) {
@@ -52,14 +52,14 @@ public class BaoHanhRepo {
                 + "           ,[HoTenKH]\n"
                 + "           ,[IdHDCT])\n"
                 + "     VALUES (?,?,?,?,?,?)";
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement pstm = con.prepareStatement(sql)) {
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setObject(1, bh.getMa());
-             pstm.setObject(2, bh.getNgayMuaHang());
-              pstm.setObject(3, bh.getNgayBH());
-               pstm.setObject(4, bh.getThoiGianBH());
-                pstm.setObject(5, bh.getTenKH());
-                 pstm.setObject(1, bh.getIDhdct());
-               
+            pstm.setObject(2, bh.getNgayMuaHang());
+            pstm.setObject(3, bh.getNgayBH());
+            pstm.setObject(4, bh.getThoiGianBH());
+            pstm.setObject(5, bh.getTenKH());
+            pstm.setObject(6, bh.getIDhdct());
+
             check = pstm.executeUpdate();
 
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class BaoHanhRepo {
                 + "      ,[HoTenKH] = ?\n"
                 + "      ,[IdHDCT] = ?\n"
                 + " WHERE  id = ?";
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement pstm = con.prepareStatement(sql)) {
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setObject(1, bh.getMa());
             pstm.setObject(2, bh.getNgayMuaHang());
             pstm.setObject(3, bh.getNgayBH());
@@ -97,7 +97,7 @@ public class BaoHanhRepo {
     public boolean delete(String id) {
         String sql = "DELETE FROM PhieuBaoHanh WHERE Id =?";
         int check = 0;
-        try ( Connection con = new JDBCUtil().getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+        try (Connection con = new JDBCUtil().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 
             ps.setObject(1, id);
             check = ps.executeUpdate();
@@ -109,7 +109,7 @@ public class BaoHanhRepo {
 
     public PhieuBaoHanh checkTrung(String ma) {
         String sql = "SELECT Ma FROM PhieuBaoHanh WHERE Ma =?";
-        try ( Connection con = new JDBCUtil().getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+        try (Connection con = new JDBCUtil().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
             ps.setObject(1, ma);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -125,7 +125,7 @@ public class BaoHanhRepo {
 
     public PhieuBaoHanh getByMa(String ma) {
         String sql = "Select * from PhieuBaoHanh where ma = ?";
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement pstm = con.prepareStatement(sql)) {
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setString(1, ma);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
@@ -140,7 +140,7 @@ public class BaoHanhRepo {
 
     public PhieuBaoHanh getByTen(String ten) {
         String sql = "Select * from PhieuBaoHanh where ten = ?";
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement pstm = con.prepareStatement(sql)) {
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setString(1, ten);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {

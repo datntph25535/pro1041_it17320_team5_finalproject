@@ -5,16 +5,13 @@
  */
 package view;
 
-import ViewModel.HoaDonCTViewModel;
 import ViewModel.HoaDonVM;
-import ViewModel.HoaDonViewModel;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.HoaDon;
 import model.KhachHang;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import repository.BanHangRepo;
@@ -52,11 +49,13 @@ public class QLHoaDon extends javax.swing.JFrame {
         serchi = new ChiTietSPService();
         defaultComboBoxModel = new DefaultComboBoxModel();
         defaultTableModel = new DefaultTableModel();
-        loadTable(serr.getListHD());
         loadCBSDT();
         loadCBNam();
         cbTimKiem();
         loadCBThang();
+        loadCBtongtien();
+        loadCBTrangThai();
+        loadTable(serr.getListHD());
 
     }
 
@@ -74,7 +73,7 @@ public class QLHoaDon extends javax.swing.JFrame {
                 hoaDon.getTenkh(),
                 hoaDon.getSdt(),
                 hoaDon.getTrangThai(),
-                hoaDon.getTongTien()
+                String.format("%.0f", hoaDon.getTongTien())
             }
             );
         }
@@ -99,19 +98,27 @@ public class QLHoaDon extends javax.swing.JFrame {
 
     }
 
+    public void loadCBtongtien() {
+        DefaultComboBoxModel ttcb = (DefaultComboBoxModel) cbTongTien.getModel();
+        ttcb.addElement(null);
+        ttcb.addElement("<10000000");
+        ttcb.addElement("Từ 10000000-50000000");
+        ttcb.addElement("Từ 50000000- 100000000");
+        ttcb.addElement(">100000000");
+    }
+
+    public void loadCBTrangThai() {
+        DefaultComboBoxModel decbtt = (DefaultComboBoxModel) cbTrangThai.getModel();
+        decbtt.addElement("Đã thanh toán");
+        decbtt.addElement("Chờ thanh toán");
+        decbtt.addElement("Huỷ");
+    }
+
     public void loadCBSDT() {
 
         DefaultComboBoxModel dcb = (DefaultComboBoxModel) cbSD.getModel();
         for (KhachHang hdon : serr.getSDTvm()) {
             dcb.addElement(hdon);
-        }
-    }
-
-    public void loadCBtongTien() {
-
-        DefaultComboBoxModel dcbh = (DefaultComboBoxModel) cbTongTien.getModel();
-        for (KhachHang hh : serr.getHTenKH()) {
-            dcbh.addElement(hh);
         }
     }
 
@@ -130,7 +137,7 @@ public class QLHoaDon extends javax.swing.JFrame {
             dftb.setRowCount(0);
             for (TBGioHang gh : list) {
                 dftb.addRow(new Object[]{
-                    gh.getMaSP(), gh.getTenSP(), gh.getDonGia(), gh.getSoLuong(), gh.getTongTien()
+                    gh.getMaSP(), gh.getTenSP(), String.format("%.0f", gh.getDonGia()), gh.getSoLuong(), String.format("%.0f", gh.getTongTien())
                 });
             }
         } else {
@@ -221,7 +228,6 @@ public class QLHoaDon extends javax.swing.JFrame {
 
         jLabel2.setText("Trạng thái ");
 
-        cbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã thanh toán", "Đã huỷ", "Chờ thanh toán" }));
         cbTrangThai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTrangThaiActionPerformed(evt);
@@ -230,7 +236,6 @@ public class QLHoaDon extends javax.swing.JFrame {
 
         jLabel3.setText("Tổng tiền");
 
-        cbTongTien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<100", "từ 100 - 500", "từ 500-1000", ">1000" }));
         cbTongTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTongTienActionPerformed(evt);
@@ -242,27 +247,29 @@ public class QLHoaDon extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(jLabel1)
                         .addGap(97, 97, 97)
-                        .addComponent(jLabel2))
+                        .addComponent(jLabel2)
+                        .addGap(16, 16, 16))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(cbSD, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(cbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(58, 58, 58)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel3)
+                        .addGap(135, 135, 135))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)))
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +314,7 @@ public class QLHoaDon extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(36, 36, 36)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -320,11 +327,11 @@ public class QLHoaDon extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 11, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 11, -1, 350));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "HOÁ ĐƠN CHI TIẾT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -370,29 +377,30 @@ public class QLHoaDon extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
-                .addGap(7, 7, 7)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 358, -1, -1));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 40, Short.MAX_VALUE))
         );
 
         pack();
@@ -437,8 +445,8 @@ public class QLHoaDon extends javax.swing.JFrame {
         List<HoaDonVM> list = serr.searchThangVM(Integer.parseInt(cbThang.getItemAt(index)));
 
         if (list.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin");
-            loadTable(serr.getListHD());
+//            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin");
+            loadTable(list);
             cbThang.setSelectedItem(null);
         } else {
             loadTable(list);
@@ -453,8 +461,8 @@ public class QLHoaDon extends javax.swing.JFrame {
 
         List<HoaDonVM> listhd = serr.searchNamVM(Integer.parseInt(cbNam.getItemAt(index)));
         if (listhd.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin");
-            loadTable(serr.getListHD());
+//            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin");
+            loadTable(listhd);
             cbNam.setSelectedItem(null);
         } else {
             loadTable(listhd);
@@ -483,8 +491,8 @@ public class QLHoaDon extends javax.swing.JFrame {
         String trangthai = cbTrangThai.getSelectedItem().toString();
         List<HoaDonVM> listN = serr.SearchTrangThaiVM(trangthai);
         if (listN.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không có thông tin");
-            loadTable(serr.getListHD());
+//            JOptionPane.showMessageDialog(this, "Không có thông tin");
+            loadTable(listN);
             cbTrangThai.setSelectedItem(null);
         } else {
             loadTable(listN);
@@ -493,19 +501,44 @@ public class QLHoaDon extends javax.swing.JFrame {
 
     private void cbTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTongTienActionPerformed
         // TODO add your handling code here:
-        if (cbTongTien.getSelectedIndex() == 0) {
+        if (cbTongTien.getSelectedIndex() == 1) {
             List<HoaDonVM> listVm = serr.searchkhoangTien1();
-            loadTable(listVm);
-        } else if (cbTongTien.getSelectedIndex() == 1) {
-            List<HoaDonVM> listVm2 = serr.searchkhoangTien2();
-            loadTable(listVm2);
+            if (listVm.isEmpty()) {
+                loadTable(listVm);
+                cbTongTien.setSelectedItem(null);
+            } else {
+                loadTable(listVm);
+            }
+
         } else if (cbTongTien.getSelectedIndex() == 2) {
-            List<HoaDonVM> listVm3 = serr.searchkhoangTien3();
-            loadTable(listVm3);
+            List<HoaDonVM> listVm2 = serr.searchkhoangTien2();
+            if (listVm2.isEmpty()) {
+                loadTable(listVm2);
+                cbTongTien.setSelectedItem(null);
+
+            } else {
+                loadTable(listVm2);
+            }
         } else if (cbTongTien.getSelectedIndex() == 3) {
+            List<HoaDonVM> listVm3 = serr.searchkhoangTien3();
+            if (listVm3.isEmpty()) {
+                loadTable(listVm3);
+                cbTongTien.setSelectedItem(null);
+
+            } else {
+                loadTable(listVm3);
+            }
+
+        } else if (cbTongTien.getSelectedIndex() == 4) {
             List<HoaDonVM> listVm4 = serr.searchkhoangTien4();
-            loadTable(listVm4);
+            if (listVm4.isEmpty()) {
+                loadTable(listVm4);
+                cbTongTien.setSelectedItem(null);
+            } else {
+                loadTable(listVm4);
+            }
         } else {
+
             cbTongTien.setSelectedItem(null);
         }
 
