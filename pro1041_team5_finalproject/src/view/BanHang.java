@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -974,7 +976,11 @@ public class BanHang extends javax.swing.JFrame {
             pag.setAlignment(Element.ALIGN_RIGHT);
             doc.add(pag);
             HoaDonVM vm = (HoaDonVM) qlhd.getListHD().get(rowhd);
-            Paragraph pad = new Paragraph("Nguoi Lap : " + vm.getTennv());
+            //chuyển đổi tiếng việt
+            String temp = Normalizer.normalize(vm.getTennv(), Normalizer.Form.NFD);
+            Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+            pattern.matcher(temp).replaceAll("");
+            Paragraph pad = new Paragraph("Nguoi Lap : " + temp);
             pad.setAlignment(Element.ALIGN_RIGHT);
             doc.add(pad);
             java.util.Date date = new java.util.Date();
@@ -984,7 +990,11 @@ public class BanHang extends javax.swing.JFrame {
             Paragraph pa = new Paragraph("Ngay Lap             : " + dateFormat.format(date));
 
             doc.add(pa);
-            Paragraph a = new Paragraph("Ho Ten Khach Hang : " + txtKhachhang.getText().trim());
+            //chuyển đổi tiếng việt
+            String temp2 = Normalizer.normalize(txtKhachhang.getText().trim(), Normalizer.Form.NFD);
+            Pattern pattern2 = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+            pattern2.matcher(temp2).replaceAll("");
+            Paragraph a = new Paragraph("Ho Ten Khach Hang : " + temp2);
             doc.add(a);
             String sdtkh = cbKH.getSelectedItem().toString();
             Paragraph ad = new Paragraph("Sdt KH            : " + sdtkh);
