@@ -20,6 +20,7 @@ public class frameDangNhap extends javax.swing.JFrame {
     public frameDangNhap() {
         initComponents();
         setLocationRelativeTo(null);
+        
     }
 
     /**
