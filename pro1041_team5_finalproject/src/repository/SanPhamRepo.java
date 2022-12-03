@@ -44,6 +44,25 @@ public class SanPhamRepo {
         return list;
     }
 
+    public String getIDSP(String ma) {
+        String idSP = null;
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select Id from SanPham where Ma = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ma);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {
+                idSP = rs.getString("Id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idSP;
+    }
+
     public void insert(SanPham sp) {
         try {
             Connection conn = JDBCUtil.getConnection();

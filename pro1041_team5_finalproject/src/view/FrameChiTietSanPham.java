@@ -120,7 +120,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         listckn = qlkn.getall();
         addCBKN();
         listSP = qlsp.getAll();
-        addCBSP(listSP);
+        addCBSP();
         
         addLocOcung();
         addLocCongKN();
@@ -136,7 +136,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBCPU() {
         dcbmCPU = (DefaultComboBoxModel) cbCPU.getModel();
         dcbmCPU.removeAllElements();
-        for (CPU cpu : listcpu) {
+        for (CPU cpu : qlcpu.getAll()) {
             dcbmCPU.addElement(cpu.getTen());
         }
     }
@@ -144,7 +144,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBCard() {
         dcbmCard = (DefaultComboBoxModel) cbCard.getModel();
         dcbmCard.removeAllElements();
-        for (CardManHinh ca : listCr) {
+        for (CardManHinh ca : qlcard.getAll()) {
             dcbmCard.addElement(ca.getLoaiCard());
         }
     }
@@ -152,7 +152,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBDongSP() {
         dcbmDSP = (DefaultComboBoxModel) cbDongSP.getModel();
         dcbmDSP.removeAllElements();
-        for (DongSP dsp : listDSP) {
+        for (DongSP dsp : qldsp.getAll()) {
             dcbmDSP.addElement(dsp.getTen());
         }
     }
@@ -160,7 +160,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBOCung() {
         dcbmOC = (DefaultComboBoxModel) cbOCung.getModel();
         dcbmOC.removeAllElements();
-        for (OCung oc : listOC) {
+        for (OCung oc : qloc.getAll()) {
             dcbmOC.addElement(oc.getDungLuong());
         }
     }
@@ -168,7 +168,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBRam() {
         dcbmRAM = (DefaultComboBoxModel) cbRam.getModel();
         dcbmRAM.removeAllElements();
-        for (Ram ram : listram) {
+        for (Ram ram : qlram.getAll()) {
             dcbmRAM.addElement(ram.getDungLuong());
         }
     }
@@ -176,22 +176,22 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBMS() {
         dcbmMS = (DefaultComboBoxModel) cbMauSac.getModel();
         dcbmMS.removeAllElements();
-        for (MauSac ms : listMS) {
+        for (MauSac ms : qlms.all()) {
             dcbmMS.addElement(ms.getTen());
         }
     }
 
     void addCBPin() {
         dcbmPin = (DefaultComboBoxModel) cbPin.getModel();
-        for (Pin pin : listPin) {
+        for (Pin pin : qlpin.getList()) {
             dcbmPin.addElement(pin.getDungLuong());
         }
     }
 
-    void addCBSP(List<SanPham> listSP) {
+    void addCBSP() {
         dcbmSP = (DefaultComboBoxModel) cbMa.getModel();
         dcbmSP.removeAllElements();
-        for (SanPham sanPham : listSP) {
+        for (SanPham sanPham : qlsp.getAll()) {
             dcbmSP.addElement(sanPham.getMaSP());
         }
     }
@@ -199,7 +199,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBHDH() {
         dcbmhDH = (DefaultComboBoxModel) cbHDH.getModel();
         dcbmhDH.removeAllElements();
-        for (Hedieuhanh hdh : listhdh) {
+        for (Hedieuhanh hdh : qlhdh.getAll()) {
             dcbmhDH.addElement(hdh.getTenHDH());
         }
     }
@@ -207,7 +207,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     void addCBKN() {
         dcbmCKN = (DefaultComboBoxModel) cbCKN.getModel();
         dcbmCKN.removeAllElements();
-        for (CongKetNoi kn : listckn) {
+        for (CongKetNoi kn : qlkn.getall()) {
             dcbmCKN.addElement(kn);
         }
     }
@@ -232,6 +232,8 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
             dfcb.addElement(oc.getDungLuong());
         }
     }
+    
+    
     void addLocCongKN(){
         dfcb = (DefaultComboBoxModel) cbLocCKN.getModel();
         dfcb.removeAllElements();
@@ -304,7 +306,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         txtGiaBan.setText("");
         txtSL.setText("");
         txtTimKiem.setText("");
-        cbMa.setSelectedItem(0);
+        cbMa.setSelectedIndex(0);
         cbMauSac.setSelectedItem(0);
         cbDongSP.setSelectedItem(0);
         cbOCung.setSelectedItem(0);
@@ -352,7 +354,6 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         cbCard = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        cbMa = new javax.swing.JComboBox<>();
         cbMauSac = new javax.swing.JComboBox<>();
         cbDongSP = new javax.swing.JComboBox<>();
         cbOCung = new javax.swing.JComboBox<>();
@@ -392,12 +393,15 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         cbLocMS = new javax.swing.JComboBox<>();
         jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        cbMa = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Màu sắc");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 167, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, -1, -1));
 
         jLabel2.setText("Dòng SP");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 196, -1, -1));
@@ -424,7 +428,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel15.setText("CT SẢN PHẨM");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 11, -1, -1));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
 
         tb.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -498,11 +502,9 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         getContentPane().add(txtTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 268, 178, -1));
 
         jLabel12.setText("Mã SP");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 133, -1, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
-        getContentPane().add(cbMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 130, 134, -1));
-
-        getContentPane().add(cbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 164, 134, -1));
+        getContentPane().add(cbMauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 134, -1));
 
         getContentPane().add(cbDongSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 193, 134, -1));
 
@@ -529,7 +531,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
                 btnMSActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 163, -1, -1));
+        getContentPane().add(btnMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 220, -1, -1));
 
         btnSP.setText("+");
         btnSP.addActionListener(new java.awt.event.ActionListener() {
@@ -718,6 +720,12 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         jLabel24.setText("Màu Sắc");
         getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 310, 80, -1));
 
+        jLabel25.setText("Tên SP");
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 140, -1));
+
+        getContentPane().add(cbMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 140, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -874,7 +882,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         FrameSanpham sp = new FrameSanpham();
         sp.setVisible(true);
         sp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        addCBSP(listSP);
+        addCBSP();
 
     }//GEN-LAST:event_btnSPActionPerformed
 
@@ -945,7 +953,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         addCBPin();
         addCBHDH();
         addCBKN();
-        addCBSP(listSP);
+        addCBSP();
     }//GEN-LAST:event_btnReLoadActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1120,6 +1128,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1128,6 +1137,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbID;
     private javax.swing.JLabel lbTrangThai;
     private javax.swing.JTable tb;

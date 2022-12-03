@@ -40,6 +40,11 @@ public class SanPhamService implements SanPhamInterface{
         spr.delete(maSP);
     }
 
+    @Override
+    public String getIDSP(String ma) {
+        return spr.getIDSP(ma);
+    }
+
     
 
 
