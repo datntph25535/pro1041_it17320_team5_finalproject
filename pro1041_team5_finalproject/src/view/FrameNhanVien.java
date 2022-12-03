@@ -44,7 +44,7 @@ public class FrameNhanVien extends javax.swing.JFrame {
         defaultTableModel.setRowCount(0);
         for (NhanVien nv : nvs.getList()) {
             defaultTableModel.addRow(new Object[]{
-                nv.getId(), nv.getMa(), nv.getHoTen(), nv.getNgaySinh(), nv.getGioiTinh(), nv.getSdt(), nv.getEmail(), nv.getCmnd(), nv.getDiaChi(), nv.getMatKhau(), nv.getChucVu(), nv.getTrangThai() //==0?"Hoạt động":"Không hoạt động"
+                nv.getId(), nv.getMa(), nv.getHoTen(), nv.getNgaySinh(), nv.getGioiTinh(), nv.getSdt(), nv.getEmail(), nv.getCmnd(), nv.getDiaChi(), nv.getMatKhau(), nv.getChucVu(), nv.getTrangThai() == 0 ? "Hoạt động" : "Không hoạt động"
             });
         }
     }
@@ -474,12 +474,12 @@ public class FrameNhanVien extends javax.swing.JFrame {
         txt_diaChi.setText(tb_nhanVien.getValueAt(row, 8).toString());
         txt_matKhau.setText(tb_nhanVien.getValueAt(row, 9).toString());
         txt_chucVu.setText(tb_nhanVien.getValueAt(row, 10).toString());
-        if (tb_nhanVien.getValueAt(row, 11).equals(0)) {
-            cbx_trangThai.setSelectedIndex(1);
-        } else {
-            cbx_trangThai.setSelectedIndex(0);
-        }
-        //cbx_trangThai.setSelectedItem(tb_nhanVien.getValueAt(row, 11));
+//        if (tb_nhanVien.getValueAt(row, 11).equals(0)) {
+//            cbx_trangThai.setSelectedIndex(1);
+//        } else {
+//            cbx_trangThai.setSelectedIndex(0);
+//        }
+        cbx_trangThai.setSelectedItem(tb_nhanVien.getValueAt(row, 11).toString());
         if (tb_nhanVien.getValueAt(row, 4).equals("Nam")) {
             rd_nam.setSelected(true);
         } else {
@@ -499,7 +499,7 @@ public class FrameNhanVien extends javax.swing.JFrame {
         String diaChi = txt_diaChi.getText();
         String matKhau = txt_matKhau.getText();
         String chucVu = txt_chucVu.getText();
-        int trangThai;
+        int trangThai = cbx_trangThai.getSelectedIndex();
         if (ma.length() == 0 || hoTen.length() == 0 || ngaySinh.length() == 0 || cmnd.length() == 0 || sdt.length() == 0 || email.length() == 0 || diaChi.length() == 0 || matKhau.length() == 0 || chucVu.length() == 0) {
             JOptionPane.showMessageDialog(this, "Không được để trống");
             return null;
@@ -515,11 +515,11 @@ public class FrameNhanVien extends javax.swing.JFrame {
         } else {
             gioiTinh = "Nữ";
         }
-        if (cbx_trangThai.getSelectedItem().equals("Hoạt động")) {
-            trangThai = 1;
-        } else {
-            trangThai = 0;
-        }
+//        if (cbx_trangThai.getSelectedItem().equals("Hoạt động")) {
+//            trangThai = 1;
+//        } else {
+//            trangThai = 0;
+//        }
         NhanVien nv = new NhanVien(id, ma, hoTen, date, gioiTinh, sdt, email, cmnd, diaChi, matKhau, chucVu, trangThai);
         return nv;
     }
