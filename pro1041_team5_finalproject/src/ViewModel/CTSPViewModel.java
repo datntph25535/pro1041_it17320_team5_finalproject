@@ -26,11 +26,12 @@ public class CTSPViewModel {
     private String HeDH;
     private String maSP;
     private String serial;
+    private String ten;
 
     public CTSPViewModel() {
     }
 
-    public CTSPViewModel(String id, double giaBan, int soLuongTon, int trangThai, String MauSac, String Dongsp, String OCung, String CongKetNoi, String Pin, String CPU, String Ram, String CardMH, String HeDH, String maSP, String serial) {
+    public CTSPViewModel(String id, double giaBan, int soLuongTon, int trangThai, String MauSac, String Dongsp, String OCung, String CongKetNoi, String Pin, String CPU, String Ram, String CardMH, String HeDH, String maSP, String serial, String ten) {
         this.id = id;
         this.giaBan = giaBan;
         this.soLuongTon = soLuongTon;
@@ -46,7 +47,18 @@ public class CTSPViewModel {
         this.HeDH = HeDH;
         this.maSP = maSP;
         this.serial = serial;
+        this.ten = ten;
     }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    
 
     public String getSerial() {
         return serial;

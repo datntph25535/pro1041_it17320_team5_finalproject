@@ -104,6 +104,11 @@ public class FrameSanpham extends javax.swing.JFrame {
                 "Mã", "Tên ", "SerialNumber"
             }
         ));
+        tb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,6 +197,14 @@ public class FrameSanpham extends javax.swing.JFrame {
         loadTable();
         clearForm();
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMouseClicked
+        // TODO add your handling code here:
+        int row = tb.getSelectedRow();
+        txtMa.setText(tb.getValueAt(row, 0).toString());
+        txtTen.setText(tb.getValueAt(row, 1).toString());
+        txtSeri.setText(tb.getValueAt(row, 2).toString());
+    }//GEN-LAST:event_tbMouseClicked
 
     /**
      * @param args the command line arguments

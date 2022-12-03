@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class ChiTietSPRepo {
 
     public static void main(String[] args) {
-        System.out.println(new ChiTietSPRepo().getOCung("256GB"));;
+        System.out.println(new ChiTietSPRepo().getListCTSPViewModel());;
     }
 
     public ArrayList<ChiTietSP> getAll() {
@@ -52,6 +52,7 @@ public class ChiTietSPRepo {
                 String idhdh = rs.getString(13);
                 String idsp = rs.getString(14);
                 ChiTietSP ctsp = new ChiTietSP(id, gia, sl, tt, idms, iddsp, idoc, idckn, idpin, idcpu, idram, idcard, idhdh, idsp);
+                list.add(ctsp);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -168,7 +169,7 @@ public class ChiTietSPRepo {
         ArrayList<CTSPViewModel> list = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "select ChiTietSP.Id as 'id', SanPham.Ma as 'masp', MauSac.Ten as 'mausac', DongSP.Ten as 'tendongsp',\n"
+            String sql = "select ChiTietSP.Id as 'id', SanPham.Ma as 'masp', SanPham.Ten as 'ten', MauSac.Ten as 'mausac', DongSP.Ten as 'tendongsp',\n"
                     + "OCung.DungLuong as 'dungluong', CongKetNoi.Ten as 'tenckn', Pin.DungLuong as 'dlpin',\n"
                     + "ChiTietSP.GiaBan as 'giaban', ChiTietSP.SoLuongTon as 'slt', SanPham.SerialNumber as 'serial',\n"
                     + "HeDieuHanh.Ten as 'hdh', ChiTietSP.TrangThai as 'tt', CPU.Ten as 'cpu', Ram.DungLuong as 'dlram',\n"
@@ -202,7 +203,56 @@ public class ChiTietSPRepo {
                 String hdh = rs.getString("hdh");
                 String masp = rs.getString("masp");
                 String serial = rs.getString("serial");
-                CTSPViewModel ctsp = new CTSPViewModel(id, gia, sl, tt, ms, dsp, oc, ckn, pin, cpu, ram, card, hdh, masp, serial);
+                String ten = rs.getString("ten");
+                CTSPViewModel ctsp = new CTSPViewModel(id, gia, sl, tt, ms, dsp, oc, ckn, pin, cpu, ram, card, hdh, masp, serial, ten);
+                list.add(ctsp);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+    public ArrayList<CTSPViewModel> searchMa(String ma) {
+        ArrayList<CTSPViewModel> list = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select ChiTietSP.Id as 'id', SanPham.Ma as 'masp', MauSac.Ten as 'mausac', DongSP.Ten as 'tendongsp',\n"
+                    + "OCung.DungLuong as 'dungluong', CongKetNoi.Ten as 'tenckn', Pin.DungLuong as 'dlpin',\n"
+                    + "ChiTietSP.GiaBan as 'giaban', ChiTietSP.SoLuongTon as 'slt', SanPham.SerialNumber as 'serial',\n"
+                    + "HeDieuHanh.Ten as 'hdh', ChiTietSP.TrangThai as 'tt', CPU.Ten as 'cpu', Ram.DungLuong as 'dlram',\n"
+                    + "CardManHinh.LoaiCard as 'cardmh' from ChiTietSP\n"
+                    + "join MauSac on MauSac.Id = ChiTietSP.IdMauSac\n"
+                    + "join DongSP on DongSP.Id = ChiTietSP.IdDongsp\n"
+                    + "join OCung on OCung.Id = ChiTietSP.IdOCung\n"
+                    + "join CongKetNoi on CongKetNoi.Id = ChiTietSP.IdCongKetNoi\n"
+                    + "join Pin on Pin.Id = ChiTietSP.IdPin\n"
+                    + "join CPU on CPU.Id = ChiTietSP.IdCPU\n"
+                    + "join Ram on Ram.Id = ChiTietSP.IdRam\n"
+                    + "join CardManHinh on CardManHinh.Id = ChiTietSP.IdCardMH\n"
+                    + "join HeDieuHanh on HeDieuHanh.Id = ChiTietSP.IdHeDH\n"
+                    + "join SanPham on SanPham.Id = ChiTietSP.IdSP where SanPham.Ma = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ma);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                double gia = rs.getDouble("giaban");
+                int sl = rs.getInt("slt");
+                int tt = rs.getInt("tt");
+                String ms = rs.getString("mausac");
+                String dsp = rs.getString("tendongsp");
+                String oc = rs.getString("dungluong");
+                String ckn = rs.getString("tenckn");
+                String pin = rs.getString("dlpin");
+                String cpu = rs.getString("cpu");
+                String ram = rs.getString("dlram");
+                String card = rs.getString("cardmh");
+                String hdh = rs.getString("hdh");
+                String masp = rs.getString("masp");
+                String serial = rs.getString("serial");
+                String ten = rs.getString("ten");
+                CTSPViewModel ctsp = new CTSPViewModel(id, gia, sl, tt, ms, dsp, oc, ckn, pin, cpu, ram, card, hdh, masp, serial, ten);
                 list.add(ctsp);
             }
         } catch (SQLException ex) {
@@ -258,6 +308,7 @@ public class ChiTietSPRepo {
             ps.setString(12, ctsp.getIdHeDH());
             ps.setString(13, ctsp.getIdSP());
             ps.setString(14, id);
+            ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

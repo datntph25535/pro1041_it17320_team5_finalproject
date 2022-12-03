@@ -28,6 +28,10 @@ import model.KhachHang;
  * @author Admin
  */
 public class BanHangRepo {
+    
+    public static void main(String[] args) {
+        new BanHangRepo().searchTen("asus");
+    }
 
     public ArrayList<TBGioHang> getListGioHang(String idHD) {
         ArrayList<TBGioHang> list = new ArrayList<>();
@@ -56,9 +60,7 @@ public class BanHangRepo {
         return list;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new BanHangRepo().searchMa("sp01"));
-    }
+    
 
     public ArrayList<HoaDonViewModel> getListHoaDon() {
         ArrayList<HoaDonViewModel> listHD = new ArrayList<>();

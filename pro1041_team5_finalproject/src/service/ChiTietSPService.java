@@ -89,8 +89,10 @@ public class ChiTietSPService implements ChiTietSPInteface {
     }
 
     @Override
-    public List<SanPhamBanHangViewModel> searchMa(String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<CTSPViewModel> searchMa(String ma) {
+        return repo.searchMa(ma);
     }
+
+    
 
 }

@@ -324,7 +324,6 @@ public class BanHang extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         lbMaHD = new javax.swing.JLabel();
         lbTongTien = new javax.swing.JLabel();
-        btnTinhTienThua = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         lbTienPhaiTra = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -639,18 +638,11 @@ public class BanHang extends javax.swing.JFrame {
 
         lbMaHD.setText("-");
 
-        lbTongTien.setText("-");
-
-        btnTinhTienThua.setText("Tính tiền thừa");
-        btnTinhTienThua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTinhTienThuaActionPerformed(evt);
-            }
-        });
+        lbTongTien.setText("0");
 
         jLabel17.setText("Tiền phải trả");
 
-        lbTienPhaiTra.setText("-");
+        lbTienPhaiTra.setText("0");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -678,14 +670,12 @@ public class BanHang extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1)
-                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(btnThanhToan)
-                                    .addGap(41, 41, 41)
-                                    .addComponent(jButton2))))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(btnThanhToan)
+                                .addGap(41, 41, 41)
+                                .addComponent(jButton2)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
@@ -700,16 +690,16 @@ public class BanHang extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnTinhTienThua))
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
                                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lbMaHD)
                                             .addComponent(lbTienThua))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton3))))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 3, Short.MAX_VALUE)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel9)
@@ -757,7 +747,7 @@ public class BanHang extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(btnTinhTienThua))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -765,9 +755,8 @@ public class BanHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(lbMaHD)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbMaHD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThanhToan)
                     .addComponent(jButton2)
@@ -921,6 +910,7 @@ public class BanHang extends javax.swing.JFrame {
             tongTien += Double.parseDouble(tblHDCT.getValueAt(i, 4).toString());
         }
         lbTongTien.setText(String.format("%.0f", tongTien));
+        lbTienPhaiTra.setText(String.format("%.0f", tongTien));
     }
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
@@ -1268,12 +1258,6 @@ public class BanHang extends javax.swing.JFrame {
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
         // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
-
-    private void btnTinhTienThuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTinhTienThuaActionPerformed
-        // TODO add your handling code here:
         if (txtTienKhachDua.getText().trim().length() == 0) {
             lbTienThua.setText("0");
         }
@@ -1291,7 +1275,8 @@ public class BanHang extends javax.swing.JFrame {
         } else {
             btnThanhToan.setEnabled(true);
         }
-    }//GEN-LAST:event_btnTinhTienThuaActionPerformed
+
+    }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
 
     private void cbOCungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbOCungActionPerformed
         // TODO add your handling code here:
@@ -1409,7 +1394,6 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JButton btnHuyHD;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnTimKiem;
-    private javax.swing.JButton btnTinhTienThua;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbCPU;
     private javax.swing.JComboBox<String> cbDSP;
