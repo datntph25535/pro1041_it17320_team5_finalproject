@@ -23,8 +23,6 @@ public interface ChiTietSPInteface {
 
     List<SanPhamBanHangViewModel> searchTenSP(String ten);
 
-    List<SanPhamBanHangViewModel> searchMa(String ma);
-
     void insert(ChiTietSP ctsp);
 
     void update(ChiTietSP ctsp, String id);
@@ -34,6 +32,8 @@ public interface ChiTietSPInteface {
     boolean updateSoLuong(ChiTietSP ctsp, String id);
 
     ArrayList<CTSPViewModel> getListCTSPViewModel();
+    
+    ArrayList<CTSPViewModel> searchMa(String ma);
 
     
     List<SanPhamBanHangViewModel> getMau(String mau);
