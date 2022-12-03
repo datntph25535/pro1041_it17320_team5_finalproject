@@ -444,7 +444,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tb);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 366, 976, 238));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 366, 1030, 238));
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -521,7 +521,7 @@ public class FrameChiTietSanPham extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 101, -1, -1));
 
         lbID.setText("-");
-        getContentPane().add(lbID, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 101, 28, -1));
+        getContentPane().add(lbID, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 101, 200, -1));
 
         btnMS.setText("+");
         btnMS.addActionListener(new java.awt.event.ActionListener() {
