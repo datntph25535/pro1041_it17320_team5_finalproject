@@ -799,17 +799,21 @@ public class BanHang extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(634, 634, 634)
-                .addComponent(jLabel1))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(634, 634, 634)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -818,14 +822,15 @@ public class BanHang extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -849,6 +854,18 @@ public class BanHang extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "không đủ sản phẩm");
                 return;
             }
+            if (soLuong == 0) {
+                JOptionPane.showMessageDialog(this, "số lượng phải lớn hơn 0");
+                return;
+            }
+            int count = tblHDCT.getRowCount();
+            for (int i = 0; i < count; i++) {
+                if (tblSP.getValueAt(row, 0).toString().equals(tblHDCT.getValueAt(i, 0))) {
+                    JOptionPane.showMessageDialog(this, "sản phẩm đã có trên giỏ hàng, vui lòng cập nhật số lượng");
+                    return;
+                }
+            }
+
             String idCTSP = sp.getIdCTSP();
             String idHD = hd.getIdHD();
             double gia = sp.getGiaBan();
@@ -941,141 +958,146 @@ public class BanHang extends javax.swing.JFrame {
         dtmHDCT = (DefaultTableModel) tblHDCT.getModel();
 
         int choice = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hoá đơn không ?");
-        if (choice != JOptionPane.YES_OPTION) {
-            return;
-        }
-        String path = "";
-        JFileChooser j = new JFileChooser();
-        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int x = j.showSaveDialog(tblHDCT);
-        if (x == JFileChooser.APPROVE_OPTION) {
-            path = j.getSelectedFile().getPath();
+        if (choice == JOptionPane.YES_OPTION) {
+            String path = "";
+            JFileChooser j = new JFileChooser();
+            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int x = j.showSaveDialog(tblHDCT);
+            if (x == JFileChooser.APPROVE_OPTION) {
+                path = j.getSelectedFile().getPath();
 
-        }
-        Document doc = new Document(PageSize.A4, 50, 50, 50, 50);
+            }
+            Document doc = new Document(PageSize.A4, 50, 50, 50, 50);
 
-        try {
-            FileOutputStream fos = new FileOutputStream(path + "h.pdf");
-            PdfWriter.getInstance(doc, fos);
-            doc.open();
-            Paragraph pss = new Paragraph("DESTINY PC",
-                    FontFactory.getFont(FontFactory.HELVETICA, 18));
-            pss.setAlignment(Element.ALIGN_CENTER);
-            doc.add(pss);
-            Paragraph poo = new Paragraph("DC :S0 9 Trinh Van Bo, Nam Tu Niem, Ha Noi");
-            poo.setAlignment(Element.ALIGN_CENTER);
-            doc.add(poo);
-            Paragraph po1 = new Paragraph("SDT : 0386.873.612");
-            po1.setAlignment(Element.ALIGN_CENTER);
-            doc.add(po1);
+            try {
+                FileOutputStream fos = new FileOutputStream(path + "h.pdf");
+                PdfWriter.getInstance(doc, fos);
+                doc.open();
+                Paragraph pss = new Paragraph("DESTINY PC",
+                        FontFactory.getFont(FontFactory.HELVETICA, 18));
+                pss.setAlignment(Element.ALIGN_CENTER);
+                doc.add(pss);
+                Paragraph poo = new Paragraph("DC :S0 9 Trinh Van Bo, Nam Tu Niem, Ha Noi");
+                poo.setAlignment(Element.ALIGN_CENTER);
+                doc.add(poo);
+                Paragraph po1 = new Paragraph("SDT : 0386.873.612");
+                po1.setAlignment(Element.ALIGN_CENTER);
+                doc.add(po1);
 
-            doc.add(new Paragraph(" "));
+                doc.add(new Paragraph(" "));
 
-            Paragraph p = new Paragraph("HOA DON BAN HANG",
-                    FontFactory.getFont(FontFactory.HELVETICA, 26));
-            p.setAlignment(Element.ALIGN_CENTER);
-            doc.add(p);
-            Paragraph ppw = new Paragraph("--------------------------------------------------------------------------------------");
-            ppw.setAlignment(Element.ALIGN_CENTER);
-            doc.add(ppw);
-            doc.add(new Paragraph(" "));
+                Paragraph p = new Paragraph("HOA DON BAN HANG",
+                        FontFactory.getFont(FontFactory.HELVETICA, 26));
+                p.setAlignment(Element.ALIGN_CENTER);
+                doc.add(p);
+                Paragraph ppw = new Paragraph("--------------------------------------------------------------------------------------");
+                ppw.setAlignment(Element.ALIGN_CENTER);
+                doc.add(ppw);
+                doc.add(new Paragraph(" "));
 
 //            long millis = System.currentTimeMillis();
 //            java.util.Date date = new java.util.Date(millis);
-            java.util.Date datetg = new java.util.Date();
-            DateFormat dateFormata = null;
-            dateFormata = new SimpleDateFormat("HH:mm:ss a");
+                java.util.Date datetg = new java.util.Date();
+                DateFormat dateFormata = null;
+                dateFormata = new SimpleDateFormat("HH:mm:ss a");
 
-            Paragraph pag = new Paragraph("Thoi Gian : " + dateFormata.format(datetg));
-            pag.setAlignment(Element.ALIGN_RIGHT);
-            doc.add(pag);
-            HoaDonVM vm = (HoaDonVM) qlhd.getListHD().get(rowhd);
-            //chuyển đổi tiếng việt
-            String temp = Normalizer.normalize(vm.getTennv(), Normalizer.Form.NFD);
-            Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-            pattern.matcher(temp).replaceAll("");
-            Paragraph pad = new Paragraph("Nguoi Lap : " + temp);
-            pad.setAlignment(Element.ALIGN_RIGHT);
-            doc.add(pad);
-            java.util.Date date = new java.util.Date();
-            DateFormat dateFormat = null;
-            dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Paragraph pag = new Paragraph("Thoi Gian : " + dateFormata.format(datetg));
+                pag.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(pag);
+                HoaDonVM vm = (HoaDonVM) qlhd.getListHD().get(rowhd);
+                //chuyển đổi tiếng việt
+                String temp = Normalizer.normalize(vm.getTennv(), Normalizer.Form.NFD);
+                Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+                pattern.matcher(temp).replaceAll("");
+                Paragraph pad = new Paragraph("Nguoi Lap : " + temp);
+                pad.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(pad);
+                java.util.Date date = new java.util.Date();
+                DateFormat dateFormat = null;
+                dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            Paragraph pa = new Paragraph("Ngay Lap             : " + dateFormat.format(date));
+                Paragraph pa = new Paragraph("Ngay Lap             : " + dateFormat.format(date));
 
-            doc.add(pa);
-            //chuyển đổi tiếng việt
-            String temp2 = Normalizer.normalize(txtKhachhang.getText().trim(), Normalizer.Form.NFD);
-            Pattern pattern2 = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-            pattern2.matcher(temp2).replaceAll("");
-            Paragraph a = new Paragraph("Ho Ten Khach Hang : " + temp2);
-            doc.add(a);
-            String sdtkh = cbKH.getSelectedItem().toString();
-            Paragraph ad = new Paragraph("Sdt KH            : " + sdtkh);
-            doc.add(ad);
-            Paragraph pas = new Paragraph("Ma Hoa Don       : " + lbMaHD.getText().trim());
-            doc.add(pas);
+                doc.add(pa);
+                //chuyển đổi tiếng việt
+                String temp2 = Normalizer.normalize(txtKhachhang.getText().trim(), Normalizer.Form.NFD);
+                Pattern pattern2 = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+                pattern2.matcher(temp2).replaceAll("");
+                Paragraph a = new Paragraph("Ho Ten Khach Hang : " + temp2);
+                doc.add(a);
+                String sdtkh = cbKH.getSelectedItem().toString();
+                Paragraph ad = new Paragraph("Sdt KH            : " + sdtkh);
+                doc.add(ad);
+                Paragraph pas = new Paragraph("Ma Hoa Don       : " + lbMaHD.getText().trim());
+                doc.add(pas);
 
-            doc.add(new Paragraph(""));
-            doc.add(new Paragraph(" "));
-            PdfPTable tab = new PdfPTable(5);
-            tab.addCell("Ma San Pham");
-            tab.addCell("Ten San Pham");
-            tab.addCell("So Luong");
-            tab.addCell("Don Gia");
-            tab.addCell("Thanh Tien");
-            for (int i = 0; i < tblHDCT.getRowCount(); i++) {
-                String ma = tblHDCT.getValueAt(i, 0).toString();
-                String tensp = tblHDCT.getValueAt(i, 1).toString();
-                String soluong = tblHDCT.getValueAt(i, 3).toString();
-                String gia = tblHDCT.getValueAt(i, 2).toString();
-                String tongtien = tblHDCT.getValueAt(i, 4).toString();
+                doc.add(new Paragraph(""));
+                doc.add(new Paragraph(" "));
+                PdfPTable tab = new PdfPTable(5);
+                tab.addCell("Ma San Pham");
+                tab.addCell("Ten San Pham");
+                tab.addCell("So Luong");
+                tab.addCell("Don Gia");
+                tab.addCell("Thanh Tien");
+                for (int i = 0; i < tblHDCT.getRowCount(); i++) {
+                    String ma = tblHDCT.getValueAt(i, 0).toString();
+                    String tensp = tblHDCT.getValueAt(i, 1).toString();
+                    String soluong = tblHDCT.getValueAt(i, 3).toString();
+                    String gia = tblHDCT.getValueAt(i, 2).toString();
+                    String tongtien = tblHDCT.getValueAt(i, 4).toString();
 
-                tab.addCell(ma);
-                tab.addCell(tensp);
-                tab.addCell(soluong);
-                tab.addCell(gia);
-                tab.addCell(tongtien);
+                    tab.addCell(ma);
+                    tab.addCell(tensp);
+                    tab.addCell(soluong);
+                    tab.addCell(gia);
+                    tab.addCell(tongtien);
+                }
+
+                doc.add(tab);
+                doc.add(new Paragraph(" "));
+                doc.add(new Paragraph(" "));
+                Paragraph prs = new Paragraph();
+                prs.add("Tien Khach Tra :      " + txtTienKhachDua.getText().trim());
+                prs.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(prs);
+                Paragraph pr = new Paragraph();
+                pr.add("Giam Gia :        " + txtGiamGia.getText().trim());
+                pr.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(pr);
+                Paragraph ppo = new Paragraph("Tong Tien :    " + lbTongTien.getText());
+                ppo.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(ppo);
+                Paragraph ppt = new Paragraph("Tien Thua :    " + lbTienThua.getText());
+                ppt.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(ppt);
+                Paragraph ppe = new Paragraph("----------------------------------------------------------------------------------------------------------");
+                ppe.setAlignment(Element.ALIGN_CENTER);
+                doc.add(ppe);
+
+                Paragraph pi = new Paragraph("CAM ON QUY KHACH !");
+                pi.setAlignment(Element.ALIGN_CENTER);
+                doc.add(pi);
+
+            } catch (FileNotFoundException ex) {
+
+            } catch (IOException ex) {
+                Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            doc.add(tab);
-            doc.add(new Paragraph(" "));
-            doc.add(new Paragraph(" "));
-            Paragraph prs = new Paragraph();
-            prs.add("Tien Khach Tra :      " + txtTienKhachDua.getText().trim());
-            prs.setAlignment(Element.ALIGN_RIGHT);
-            doc.add(prs);
-            Paragraph pr = new Paragraph();
-            pr.add("Giam Gia :        " + txtGiamGia.getText().trim());
-            pr.setAlignment(Element.ALIGN_RIGHT);
-            doc.add(pr);
-            Paragraph ppo = new Paragraph("Tong Tien :    " + lbTongTien.getText());
-            ppo.setAlignment(Element.ALIGN_RIGHT);
-            doc.add(ppo);
-            Paragraph ppt = new Paragraph("Tien Thua :    " + lbTienThua.getText());
-            ppt.setAlignment(Element.ALIGN_RIGHT);
-            doc.add(ppt);
-            Paragraph ppe = new Paragraph("----------------------------------------------------------------------------------------------------------");
-            ppe.setAlignment(Element.ALIGN_CENTER);
-            doc.add(ppe);
-
-            Paragraph pi = new Paragraph("CAM ON QUY KHACH !");
-            pi.setAlignment(Element.ALIGN_CENTER);
-            doc.add(pi);
-
-        } catch (FileNotFoundException ex) {
-
-        } catch (IOException ex) {
-            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+            dtmHDCT.setRowCount(0);
+            loadTableHD(qlbh.getListHoaDon());
+            clearForm();
+            doc.close();
+            JOptionPane.showMessageDialog(this, "Đã thanh toán và in hoá đơn thành công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công");
+            dtmHDCT.setRowCount(0);
+            loadTableHD(qlbh.getListHoaDon());
+            clearForm();
         }
 
-        doc.close();
-        JOptionPane.showMessageDialog(this, "Đã in hoá đơn thành công");
-        dtmHDCT.setRowCount(0);
-        loadTableHD(qlbh.getListHoaDon());
-        clearForm();
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void txtTienKhachDuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhachDuaActionPerformed
@@ -1253,6 +1275,7 @@ public class BanHang extends javax.swing.JFrame {
         for (HoaDonCTViewModel hdct : listHDC) {
             qlbh.saveHDCT(hdct);
         }
+        listHDC.removeAll(listHDC);
         JOptionPane.showMessageDialog(this, "Lưu hóa đơn thành công");
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1269,7 +1292,7 @@ public class BanHang extends javax.swing.JFrame {
 
         double tienPhaiTra = Double.parseDouble(lbTienPhaiTra.getText());
         double tienThua = tienDua - tienPhaiTra;
-        lbTienThua.setText(String.valueOf(tienThua));
+        lbTienThua.setText(String.format("%.0f", tienThua));
         if (tienThua < 0) {
             btnThanhToan.setEnabled(false);
         } else {

@@ -55,7 +55,7 @@ public class ChiTietSP {
     }
 
     public double getGiaBan() {
-        return giaBan;
+        return Double.parseDouble(String.format("%.0f", giaBan));
     }
 
     public void setGiaBan(double giaBan) {

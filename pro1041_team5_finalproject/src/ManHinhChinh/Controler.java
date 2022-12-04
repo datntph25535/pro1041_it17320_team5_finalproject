@@ -17,6 +17,7 @@ import view.BanHang;
 import view.FrameChiTietSanPham;
 import view.FrameKhachHang;
 import view.FrameNhanVien;
+import view.FrameQuanLySanPham;
 import view.JFrameThongKe;
 import view.QLDoiTra;
 
@@ -80,7 +81,7 @@ public class Controler {
                     node = (JPanel) hbg.getContentPane();
                     break;
                 case "SẢN PHẨM":
-                    FrameChiTietSanPham ct = new FrameChiTietSanPham();
+                    FrameQuanLySanPham ct = new FrameQuanLySanPham();
                     node = (JPanel) ct.getContentPane();
                     break;
                 case "HOÁ ĐƠN":

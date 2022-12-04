@@ -90,6 +90,7 @@ public class ManHinh extends javax.swing.JFrame {
 
         pnMenu.setBackground(new java.awt.Color(51, 51, 51));
         pnMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -115,6 +116,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap(73, Short.MAX_VALUE))
         );
 
+        pnMenu.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, -1));
+
         pntrangchu.setBackground(new java.awt.Color(51, 51, 51));
 
         lblTrangchu.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -137,6 +140,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addGap(0, 5, Short.MAX_VALUE)
                 .addComponent(lblTrangchu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        pnMenu.add(pntrangchu, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 132, -1, -1));
 
         pnHoaDon.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -163,6 +168,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pnMenu.add(pnHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 282, -1, 50));
+
         pnNhanVien.setBackground(new java.awt.Color(51, 51, 51));
 
         lblNhanVien.setBackground(new java.awt.Color(102, 102, 102));
@@ -187,6 +194,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addComponent(lblNhanVien)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pnMenu.add(pnNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 332, -1, 50));
 
         pnKhachHang.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -213,6 +222,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pnMenu.add(pnKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 382, -1, 50));
+
         pnThongKe.setBackground(new java.awt.Color(51, 51, 51));
 
         lblThongKe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -237,6 +248,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        pnMenu.add(pnThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 432, -1, 50));
+
         pnDoiTra.setBackground(new java.awt.Color(51, 51, 51));
 
         lblDoiTra.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -251,7 +264,7 @@ public class ManHinh extends javax.swing.JFrame {
             .addGroup(pnDoiTraLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(lblDoiTra)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnDoiTraLayout.setVerticalGroup(
             pnDoiTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,6 +273,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addComponent(lblDoiTra)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pnMenu.add(pnDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 482, 230, 50));
 
         pnSanPham.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -285,6 +300,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pnMenu.add(pnSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 232, -1, 50));
+
         pnBanHang.setBackground(new java.awt.Color(51, 51, 51));
 
         lblBanHang.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -308,6 +325,8 @@ public class ManHinh extends javax.swing.JFrame {
                 .addComponent(lblBanHang)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pnMenu.add(pnBanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 182, -1, 50));
 
         pnDangXuat.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -333,44 +352,7 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout pnMenuLayout = new javax.swing.GroupLayout(pnMenu);
-        pnMenu.setLayout(pnMenuLayout);
-        pnMenuLayout.setHorizontalGroup(
-            pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pntrangchu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnDoiTra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        pnMenuLayout.setVerticalGroup(
-            pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnMenuLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pntrangchu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnDoiTra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        pnMenu.add(pnDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 532, -1, 50));
 
         pnManHinh.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnManHinh.setPreferredSize(new java.awt.Dimension(1600, 0));
@@ -383,7 +365,7 @@ public class ManHinh extends javax.swing.JFrame {
             .addGroup(pnRootLayout.createSequentialGroup()
                 .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnManHinh, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE))
+                .addComponent(pnManHinh, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
         );
         pnRootLayout.setVerticalGroup(
             pnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
