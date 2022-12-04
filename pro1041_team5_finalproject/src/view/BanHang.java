@@ -849,6 +849,18 @@ public class BanHang extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "không đủ sản phẩm");
                 return;
             }
+            if (soLuong == 0) {
+                JOptionPane.showMessageDialog(this, "số lượng phải lớn hơn 0");
+                return;
+            }
+            int count = tblHDCT.getRowCount();
+            for (int i = 0; i < count; i++) {
+                if (tblSP.getValueAt(row, 0).toString().equals(tblHDCT.getValueAt(i, 0))) {
+                    JOptionPane.showMessageDialog(this, "sản phẩm đã có trên giỏ hàng, vui lòng cập nhật số lượng");
+                    return;
+                }
+            }
+
             String idCTSP = sp.getIdCTSP();
             String idHD = hd.getIdHD();
             double gia = sp.getGiaBan();
@@ -939,9 +951,12 @@ public class BanHang extends javax.swing.JFrame {
         qlbh.ThanhToan(hd, idHD);
         loadDataSP();
         dtmHDCT = (DefaultTableModel) tblHDCT.getModel();
-
+        dtmHDCT.setRowCount(0);
+        loadTableHD(qlbh.getListHoaDon());
+        clearForm();
         int choice = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hoá đơn không ?");
         if (choice != JOptionPane.YES_OPTION) {
+
             return;
         }
         String path = "";
@@ -1073,9 +1088,7 @@ public class BanHang extends javax.swing.JFrame {
 
         doc.close();
         JOptionPane.showMessageDialog(this, "Đã in hoá đơn thành công");
-        dtmHDCT.setRowCount(0);
-        loadTableHD(qlbh.getListHoaDon());
-        clearForm();
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void txtTienKhachDuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhachDuaActionPerformed
@@ -1253,6 +1266,7 @@ public class BanHang extends javax.swing.JFrame {
         for (HoaDonCTViewModel hdct : listHDC) {
             qlbh.saveHDCT(hdct);
         }
+        listHDC.removeAll(listHDC);
         JOptionPane.showMessageDialog(this, "Lưu hóa đơn thành công");
     }//GEN-LAST:event_jButton2ActionPerformed
 

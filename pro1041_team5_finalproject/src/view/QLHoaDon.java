@@ -111,7 +111,6 @@ public class QLHoaDon extends javax.swing.JFrame {
         DefaultComboBoxModel decbtt = (DefaultComboBoxModel) cbTrangThai.getModel();
         decbtt.addElement("Đã thanh toán");
         decbtt.addElement("Chờ thanh toán");
-        decbtt.addElement("Huỷ");
     }
 
     public void loadCBSDT() {
