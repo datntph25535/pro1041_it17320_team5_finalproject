@@ -448,13 +448,13 @@ public class FrameNhanVien extends javax.swing.JFrame {
             defaultTableModel = (DefaultTableModel) tb_nhanVien.getModel();
             defaultTableModel.setRowCount(0);
             defaultTableModel.addRow(new Object[]{
-                nv.getId(), nv.getMa(), nv.getHoTen(), nv.getNgaySinh(), nv.getGioiTinh(), nv.getSdt(), nv.getEmail(), nv.getCmnd(), nv.getDiaChi(), nv.getMatKhau(), nv.getChucVu(), nv.getTrangThai()
+                nv.getId(), nv.getMa(), nv.getHoTen(), nv.getNgaySinh(), nv.getGioiTinh(), nv.getSdt(), nv.getEmail(), nv.getCmnd(), nv.getDiaChi(), nv.getMatKhau(), nv.getChucVu(), nv.getTrangThai()==0? "Hoạt động":"Không hoạt động"
             });
         } else if (nva != null) {
             defaultTableModel = (DefaultTableModel) tb_nhanVien.getModel();
             defaultTableModel.setRowCount(0);
             defaultTableModel.addRow(new Object[]{
-                nva.getId(), nva.getMa(), nva.getHoTen(), nva.getNgaySinh(), nva.getGioiTinh(), nva.getSdt(), nva.getEmail(), nva.getCmnd(), nva.getDiaChi(), nva.getMatKhau(), nva.getChucVu(), nva.getTrangThai()
+                nva.getId(), nva.getMa(), nva.getHoTen(), nva.getNgaySinh(), nva.getGioiTinh(), nva.getSdt(), nva.getEmail(), nva.getCmnd(), nva.getDiaChi(), nva.getMatKhau(), nva.getChucVu(), nva.getTrangThai()==0? "Hoạt động":"Không hoạt động"
             });
         } else {
             JOptionPane.showMessageDialog(this, "Không tìm được nhân viên");
