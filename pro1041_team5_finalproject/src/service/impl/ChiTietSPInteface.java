@@ -20,6 +20,10 @@ public interface ChiTietSPInteface {
     List<SanPhamBanHangViewModel> getAllSPBH();
 
     ArrayList<ChiTietSP> getAll();
+    
+    void xoa(String idSP);
+    
+    void sua(ChiTietSP ctsp, String idSP);
 
     List<SanPhamBanHangViewModel> searchTenSP(String ten);
 
@@ -34,6 +38,8 @@ public interface ChiTietSPInteface {
     ArrayList<CTSPViewModel> getListCTSPViewModel();
     
     ArrayList<CTSPViewModel> searchMa(String ma);
+    
+    ArrayList<CTSPViewModel> searchTen(String t);
 
     
     List<SanPhamBanHangViewModel> getMau(String mau);

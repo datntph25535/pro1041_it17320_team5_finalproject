@@ -24,6 +24,8 @@ public interface SanPhamInterface {
     
     void delete(String maSP);
     
+    String getIDSP(String ma);
+    
    
     
 

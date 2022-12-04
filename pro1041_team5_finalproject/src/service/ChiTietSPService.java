@@ -83,14 +83,31 @@ public class ChiTietSPService implements ChiTietSPInteface {
 
     }
 
-    @Override
-    public List<SanPhamBanHangViewModel> searchTenSP(String ten) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public ArrayList<CTSPViewModel> searchMa(String ma) {
         return repo.searchMa(ma);
+    }
+
+    @Override
+    public void xoa(String idSP) {
+        repo.xoa(idSP);
+    }
+
+    @Override
+    public void sua(ChiTietSP ctsp, String idSP) {
+        repo.sua(ctsp, idSP);
+    }
+
+    @Override
+    public ArrayList<CTSPViewModel> searchTen(String t) {
+        return repo.searchTen(t);
+    }
+
+    @Override
+    public List<SanPhamBanHangViewModel> searchTenSP(String ten) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
