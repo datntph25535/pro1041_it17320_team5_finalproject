@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import JDBC.JDBCUtil;
 import ViewModel.HoaDonCTViewModel;
+import ViewModel.HoaDonDoiTraVM;
 import ViewModel.HoaDonViewModel;
 import ViewModel.SanPhamBanHangViewModel;
 import java.sql.Date;
@@ -59,6 +60,7 @@ public class BanHangRepo {
         }
         return list;
     }
+    
 
     
 
@@ -84,6 +86,34 @@ public class BanHangRepo {
         }
         return listHD;
     }
+    public ArrayList<HoaDonDoiTraVM> getListHoaDonDoiTra() {
+        ArrayList<HoaDonDoiTraVM> listHD = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select HoaDon.Id as 'id', HoaDon.Ma as 'mahd',NgayNhan,ThanhTien,NhanVien.HoTen as 'NguoiTao', KhachHang.HoTen as 'TenKhachhang',IdNV From HoaDon \n" +
+"					join NhanVien on NhanVien.Id = HoaDon.IdNV \n" +
+"					join KhachHang on KhachHang.Id = HoaDon.IdKH\n" +
+"					where HoaDon.TrangThai = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "Đã thanh toán");
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String mahd = rs.getString("mahd");
+                Date ngaymua = rs.getDate("NgayNhan");
+                String nguoiTao = rs.getString("NguoiTao");
+                String tenKh = rs.getString("TenKhachHang");
+                double tongTien = rs.getDouble("ThanhTien");
+                String idNV = rs.getString("IdNV");
+                HoaDonDoiTraVM hd = new HoaDonDoiTraVM(id, mahd, tenKh, ngaymua, ngaymua, tongTien, nguoiTao, idNV);
+                listHD.add(hd);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return listHD;
+    }
 
     public void insertHDR(HoaDonViewModel hd) {
 
@@ -99,6 +129,25 @@ public class BanHangRepo {
             ex.printStackTrace(System.out);
         }
 
+    }
+    
+    public ArrayList<String> getListSerialNB(String tenSP){
+        ArrayList<String> listSN = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select SerialNumber from SanPham where Ten = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, tenSP);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {                
+                String sn = rs.getString("SerialNumber");
+                listSN.add(sn);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BanHangRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listSN;
     }
 
     public void huyHD(String idHD) {
