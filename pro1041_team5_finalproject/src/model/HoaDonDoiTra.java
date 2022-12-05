@@ -14,14 +14,59 @@ import java.sql.Date;
 public class HoaDonDoiTra {
 
     private String id;
-//    private NhanVien nv;
-//    private ChiTietSP ctsp;
+
     private String ma;
+    private int soLuong;
     private Date ngayDoi;
     private Date ngayNhan;
-    private int soLuong;
+    private String lido;
+    private String ghichu;
+    private String idhdct;
+    private String idnv;
 
     public HoaDonDoiTra() {
+    }
+
+    public HoaDonDoiTra(String id, String ma, int soLuong, Date ngayDoi, String lido, String idhdct, String idnv) {
+        this.id = id;
+        this.ma = ma;
+        this.soLuong = soLuong;
+        this.ngayDoi = ngayDoi;
+        this.lido = lido;
+        this.idhdct = idhdct;
+        this.idnv = idnv;
+    }
+
+    public String getLido() {
+        return lido;
+    }
+
+    public void setLido(String lido) {
+        this.lido = lido;
+    }
+
+    public String getGhichu() {
+        return ghichu;
+    }
+
+    public void setGhichu(String ghichu) {
+        this.ghichu = ghichu;
+    }
+
+    public String getIdhdct() {
+        return idhdct;
+    }
+
+    public void setIdhdct(String idhdct) {
+        this.idhdct = idhdct;
+    }
+
+    public String getIdnv() {
+        return idnv;
+    }
+
+    public void setIdnv(String idnv) {
+        this.idnv = idnv;
     }
 
     public HoaDonDoiTra(String id, String ma, Date ngayDoi, Date ngayNhan, int soLuong) {
@@ -40,7 +85,6 @@ public class HoaDonDoiTra {
 //        this.ngayNhan = ngayNhan;
 //        this.soLuong = soLuong;
 //    }
-
     public String getId() {
         return id;
     }
@@ -56,7 +100,6 @@ public class HoaDonDoiTra {
 //    public void setNv(NhanVien nv) {
 //        this.nv = nv;
 //    }
-
     public String getMa() {
         return ma;
     }
@@ -88,5 +131,5 @@ public class HoaDonDoiTra {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-  
+
 }

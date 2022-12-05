@@ -5,6 +5,7 @@
  */
 package service.impl;
 
+import ViewModel.HoaDonDoiTraVM;
 import model.HoaDonDoiTra;
 import java.util.List;
 
@@ -16,9 +17,13 @@ public interface IHoaDonDoiTra {
 
     List<HoaDonDoiTra> getAll();
 
+    List<HoaDonDoiTraVM> getAllHDDTVM();
+
     Integer insertHD(HoaDonDoiTra hd);
 
     Integer updateHD(HoaDonDoiTra hd, String id);
 
     Integer deleteHD(String ma);
+
+    Integer insertHDDTRVMo(HoaDonDoiTra hdt);
 }

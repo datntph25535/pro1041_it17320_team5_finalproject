@@ -100,7 +100,7 @@ public class TBGioHang {
 
     @Override
     public String toString() {
-        return "{\n Hoá đơn chi tiết : " + "\n Mã sản phẩm : " + maSP + ", \n Tên sản phẩm : " + tenSP + ",\n Số lượng = " + soLuong + ",\n Giá = " + donGia + ",\n Thành tiền = " + tongTien + "\n}";
+        return "{\n Hoá đơn chi tiết : " + "\n Mã sản phẩm : " + maSP + ", \n Tên sản phẩm : " + tenSP + ",\n Số lượng = " + soLuong + ",\n Giá = " + String.format("%.0f", donGia) + ",\n Thành tiền = " + String.format("%.0f", tongTien) + "\n}";
     }
 
 }
