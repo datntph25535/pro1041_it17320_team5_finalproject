@@ -6,11 +6,14 @@
 package repository;
 
 import JDBC.JDBCUtil;
+import ViewModel.HoaDonCTDoiTra;
+import ViewModel.TBGioHang;
 import model.HoaDonDoiTra;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,5 +103,37 @@ public class HoaDonDTRepo {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+    public ArrayList<HoaDonCTDoiTra> getListHDCT(String mahd) {
+        ArrayList<HoaDonCTDoiTra> list = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "select hdct.Id,hd.Ma as'mahd',sp.Ma as'masp',sp.Ten as 'tensp',hdct.SoLuong,hdct.DonGia,hdct.SoLuong*hdct.DonGia as 'thanhtien',IdHD,IdCTSP, SerialNumBer as 'sn' from HoaDonChiTiet hdct \n"
+                    + " join HoaDon hd on hd.Id=hdct.IdHD \n"
+                    + " join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP\n"
+                    + " join SanPham sp on sp.Id=ctsp.IdSP\n"
+                    + "Where hd.Ma=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, mahd);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String masp = rs.getString("masp");
+                String tensp = rs.getString("tensp");
+                double gia = rs.getDouble("DonGia");
+                double thanhtien = rs.getDouble("thanhtien");
+                int sl = rs.getInt("SoLuong");
+                String idhd = rs.getString("IdHD");
+                String idctsp = rs.getString("IdCTSP");
+                String sn = rs.getString("sn");
+                HoaDonCTDoiTra hdct = new HoaDonCTDoiTra(id, masp, tensp, sl, gia, thanhtien, idhd, idctsp, sn);
+                list.add(hdct);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
     }
 }
