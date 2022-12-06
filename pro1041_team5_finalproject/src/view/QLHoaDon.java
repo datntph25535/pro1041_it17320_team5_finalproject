@@ -136,7 +136,7 @@ public class QLHoaDon extends javax.swing.JFrame {
             dftb.setRowCount(0);
             for (TBGioHang gh : list) {
                 dftb.addRow(new Object[]{
-                    gh.getMaSP(), gh.getTenSP(), String.format("%.0f", gh.getDonGia()), gh.getSoLuong(), String.format("%.0f", gh.getTongTien())
+                    gh.getMaSP(), gh.getTenSP(), gh.getSoLuong(), String.format("%.0f", gh.getDonGia()), String.format("%.0f", gh.getTongTien())
                 });
             }
         } else {

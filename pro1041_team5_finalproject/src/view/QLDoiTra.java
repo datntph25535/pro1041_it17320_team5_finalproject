@@ -10,11 +10,16 @@ import ViewModel.HoaDonDoiTraVM;
 import ViewModel.HoaDonViewModel;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import model.HoaDonDoiTra;
 import repository.BanHangRepo;
 import repository.HoaDonDTRepo;
+import service.HoaDonDoiTraSerVice;
 import service.HoaDonService;
+import service.impl.IHoaDonDoiTra;
 import service.impl.IHoaDonS;
 
 /**
@@ -29,42 +34,46 @@ public class QLDoiTra extends javax.swing.JFrame {
     BanHangRepo qlbh = new BanHangRepo();
     IHoaDonS qlhd = new HoaDonService();
     HoaDonDTRepo hddt = new HoaDonDTRepo();
+    IHoaDonDoiTra qldt;
     DefaultComboBoxModel dfcb = new DefaultComboBoxModel();
+    
     public QLDoiTra() {
         initComponents();
+        qldt = new HoaDonDoiTraSerVice();
         loadTableHD();
+        loadTableHDDT();
     }
     
-     void loadTableHDCT() {
-         int row = tbHD.getSelectedRow();
+    void loadTableHDCT() {
+        int row = tbHD.getSelectedRow();
         if (row == -1) {
             return;
         }
         DefaultTableModel dftb = new DefaultTableModel();
         dftb = (DefaultTableModel) tbHDCT.getModel();
-
+        
         ArrayList<HoaDonCTDoiTra> list = hddt.getListHDCT(tbHD.getValueAt(row, 0).toString());
         if (list != null) {
-
+            
             dftb.setRowCount(0);
             for (HoaDonCTDoiTra gh : list) {
                 dftb.addRow(new Object[]{
-                    gh.getMaSP(), gh.getTenSP(),  gh.getSoLuong(),String.format("%.0f", gh.getDonGia()), String.format("%.0f", gh.getTongTien()), gh.getSerial()
+                    gh.getMaSP(), gh.getTenSP(), gh.getSoLuong(), String.format("%.0f", gh.getDonGia()), String.format("%.0f", gh.getTongTien()), gh.getSerial()
                 });
             }
         } else {
             dftb.setRowCount(0);
         }
     }
-     
-     void addCBSN(){
-         String ten = lbTenSP.getText();
-         dfcb = (DefaultComboBoxModel) cbSN.getModel();
-         dfcb.removeAllElements();
-         for(String sn : qlbh.getListSerialNB(ten)){
-             dfcb.addElement(sn);
-         }
-     }
+    
+    void addCBSN() {
+        String ten = lbTenSP.getText();
+        dfcb = (DefaultComboBoxModel) cbSN.getModel();
+        dfcb.removeAllElements();
+        for (String sn : qlbh.getListSerialNB(ten)) {
+            dfcb.addElement(sn);
+        }
+    }
     
     void loadTableHD() {
         DefaultTableModel dftb = new DefaultTableModel();
@@ -72,9 +81,30 @@ public class QLDoiTra extends javax.swing.JFrame {
         dftb.setRowCount(0);
         for (HoaDonDoiTraVM hd : qlbh.getListHoaDonDoiTra()) {
             dftb.addRow(new Object[]{
-                hd.getMaHD(), hd.getTenKhachHang(), hd.getNgayMua(), hd.getHanTra(), hd.getTongTien(), hd.getNguoiTao()
+                hd.getMaHD(), hd.getTenKhachHang(), hd.getNgayMua(), String.format("%.0f", hd.getTongTien()), hd.getNguoiTao()
             });
         }
+    }
+    
+    void loadTableHDDT() {
+        DefaultTableModel tbm = new DefaultTableModel();
+        tbm = (DefaultTableModel) tbDoiTra.getModel();
+        tbm.setRowCount(0);
+        for (HoaDonDoiTraVM dt : qldt.getAllHDDTVM()) {
+            tbm.addRow(new Object[]{
+                dt.getMaHD(), dt.getMaHDDT(), dt.getMakh(), dt.getTenKhachHang(), dt.getSoluong(),String.format("%.0f", dt.getGia()) ,
+                dt.getNgayDoiTra(), dt.getLidoDt(), dt.getNguoiTao()
+            });
+            
+        }
+    }
+
+    private void clearForm() {
+        lbTenKH.setText("");
+        lbTenSP.setText("");
+        cbSN.setSelectedIndex(0);
+        cbLiDo.setSelectedIndex(0);
+        txtSoLuong.setText("");
     }
 
     /**
@@ -96,10 +126,10 @@ public class QLDoiTra extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDoiTra = new javax.swing.JTable();
         lbTenSP = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbLiDo = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtSoLuong = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbHD = new javax.swing.JTable();
@@ -125,20 +155,20 @@ public class QLDoiTra extends javax.swing.JFrame {
 
         tbDoiTra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Hoá Đơn", "Mã KH", "Số Lượng", "Giá", "Ngày Trả -Đổi", "Đổi- Trả", "Người đổi -trả"
+                "Mã Hoá Đơn", "Mã đổi trả", "Mã KH", "Tên Khách Hàng", "Số Lượng", "Giá", "Ngày Đổi Trả", "Lý Do Đổi Trả", "Người đổi trả"
             }
         ));
         jScrollPane1.setViewportView(tbDoiTra);
 
         lbTenSP.setText("_");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lỗi bàn phím", "Lỗi màn hình", "Lỗi Pin ", "Máy nóng", "Lỗi ổ cứng", "Không cài được phần mềm" }));
+        cbLiDo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lỗi bàn phím", "Lỗi màn hình", "Lỗi Pin ", "Máy nóng", "Lỗi ổ cứng", "Không cài được phần mềm" }));
 
         jButton1.setText("Đổi Trả");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +177,7 @@ public class QLDoiTra extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Ngày Đổi-Trả:");
+        jLabel4.setText("Số lượng");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,16 +193,17 @@ public class QLDoiTra extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel5)
-                                .addComponent(jLabel7))
+                                .addComponent(jLabel4))
                             .addGap(35, 35, 35)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbSN, 0, 173, Short.MAX_VALUE)))
-                                .addComponent(lbTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cbLiDo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(cbSN, 0, 173, Short.MAX_VALUE)))
+                                    .addComponent(lbTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(25, 25, 25))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jButton1)
@@ -199,19 +230,19 @@ public class QLDoiTra extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(lbTenSP))
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(cbSN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cbLiDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
                         .addComponent(jButton1))))
         );
 
@@ -219,17 +250,17 @@ public class QLDoiTra extends javax.swing.JFrame {
 
         tbHD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Hoá Đơn", "Tên Khách Hàng", "Ngày Mua", "Hạn Trả", "Tổng Tiền", "Người Tạo"
+                "Mã Hoá Đơn", "Tên Khách Hàng", "Ngày Mua", "Tổng Tiền", "Người Tạo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, false
+                true, true, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -335,7 +366,7 @@ public class QLDoiTra extends javax.swing.JFrame {
         // TODO add your handling code here:
         int rowhd = tbHD.getSelectedRow();
         int row = tbHDCT.getSelectedRow();
-        if (row == -1 ||rowhd == -1) {
+        if (row == -1 || rowhd == -1) {
             return;
         }
         lbTenKH.setText(tbHD.getValueAt(rowhd, 1).toString());
@@ -349,8 +380,28 @@ public class QLDoiTra extends javax.swing.JFrame {
         int rowhdct = tbHDCT.getSelectedRow();
         HoaDonDoiTraVM hd = qlbh.getListHoaDonDoiTra().get(row);
         HoaDonCTDoiTra hdct = hddt.getListHDCT(tbHD.getValueAt(row, 0).toString()).get(rowhdct);
-        System.out.println(hd.getIdNV());
-        System.out.println(hdct.getId());
+//        System.out.println(hd.getIdNV());
+//        System.out.println(hdct.getId());
+
+        String nv = hd.getIdNV();
+        String idhdct = hdct.getId();
+        long millis = System.currentTimeMillis();
+        Date ngaydt = new Date(millis);
+        int soluong = Integer.parseInt(txtSoLuong.getText().trim());
+        Random rd = new Random();
+        String maHD = "HDDT" + rd.nextInt(1000);
+        String lido = cbLiDo.getSelectedItem().toString();
+        
+        HoaDonDoiTra doitra = new HoaDonDoiTra();
+        doitra.setMa(maHD);
+        doitra.setSoLuong(soluong);
+        doitra.setLido(lido);
+        doitra.setIdhdct(idhdct);
+        doitra.setIdnv(nv);
+        doitra.setNgayDoi( ngaydt);
+        qldt.insertHDDTRVMo(doitra);
+        loadTableHDDT();
+        clearForm();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -389,25 +440,25 @@ public class QLDoiTra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbLiDo;
     private javax.swing.JComboBox<String> cbSN;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbTenKH;
     private javax.swing.JLabel lbTenSP;
     private javax.swing.JTable tbDoiTra;
     private javax.swing.JTable tbHD;
     private javax.swing.JTable tbHDCT;
+    private javax.swing.JTextField txtSoLuong;
     // End of variables declaration//GEN-END:variables
 }

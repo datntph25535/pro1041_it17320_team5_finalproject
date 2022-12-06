@@ -7,10 +7,11 @@ package repository;
 
 import JDBC.JDBCUtil;
 import ViewModel.HoaDonCTDoiTra;
+import ViewModel.HoaDonDoiTraVM;
 import ViewModel.TBGioHang;
 import model.HoaDonDoiTra;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,9 +41,44 @@ public class HoaDonDTRepo {
                 HoaDonDoiTra hdv = new HoaDonDoiTra();
                 hdv.setId(id);
                 hdv.setMa(madt);
-                hdv.setNgayDoi(ngayDt);
-                hdv.setNgayNhan(ngayNhan);
+                hdv.setNgayDoi((java.sql.Date) ngayDt);
+                hdv.setNgayNhan((java.sql.Date) ngayNhan);
                 hdv.setSoLuong(sl);
+                lisstHDDT.add(hdv);
+            }
+            return lisstHDDT;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonDoiTraVM> getAllDT() {
+        List<HoaDonDoiTraVM> lisstHDDT = new ArrayList<>();
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = " select dt.Id,dt.Ma as 'madt',hd.Ma as 'mahd',kh.Ma as 'makh',kh.HoTen,dt.SoLuong,ct.DonGia,NgayDoiTra,LiDoDT,nv.HoTen as'htnv' from HoaDonDoiTra dt join HoaDonChiTiet ct on ct.Id=dt.IdHDCT \n"
+                    + " join HoaDon hd on hd.Id=ct.IdHD \n"
+                    + " join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + " join NhanVien nv on nv.Id=hd.IdNV\n"
+                    + " group by dt.Id,hd.Ma ,kh.Ma ,kh.HoTen,dt.SoLuong,ct.DonGia,NgayDoiTra,LiDoDT,nv.HoTen,dt.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String mahd = rs.getString("mahd");
+                String madt = rs.getString("madt");
+                String makh = rs.getString("makh");
+                String hoTen = rs.getString("HoTen");
+                double gia = rs.getDouble("DonGia");
+                java.sql.Date ngayDt = rs.getDate("NgayDoiTra");
+                String lido = rs.getString("liDoDT");
+                String nvhoten = rs.getString("htnv");
+                int sl = rs.getInt("SoLuong");
+                HoaDonDoiTraVM hdv = new HoaDonDoiTraVM(id, mahd, madt, makh, hoTen, sl, gia, ngayDt, lido, nvhoten);
+
                 lisstHDDT.add(hdv);
             }
             return lisstHDDT;
@@ -60,9 +96,29 @@ public class HoaDonDTRepo {
             String sql = "Insert into HoaDonDoiTra " + "(Ma,NgayDoiTra,NgayNhanSP,SoLuong)" + " Values(?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, hdt.getMa());
-            ps.setDate(2, hdt.getNgayDoi());
-            ps.setDate(3, hdt.getNgayNhan());
+            ps.setDate(2, (java.sql.Date) hdt.getNgayDoi());
+            ps.setDate(3, (java.sql.Date) hdt.getNgayNhan());
             ps.setInt(4, hdt.getSoLuong());
+            kq = ps.executeUpdate();
+            return kq;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Integer insertHDDTRVM(HoaDonDoiTra hdt) {
+        Integer kq = -1;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Insert into HoaDonDoiTra " + "(Ma,SoLuong,NgayDoiTra,LiDoDT,IdHDCT,IdNV)" + " Values(?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, hdt.getMa());
+            ps.setDate(3, hdt.getNgayDoi());
+            ps.setInt(2, hdt.getSoLuong());
+            ps.setString(4, hdt.getLido());
+            ps.setString(5, hdt.getIdhdct());
+            ps.setString(6, hdt.getIdnv());
             kq = ps.executeUpdate();
             return kq;
         } catch (Exception e) {
@@ -77,8 +133,8 @@ public class HoaDonDTRepo {
             Connection conn = JDBCUtil.getConnection();
             String sql = "Update HoaDonDoiTra Set NgayDoiTra=?,NgayNhanSP=?,SoLuong=? Where Id=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setDate(1, hdt.getNgayDoi());
-            ps.setDate(2, hdt.getNgayNhan());
+            ps.setDate(1, (java.sql.Date) hdt.getNgayDoi());
+            ps.setDate(2, (java.sql.Date) hdt.getNgayNhan());
             ps.setInt(3, hdt.getSoLuong());
             ps.setString(4, id);
             kq = ps.executeUpdate();
@@ -104,7 +160,7 @@ public class HoaDonDTRepo {
         }
         return null;
     }
-    
+
     public ArrayList<HoaDonCTDoiTra> getListHDCT(String mahd) {
         ArrayList<HoaDonCTDoiTra> list = new ArrayList<>();
         try {

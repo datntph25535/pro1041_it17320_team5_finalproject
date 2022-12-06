@@ -5,6 +5,7 @@
  */
 package service;
 
+import ViewModel.HoaDonDoiTraVM;
 import model.HoaDonDoiTra;
 import repository.HoaDonDTRepo;
 import java.util.List;
@@ -40,6 +41,16 @@ public class HoaDonDoiTraSerVice implements IHoaDonDoiTra {
     @Override
     public Integer updateHD(HoaDonDoiTra hd, String id) {
         return this.repo.updateHDDTR(hd, id);
+    }
+
+    @Override
+    public Integer insertHDDTRVMo(HoaDonDoiTra hdt) {
+        return repo.insertHDDTRVM(hdt);
+    }
+
+    @Override
+    public List<HoaDonDoiTraVM> getAllHDDTVM() {
+        return repo.getAllDT();
     }
 
 }
