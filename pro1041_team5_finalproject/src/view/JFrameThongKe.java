@@ -51,9 +51,9 @@ public class JFrameThongKe extends javax.swing.JFrame {
                 String dateFrom = df.format(date.getFromDate());
                 String toDate = df.format(date.getToDate());
                 loadData("SELECT   COUNT(dbo.HoaDon.Id) as TSHD, SUM( dbo.HoaDon.ThanhTien) as TT,\n"
-                        + "dbo.HoaDon.NgayTao AS NT from   dbo.HoaDon \n"
-                        + "where dbo.HoaDon.NgayTao  between '" + dateFrom + "' and '" + toDate
-                        + "'and TrangThai like N'Đã thanh toán' GROUP BY dbo.HoaDon.NgayTao");
+                        + "dbo.HoaDon.NgayThanhToan AS NT from   dbo.HoaDon \n"
+                        + "where dbo.HoaDon.NgayThanhToan  between '" + dateFrom + "' and '" + toDate
+                        + "'and TrangThai like N'Đã thanh toán' GROUP BY dbo.HoaDon.NgayThanhToan");
 
             }
 
@@ -63,13 +63,14 @@ public class JFrameThongKe extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        loadNgay("Select  top 1 SUM(dbo.HoaDon.ThanhTien) As 'Doanhthu',count(HoaDon.Id) as'sohd',NgayTao from HoaDon \n"
-                + "where  TrangThai like N'Đã thanh toán'\n"
-                + "GROUP BY HoaDon.NgayTao\n"
-                + "order by NgayTao desc");
+        doanhthu();
+//        loadNgay("Select  top 1 SUM(dbo.HoaDon.ThanhTien) As 'Doanhthu',count(HoaDon.Id) as'sohd',NgayTao from HoaDon \n"
+//                + "where  TrangThai like N'Đã thanh toán'\n"
+//                + "GROUP BY HoaDon.NgayTao\n"
+//                + "order by NgayTao desc");
 //        loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayTao) as thang from HoaDon where month(HoaDon.NgayTao) = 11 GROUP BY month(HoaDon.NgayTao)");
-        loadNam("Select top 1 SUM(dbo.HoaDon.ThanhTien) As Doanhthu,year( HoaDon.NgayTao) as nam from HoaDon where TrangThai like N'Đã thanh toán' GROUP BY year(HoaDon.NgayTao)\n"
-                + " order by nam desc");
+//        loadNam("Select top 1 SUM(dbo.HoaDon.ThanhTien) As Doanhthu,year( HoaDon.NgayTao) as nam from HoaDon where TrangThai like N'Đã thanh toán' GROUP BY year(HoaDon.NgayTao)\n"
+//                + " order by nam desc");
         loadSPTK("select COUNT(DISTINCT dbo.SanPham.Ten) as sp from SanPham");
         loadSPSHH("select count(sp.Ten) as slsp from ChiTietSP ctsp join SanPham sp on sp.Id=ctsp.IdSP\n"
                 + "where SoLuongTon between 0 and 10");
@@ -95,9 +96,9 @@ public class JFrameThongKe extends javax.swing.JFrame {
                     Date d = new Date();
                     // format lai theo mau hh:mm aa roi hien thi len lblTime
 
-                    loadNgay("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu, HoaDon.NgayTao from HoaDon where HoaDon.NgayTao = '" + sdf.format(d) + "' GROUP BY HoaDon.NgayTao");
+                    loadNgay("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu, HoaDon.NgayThanhToan from HoaDon where HoaDon.NgayThanhToan = '" + sdf.format(d) + "' GROUP BY HoaDon.NgayThanhToan");
 //                    loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayTao) as thang from HoaDon where month(HoaDon.NgayTao) = '" + sdfmonth.format(d) + "' GROUP BY month(HoaDon.NgayTao)");
-                    loadNam("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,YEAR( HoaDon.NgayTao) as nam from HoaDon where year(HoaDon.NgayTao) = '" + sdfYear.format(d) + "' GROUP BY year(HoaDon.NgayTao)");
+                    loadNam("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,YEAR( HoaDon.NgayThanhToan) as nam from HoaDon where year(HoaDon.NgayThanhToan) = '" + sdfYear.format(d) + "' GROUP BY year(HoaDon.NgayThanhToan)");
 
                     try {
                         Thread.sleep(1000);
@@ -160,7 +161,6 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void loadNgay(String sql) {
         try {
-            model.setRowCount(0);
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -183,7 +183,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
     private String loadThang(String sql) {
         String thanhtien = null;
         try {
-            model.setRowCount(0);
+
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -209,7 +209,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void loadNam(String sql) {
         try {
-            model.setRowCount(0);
+
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
