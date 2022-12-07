@@ -45,8 +45,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
     private DateChooser chDate = new DateChooser();
     private DefaultTableModel model;
     private DefaultTableModel model2;
-     private IHoaDonS  thongKeService = new HoaDonService();
-
+    private IHoaDonS thongKeService = new HoaDonService();
 
     public JFrameThongKe() {
         initComponents();
@@ -75,7 +74,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-          doanhthu();
+        doanhthu();
         loadSPTK("select COUNT(DISTINCT dbo.SanPham.Ten) as sp from SanPham");
         loadSPSHH("select count(sp.Ten) as slsp from ChiTietSP ctsp join SanPham sp on sp.Id=ctsp.IdSP\n"
                 + "where SoLuongTon between 0 and 10");
@@ -166,7 +165,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void loadNgay(String sql) {
         try {
-            
+
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -189,7 +188,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
     private String loadThang(String sql) {
         String thanhtien = null;
         try {
-            
+
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -215,7 +214,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void loadNam(String sql) {
         try {
-           
+
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -739,17 +738,17 @@ public class JFrameThongKe extends javax.swing.JFrame {
         try {
             List<thongKe> listItem = thongKeService.getdoanhthu();
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        if (listItem != null) {
-            for (thongKe item : listItem) {
-                dataset.addValue(item.getDoanhThu(), "Doanh thu", item.getNgayThanhToan());
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            if (listItem != null) {
+                for (thongKe item : listItem) {
+                    dataset.addValue(item.getDoanhThu(), "Doanh thu", item.getNgayThanhToan());
+                }
             }
-        }
 
-        JFreeChart chart = ChartFactory.createBarChart(
-                "Biểu đồ thống kê doanh thu".toUpperCase(),
-                "Thời gian", "Số lượng",
-                dataset, PlotOrientation.VERTICAL, false, true, false);
+            JFreeChart chart = ChartFactory.createBarChart(
+                    "Biểu đồ thống kê doanh thu".toUpperCase(),
+                    "Thời gian", "Số lượng",
+                    dataset, PlotOrientation.VERTICAL, false, true, false);
 
             BarRenderer render = null;
             CategoryPlot plot = null;
@@ -764,56 +763,56 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-          try {
+        try {
             List<thongKe> listItem = thongKeService.getSP();
 
-        DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
-        if (listItem != null) {
-            for (thongKe ke : listItem) {
-                 dataset1.addValue(ke.getSoLuong(), " sp ban chay", ke.getTenSP());
+            DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+            if (listItem != null) {
+                for (thongKe ke : listItem) {
+                    dataset1.addValue(ke.getSoLuong(), " sp ban chay", ke.getTenSP());
+                }
             }
-        }
 
-        JFreeChart chart1 = ChartFactory.createBarChart(
-                "Biểu đồ thống kê san pham mua nhieu nhat".toUpperCase(),
-                 "Sản phẩm","Số lượng",
-                dataset1, PlotOrientation.VERTICAL, false, true, false);
+            JFreeChart chart1 = ChartFactory.createBarChart(
+                    "Biểu đồ thống kê san pham mua nhieu nhat".toUpperCase(),
+                    "Sản phẩm", "Số lượng",
+                    dataset1, PlotOrientation.VERTICAL, false, true, false);
 
             BarRenderer render1 = null;
             CategoryPlot plot1 = null;
             render1 = new BarRenderer();
             ChartFrame frame1 = new ChartFrame("San pham", chart1);
             frame1.setVisible(true);
-            frame1.setSize(400,650);
-             
+            frame1.setSize(400, 650);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         try {
-            List<thongKe> listItem = thongKeService.getSP();
+        try {
+            List<thongKe> listItem = thongKeService.getKH();
 
-        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
-        if (listItem != null) {
-            for (thongKe ke : listItem) {
-                 dataset2.addValue(ke.getSlhdct(), " Khach hang mua nhieu", ke.getTenKH());
+            DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+            if (listItem != null) {
+                for (thongKe ke : listItem) {
+                    dataset2.addValue(ke.getSlhdct(), " Khach hang mua nhieu", ke.getTenKH());
+                }
             }
-        }
 
-        JFreeChart chart2 = ChartFactory.createBarChart(
-                "Biểu đồ thống kê khach hang mua nhieu nhat".toUpperCase(),
-                 "Sản phẩm","Số lượng",
-                dataset2, PlotOrientation.VERTICAL, false, true, false);
+            JFreeChart chart2 = ChartFactory.createBarChart(
+                    "Biểu đồ thống kê khach hang mua nhieu nhat".toUpperCase(),
+                    "Khách Hàng", "Số lượng sản phẩm",
+                    dataset2, PlotOrientation.VERTICAL, false, true, false);
 
             BarRenderer render2 = null;
             CategoryPlot plot2 = null;
             render2 = new BarRenderer();
-            ChartFrame frame1 = new ChartFrame("San pham", chart2);
+            ChartFrame frame1 = new ChartFrame("Khách Hàng", chart2);
             frame1.setVisible(true);
-            frame1.setSize(400,650);
-             
+            frame1.setSize(400, 650);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
