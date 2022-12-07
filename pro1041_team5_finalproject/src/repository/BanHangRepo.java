@@ -68,7 +68,7 @@ public class BanHangRepo {
         ArrayList<HoaDonViewModel> listHD = new ArrayList<>();
         try {
             Connection conn = JDBCUtil.getConnection();
-            String sql = "Select HoaDon.Id as 'id', HoaDon.Ma as 'mahd',NgayTao,HoaDon.TrangThai as 'tt' From HoaDon where TrangThai = ?";
+            String sql = " Select HoaDon.Id as 'id', HoaDon.Ma as 'mahd',NgayTao,HoaDon.ThanhTien,HoaDon.TrangThai as 'tt' From HoaDon where TrangThai = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, "Chờ thanh toán");
             ps.execute();
@@ -78,7 +78,8 @@ public class BanHangRepo {
                 String id = rs.getString("id");
                 Date ngaytao = rs.getDate("NgayTao");
                 String tt = rs.getString("tt");
-                HoaDonViewModel hd = new HoaDonViewModel(mahd, ngaytao, "nv01", tt, id);
+                double thanhtien=rs.getDouble("ThanhTien");
+                HoaDonViewModel hd = new HoaDonViewModel(mahd, ngaytao, "nv01", tt, id, thanhtien);
                 listHD.add(hd);
             }
         } catch (Exception ex) {

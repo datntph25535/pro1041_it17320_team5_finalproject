@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Administrator
  */
 public class thongKe {
+
     private double doanhThu;
     private String ngayThanhToan;
     private String tenSP;
@@ -29,6 +30,11 @@ public class thongKe {
     public thongKe(String tenSP, int soLuong) {
         this.tenSP = tenSP;
         this.soLuong = soLuong;
+    }
+
+    public thongKe(int slhdct, String tenKH) {
+        this.tenKH = tenKH;
+        this.slhdct = slhdct;
     }
 
     public int getSlhdct() {
@@ -62,7 +68,6 @@ public class thongKe {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-    
 
     public double getDoanhThu() {
         return doanhThu;
@@ -85,10 +90,4 @@ public class thongKe {
         return "thongKe{" + "tenKH=" + tenKH + ", slhdct=" + slhdct + '}';
     }
 
-    
-
-
-   
-
-    
 }

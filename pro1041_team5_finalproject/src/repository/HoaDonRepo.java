@@ -28,17 +28,18 @@ import model.thongKe;
  * @author Admin
  */
 public class HoaDonRepo {
-     public List<thongKe> getListTK() {
+
+    public List<thongKe> getListTK() {
         List<thongKe> list = new ArrayList<>();
-        
+
         String sql = "Select SUM(dbo.HoaDon.ThanhTien) As 'Doanhthu',dbo.HoaDon.NgayThanhToan as 'ngayTT' from HoaDon \n"
                 + "                where  TrangThai like N'Đã thanh toán' \n"
                 + "				GROUP BY HoaDon.NgayThanhToan order by NgayThanhToan desc";
-        
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
+
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 thongKe tk = new thongKe(rs.getDouble(1), rs.getString(2));
 
@@ -51,24 +52,24 @@ public class HoaDonRepo {
         }
         return null;
     }
-    
+
     public List<thongKe> getListSP() {
         List<thongKe> list = new ArrayList<>();
-        
-        String sql = "select top 5 sp.Ten,count(hdct.IdCTSP) as 'soluongspdaban' from HoaDonChiTiet hdct\n" +
-"       join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP \n" +
-"       join SanPham sp on sp.Id=ctsp.IdSP\n" +
-"	   join HoaDon hd on hd.Id=hdct.IdHD\n" +
-"	   where hd.TrangThai=N'Đã thanh toán'\n" +
-"       group by sp.Ten,hdct.IdCTSP\n" +
-"       order by soluongspdaban desc";
-        
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
+
+        String sql = "select top 5 sp.Ten,count(hdct.IdCTSP) as 'soluongspdaban' from HoaDonChiTiet hdct\n"
+                + "       join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP \n"
+                + "       join SanPham sp on sp.Id=ctsp.IdSP\n"
+                + "	   join HoaDon hd on hd.Id=hdct.IdHD\n"
+                + "	   where hd.TrangThai=N'Đã thanh toán'\n"
+                + "       group by sp.Ten,hdct.IdCTSP\n"
+                + "       order by soluongspdaban desc";
+
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                thongKe tk = new thongKe(rs.getString(1),rs.getInt(2));
+                thongKe tk = new thongKe(rs.getString(1), rs.getInt(2));
 
                 list.add(tk);
 
@@ -79,21 +80,22 @@ public class HoaDonRepo {
         }
         return null;
     }
+
     public List<thongKe> getListKH() {
         List<thongKe> list = new ArrayList<>();
-        
-        String sql = "select sum(SoLuong) as'sohdct',kh.HoTen from HoaDonChiTiet ct\n" +
-" join HoaDon hd on hd.Id=ct.IdHD\n" +
-" join KhachHang kh on kh.Id=hd.IdKH\n" +
-" where hd.TrangThai=N'Đã thanh toán'\n" +
-" group by kh.HoTen";
-        
-        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
+
+        String sql = "select sum(SoLuong) as'sohdct',kh.HoTen from HoaDonChiTiet ct\n"
+                + "join HoaDon hd on hd.Id=ct.IdHD\n"
+                + " join KhachHang kh on kh.Id=hd.IdKH\n"
+                + "where hd.TrangThai=N'Đã thanh toán'\n"
+                + " group by kh.HoTen";
+
+        try (Connection con = JDBCUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                thongKe tk = new thongKe(rs.getString(1),rs.getInt(2));
+                thongKe tk = new thongKe(rs.getInt(1), rs.getString(2));
 
                 list.add(tk);
 
@@ -104,7 +106,10 @@ public class HoaDonRepo {
         }
         return null;
     }
-    
+
+    public static void main(String[] args) {
+        System.out.println(new HoaDonRepo().getListKH());
+    }
 
     public List<HoaDon> allH() {
         List<HoaDon> listHD = new ArrayList<>();
@@ -149,7 +154,7 @@ public class HoaDonRepo {
                     + "where NgayTao between ? and ?\n"
                     + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setDate(1,  ngaytao1);
+            ps.setDate(1, ngaytao1);
             ps.setDate(2, ngayTao2);
             ps.execute();
             ResultSet rs = ps.getResultSet();
