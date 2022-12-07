@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.util.List;
 import model.HoaDon;
 import model.KhachHang;
+import model.thongKe;
 import repository.HoaDonRepo;
 import service.impl.IHoaDonS;
 
@@ -142,6 +143,21 @@ public class HoaDonService implements IHoaDonS {
     @Override
     public List<HoaDonVM> getListHD() {
         return repo.getListHDV();
+    }
+
+    @Override
+    public List<thongKe> getdoanhthu() {
+        return repo.getListTK();
+    }
+
+    @Override
+    public List<thongKe> getSP() {
+        return repo.getListSP();
+    }
+
+    @Override
+    public List<thongKe> getKH() {
+        return repo.getListKH();
     }
 
 }
