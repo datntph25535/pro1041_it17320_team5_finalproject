@@ -12,13 +12,18 @@ import java.sql.Date;
 import model.HoaDon;
 import java.util.List;
 import model.KhachHang;
+import model.thongKe;
 
 /**
  *
  * @author Admin
  */
 public interface IHoaDonS {
-
+ List<thongKe> getdoanhthu();
+    
+     List<thongKe> getSP();
+     
+     List<thongKe> getKH();
     List<HoaDon> getAll();
 
     List<HoaDon> searchHD(String ma);

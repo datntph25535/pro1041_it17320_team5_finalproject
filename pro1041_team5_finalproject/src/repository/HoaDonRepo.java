@@ -21,12 +21,90 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.HoaDon;
 import model.KhachHang;
+import model.thongKe;
 
 /**
  *
  * @author Admin
  */
 public class HoaDonRepo {
+     public List<thongKe> getListTK() {
+        List<thongKe> list = new ArrayList<>();
+        
+        String sql = "Select SUM(dbo.HoaDon.ThanhTien) As 'Doanhthu',dbo.HoaDon.NgayThanhToan as 'ngayTT' from HoaDon \n"
+                + "                where  TrangThai like N'Đã thanh toán' \n"
+                + "				GROUP BY HoaDon.NgayThanhToan order by NgayThanhToan desc";
+        
+        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                thongKe tk = new thongKe(rs.getDouble(1), rs.getString(2));
+
+                list.add(tk);
+
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<thongKe> getListSP() {
+        List<thongKe> list = new ArrayList<>();
+        
+        String sql = "select top 5 sp.Ten,count(hdct.IdCTSP) as 'soluongspdaban' from HoaDonChiTiet hdct\n" +
+"       join ChiTietSP ctsp on ctsp.Id=hdct.IdCTSP \n" +
+"       join SanPham sp on sp.Id=ctsp.IdSP\n" +
+"	   join HoaDon hd on hd.Id=hdct.IdHD\n" +
+"	   where hd.TrangThai=N'Đã thanh toán'\n" +
+"       group by sp.Ten,hdct.IdCTSP\n" +
+"       order by soluongspdaban desc";
+        
+        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                thongKe tk = new thongKe(rs.getString(1),rs.getInt(2));
+
+                list.add(tk);
+
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<thongKe> getListKH() {
+        List<thongKe> list = new ArrayList<>();
+        
+        String sql = "select sum(SoLuong) as'sohdct',kh.HoTen from HoaDonChiTiet ct\n" +
+" join HoaDon hd on hd.Id=ct.IdHD\n" +
+" join KhachHang kh on kh.Id=hd.IdKH\n" +
+" where hd.TrangThai=N'Đã thanh toán'\n" +
+" group by kh.HoTen";
+        
+        try ( Connection con = JDBCUtil.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                thongKe tk = new thongKe(rs.getString(1),rs.getInt(2));
+
+                list.add(tk);
+
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 
     public List<HoaDon> allH() {
         List<HoaDon> listHD = new ArrayList<>();

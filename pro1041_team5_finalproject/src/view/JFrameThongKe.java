@@ -11,6 +11,7 @@ import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
+import java.awt.CardLayout;
 import java.sql.Array;
 import java.util.Date;
 import java.sql.PreparedStatement;
@@ -23,6 +24,15 @@ import service.HoaDonService;
 import service.impl.IHoaDonS;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import model.thongKe;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 import service.HoaDonCTSer;
 import service.impl.IHoaDonCT;
 
@@ -35,6 +45,8 @@ public class JFrameThongKe extends javax.swing.JFrame {
     private DateChooser chDate = new DateChooser();
     private DefaultTableModel model;
     private DefaultTableModel model2;
+     private IHoaDonS  thongKeService = new HoaDonService();
+
 
     public JFrameThongKe() {
         initComponents();
@@ -63,14 +75,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        doanhthu();
-//        loadNgay("Select  top 1 SUM(dbo.HoaDon.ThanhTien) As 'Doanhthu',count(HoaDon.Id) as'sohd',NgayTao from HoaDon \n"
-//                + "where  TrangThai like N'Đã thanh toán'\n"
-//                + "GROUP BY HoaDon.NgayTao\n"
-//                + "order by NgayTao desc");
-//        loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayTao) as thang from HoaDon where month(HoaDon.NgayTao) = 11 GROUP BY month(HoaDon.NgayTao)");
-//        loadNam("Select top 1 SUM(dbo.HoaDon.ThanhTien) As Doanhthu,year( HoaDon.NgayTao) as nam from HoaDon where TrangThai like N'Đã thanh toán' GROUP BY year(HoaDon.NgayTao)\n"
-//                + " order by nam desc");
+          doanhthu();
         loadSPTK("select COUNT(DISTINCT dbo.SanPham.Ten) as sp from SanPham");
         loadSPSHH("select count(sp.Ten) as slsp from ChiTietSP ctsp join SanPham sp on sp.Id=ctsp.IdSP\n"
                 + "where SoLuongTon between 0 and 10");
@@ -161,6 +166,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void loadNgay(String sql) {
         try {
+            
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -183,7 +189,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
     private String loadThang(String sql) {
         String thanhtien = null;
         try {
-
+            
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -209,7 +215,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     private void loadNam(String sql) {
         try {
-
+           
             SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
 
@@ -309,6 +315,9 @@ public class JFrameThongKe extends javax.swing.JFrame {
         txtDate = new javax.swing.JTextField();
         cbThang = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         lblThang = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -374,7 +383,7 @@ public class JFrameThongKe extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "STT", "Tổng số HD", "Doanh Thu", "Ngày tạo"
+                "STT", "Tổng số HD", "Doanh Thu", "Ngày thanh toan"
             }
         ));
         jScrollPane1.setViewportView(tblBang);
@@ -390,6 +399,27 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
         jLabel4.setText("Tìm doanh thu tháng");
 
+        jButton1.setText("Doanh thu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Sản phẩm");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Khach Hang");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -404,11 +434,18 @@ public class JFrameThongKe extends javax.swing.JFrame {
                         .addGap(76, 76, 76)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(95, 95, 95)
+                                .addComponent(jButton1)
+                                .addGap(30, 30, 30)
+                                .addComponent(jButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1015, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,10 +456,13 @@ public class JFrameThongKe extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 153, 255));
@@ -684,16 +724,100 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
             int index = cbThang.getSelectedIndex();
 
-            if (loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayTao) as thang from HoaDon where month(HoaDon.NgayTao) = '" + (index + 1) + "'and TrangThai like N'Đã thanh toán' GROUP BY month(HoaDon.NgayTao)")
+            if (loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayThanhToan) as thang from HoaDon where month(HoaDon.NgayThanhToan) = '" + (index + 1) + "'and TrangThai like N'Đã thanh toán' GROUP BY month(HoaDon.NgayThanhToan)")
                     == null) {
                 lblThang.setText("0");
             } else {
-                loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayTao) as thang from HoaDon where month(HoaDon.NgayTao) = '" + (index + 1) + "'and TrangThai like N'Đã thanh toán' GROUP BY month(HoaDon.NgayTao)");
+                loadThang("Select SUM(dbo.HoaDon.ThanhTien) As Doanhthu,month( HoaDon.NgayThanhToan) as thang from HoaDon where month(HoaDon.NgayThanhToan) = '" + (index + 1) + "'and TrangThai like N'Đã thanh toán' GROUP BY month(HoaDon.NgayThanhToan)");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_cbThangActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            List<thongKe> listItem = thongKeService.getdoanhthu();
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        if (listItem != null) {
+            for (thongKe item : listItem) {
+                dataset.addValue(item.getDoanhThu(), "Doanh thu", item.getNgayThanhToan());
+            }
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Biểu đồ thống kê doanh thu".toUpperCase(),
+                "Thời gian", "Số lượng",
+                dataset, PlotOrientation.VERTICAL, false, true, false);
+
+            BarRenderer render = null;
+            CategoryPlot plot = null;
+            render = new BarRenderer();
+            ChartFrame frame = new ChartFrame("Doanh thu", chart);
+            frame.setVisible(true);
+            frame.setSize(400, 650);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+          try {
+            List<thongKe> listItem = thongKeService.getSP();
+
+        DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+        if (listItem != null) {
+            for (thongKe ke : listItem) {
+                 dataset1.addValue(ke.getSoLuong(), " sp ban chay", ke.getTenSP());
+            }
+        }
+
+        JFreeChart chart1 = ChartFactory.createBarChart(
+                "Biểu đồ thống kê san pham mua nhieu nhat".toUpperCase(),
+                 "Sản phẩm","Số lượng",
+                dataset1, PlotOrientation.VERTICAL, false, true, false);
+
+            BarRenderer render1 = null;
+            CategoryPlot plot1 = null;
+            render1 = new BarRenderer();
+            ChartFrame frame1 = new ChartFrame("San pham", chart1);
+            frame1.setVisible(true);
+            frame1.setSize(400,650);
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         try {
+            List<thongKe> listItem = thongKeService.getSP();
+
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        if (listItem != null) {
+            for (thongKe ke : listItem) {
+                 dataset2.addValue(ke.getSlhdct(), " Khach hang mua nhieu", ke.getTenKH());
+            }
+        }
+
+        JFreeChart chart2 = ChartFactory.createBarChart(
+                "Biểu đồ thống kê khach hang mua nhieu nhat".toUpperCase(),
+                 "Sản phẩm","Số lượng",
+                dataset2, PlotOrientation.VERTICAL, false, true, false);
+
+            BarRenderer render2 = null;
+            CategoryPlot plot2 = null;
+            render2 = new BarRenderer();
+            ChartFrame frame1 = new ChartFrame("San pham", chart2);
+            frame1.setVisible(true);
+            frame1.setSize(400,650);
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -729,6 +853,9 @@ public class JFrameThongKe extends javax.swing.JFrame {
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -740,6 +867,9 @@ public class JFrameThongKe extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbThang;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
