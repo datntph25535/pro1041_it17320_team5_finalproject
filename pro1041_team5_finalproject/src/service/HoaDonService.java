@@ -8,6 +8,7 @@ package service;
 import ViewModel.HoaDonVM;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import model.HoaDon;
 import model.KhachHang;
@@ -68,9 +69,9 @@ public class HoaDonService implements IHoaDonS {
     }
 
     @Override
-    public List<HoaDonVM> getListHD() {
+    public List<HoaDonVM> getListHDA(Date ngayTao1, Date ngayTao2) {
 
-        return repo.getListHDV();
+        return repo.getListHDVa(ngayTao1, ngayTao2);
     }
 
     @Override
@@ -136,6 +137,11 @@ public class HoaDonService implements IHoaDonS {
     @Override
     public ArrayList<TBGioHang> SearchMaSPVm(String masp, String mahd) {
         return repo.SearchMaSP(masp, mahd);
+    }
+
+    @Override
+    public List<HoaDonVM> getListHD() {
+        return repo.getListHDV();
     }
 
 }

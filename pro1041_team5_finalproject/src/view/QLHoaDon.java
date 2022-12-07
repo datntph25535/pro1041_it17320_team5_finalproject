@@ -7,6 +7,12 @@ package view;
 
 import ViewModel.HoaDonVM;
 import ViewModel.TBGioHang;
+import com.raven.datechooser.DateBetween;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -38,6 +44,7 @@ public class QLHoaDon extends javax.swing.JFrame {
     private DefaultComboBoxModel cbb;
     private BanHangRepo qlbh = new BanHangRepo();
     private KhachHangInter qlkh = new KhachHangService();
+    private DateChooser chDate = new DateChooser();
 
     /**
      * Creates new form QlHoaDon
@@ -50,12 +57,26 @@ public class QLHoaDon extends javax.swing.JFrame {
         defaultComboBoxModel = new DefaultComboBoxModel();
         defaultTableModel = new DefaultTableModel();
         loadCBSDT();
-        loadCBNam();
         cbTimKiem();
-        loadCBThang();
         loadCBtongtien();
         loadCBTrangThai();
         loadTable(serr.getListHD());
+        chDate.setTextField(txtDate);
+
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setLabelCurrentDayVisible(false);
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+
+            @Override
+            public void dateBetweenChanged(DateBetween date, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(date.getFromDate());
+                String toDate = df.format(date.getToDate());
+
+                loadTable(serr.getListHDA(java.sql.Date.valueOf(dateFrom), java.sql.Date.valueOf(toDate)));
+            }
+        });
 
     }
 
@@ -79,25 +100,6 @@ public class QLHoaDon extends javax.swing.JFrame {
         }
     }
 
-    public void loadCBNam() {
-        DefaultComboBoxModel def = (DefaultComboBoxModel) cbNam.getModel();
-
-        for (int i = 2017; i <= 2023; i++) {
-
-            def.addElement(String.valueOf(i));
-        }
-    }
-
-    public void loadCBThang() {
-        DefaultComboBoxModel defn = (DefaultComboBoxModel) cbThang.getModel();
-
-        for (int i = 1; i <= 12; i++) {
-
-            defn.addElement(String.valueOf(i));
-        }
-
-    }
-
     public void loadCBtongtien() {
         DefaultComboBoxModel ttcb = (DefaultComboBoxModel) cbTongTien.getModel();
         ttcb.addElement(null);
@@ -109,6 +111,7 @@ public class QLHoaDon extends javax.swing.JFrame {
 
     public void loadCBTrangThai() {
         DefaultComboBoxModel decbtt = (DefaultComboBoxModel) cbTrangThai.getModel();
+        decbtt.addElement("");
         decbtt.addElement("Đã thanh toán");
         decbtt.addElement("Chờ thanh toán");
     }
@@ -158,8 +161,8 @@ public class QLHoaDon extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        cbThang = new javax.swing.JComboBox<>();
-        cbNam = new javax.swing.JComboBox<>();
+        txtDate = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cbSD = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -182,19 +185,9 @@ public class QLHoaDon extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Theo Tháng- Năm"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Theo Khoảng Ngày"));
 
-        cbThang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbThangActionPerformed(evt);
-            }
-        });
-
-        cbNam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbNamActionPerformed(evt);
-            }
-        });
+        jLabel4.setText("(* chọn khoảng ngày muốn tìm kiếm)");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -202,19 +195,20 @@ public class QLHoaDon extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(cbNam, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4))
         );
 
         jLabel1.setText("SĐT Khách Hàng");
@@ -261,14 +255,13 @@ public class QLHoaDon extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jLabel3)
-                        .addGap(135, 135, 135))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)))
+                        .addComponent(cbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(38, 38, 38)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,10 +277,9 @@ public class QLHoaDon extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(cbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         tbHD.setModel(new javax.swing.table.DefaultTableModel(
@@ -326,7 +318,7 @@ public class QLHoaDon extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -438,37 +430,6 @@ public class QLHoaDon extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tbHDCTMouseClicked
 
-    private void cbThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbThangActionPerformed
-        // TODO add your handling code here:
-        int index = cbThang.getSelectedIndex();
-        List<HoaDonVM> list = serr.searchThangVM(Integer.parseInt(cbThang.getItemAt(index)));
-
-        if (list.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin");
-            loadTable(list);
-            cbThang.setSelectedItem(null);
-        } else {
-            loadTable(list);
-        }
-
-    }//GEN-LAST:event_cbThangActionPerformed
-
-    private void cbNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamActionPerformed
-        // TODO add your handling code here:
-
-        int index = cbNam.getSelectedIndex();
-
-        List<HoaDonVM> listhd = serr.searchNamVM(Integer.parseInt(cbNam.getItemAt(index)));
-        if (listhd.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin");
-            loadTable(listhd);
-            cbNam.setSelectedItem(null);
-        } else {
-            loadTable(listhd);
-        }
-
-    }//GEN-LAST:event_cbNamActionPerformed
-
     private void cbSDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSDActionPerformed
         // TODO add your handling code here:
         String sdt = cbSD.getSelectedItem().toString();
@@ -490,10 +451,15 @@ public class QLHoaDon extends javax.swing.JFrame {
         String trangthai = cbTrangThai.getSelectedItem().toString();
         List<HoaDonVM> listN = serr.SearchTrangThaiVM(trangthai);
         if (listN.isEmpty()) {
+            if (cbTrangThai.getSelectedIndex() == 0) {
+                loadTable(serr.getListHD());
+                return;
+            }
 //            JOptionPane.showMessageDialog(this, "Không có thông tin");
             loadTable(listN);
             cbTrangThai.setSelectedItem(null);
         } else {
+
             loadTable(listN);
         }
     }//GEN-LAST:event_cbTrangThaiActionPerformed
@@ -539,6 +505,8 @@ public class QLHoaDon extends javax.swing.JFrame {
         } else {
 
             cbTongTien.setSelectedItem(null);
+            loadTable(serr.getListHD());
+
         }
 
     }//GEN-LAST:event_cbTongTienActionPerformed
@@ -583,14 +551,13 @@ public class QLHoaDon extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cbNam;
     private javax.swing.JComboBox<String> cbSD;
-    private javax.swing.JComboBox<String> cbThang;
     private javax.swing.JComboBox<String> cbTongTien;
     private javax.swing.JComboBox<String> cbTrangThai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -600,6 +567,7 @@ public class QLHoaDon extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbHD;
     private javax.swing.JTable tbHDCT;
+    private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }
