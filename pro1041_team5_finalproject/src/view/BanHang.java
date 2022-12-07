@@ -959,18 +959,18 @@ public class BanHang extends javax.swing.JFrame {
 
         int choice = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hoá đơn không ?");
         if (choice == JOptionPane.YES_OPTION) {
-            String path = "";
+            String path = tbHD.getValueAt(rowhd, 0).toString();
             JFileChooser j = new JFileChooser();
-            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            j.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
             int x = j.showSaveDialog(tblHDCT);
-            if (x == JFileChooser.APPROVE_OPTION) {
-                path = j.getSelectedFile().getPath();
-
-            }
+//            if (x == JFileChooser.APPROVE_OPTION) {
+//                path = j.getSelectedFile().getPath();
+//
+//            }
             Document doc = new Document(PageSize.A4, 50, 50, 50, 50);
 
             try {
-                FileOutputStream fos = new FileOutputStream(path + "h.pdf");
+                FileOutputStream fos = new FileOutputStream(path + ".pdf");
                 PdfWriter.getInstance(doc, fos);
                 doc.open();
                 Paragraph pss = new Paragraph("DESTINY PC",

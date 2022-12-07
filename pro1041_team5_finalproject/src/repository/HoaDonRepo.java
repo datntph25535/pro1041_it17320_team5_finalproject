@@ -12,8 +12,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +51,47 @@ public class HoaDonRepo {
                 listHD.add(hdv);
             }
             return listHD;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public List<HoaDonVM> getListHDVa(Date ngaytao1, Date ngayTao2) {
+        List<HoaDonVM> listHDVM = new ArrayList<>();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            String sql = "Select hd.Id,hd.Ma as'mahd',NgayTao,hd.TrangThai,kh.Sdt,SUM(ct.ThanhTien) as 'thanhtien',kh.HoTen as'tenkh',kh.Ma as 'makh',nv.HoTen as 'htnv',nv.Ma as 'manv'  From HoaDon hd\n"
+                    + "left join KhachHang kh on kh.Id=hd.IdKH\n"
+                    + "left join NhanVien nv on Nv.Id=hd.IdNV \n"
+                    + "left join HoaDonChiTiet ct on ct.IdHD=hd.Id\n"
+                    + "where NgayTao between ? and ?\n"
+                    + "Group by hd.Id,hd.Ma,NgayTao,hd.TrangThai,kh.Sdt,kh.HoTen,kh.Ma,nv.HoTen,nv.Ma";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDate(1,  ngaytao1);
+            ps.setDate(2, ngayTao2);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("Id");
+                String ma = rs.getString("mahd");
+
+                Date ngaytao = rs.getDate("NgayTao");
+                String manv = rs.getString("manv");
+                String htennv = rs.getString("htnv");
+
+                String makh = rs.getString("makh");
+                String htenkh = rs.getString("tenkh");
+                String sdt = rs.getString("Sdt");
+                double thanhTien = rs.getDouble("thanhtien");
+                String tt = rs.getString("TrangThai");
+                HoaDonVM hdv = new HoaDonVM(ma, ngaytao, manv, htennv, makh, htenkh, sdt, tt, thanhTien);
+                listHDVM.add(hdv);
+            }
+            return listHDVM;
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }

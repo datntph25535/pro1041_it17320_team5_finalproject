@@ -8,6 +8,7 @@ package service.impl;
 import ViewModel.HoaDonVM;
 import ViewModel.TBGioHang;
 import java.util.ArrayList;
+import java.sql.Date;
 import model.HoaDon;
 import java.util.List;
 import model.KhachHang;
@@ -66,6 +67,7 @@ public interface IHoaDonS {
 
     Integer deleteHD(String ma);
 
-    List<HoaDonVM> getListHD();
+    List<HoaDonVM> getListHDA(Date ngayTao1, Date ngayTao2);
 
+    List<HoaDonVM> getListHD();
 }
