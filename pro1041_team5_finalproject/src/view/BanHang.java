@@ -942,7 +942,10 @@ public class BanHang extends javax.swing.JFrame {
         String idNV = qlbh.getIdNV(tbHD.getValueAt(rowhd, 2).toString());
         String sdt = cbKH.getSelectedItem().toString();
         String idKh = qlbh.getIdKH(sdt);
-
+        if (txtKhachhang.getText().equals("") || cbKH.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Nhập thông tin khách hàng");
+            return;
+        }
         hd.setNgayThanhToan(ngayThanhToan);
         hd.setNgayNhan(ngayThanhToan);
         hd.setSdt(cbKH.getSelectedItem().toString());
@@ -958,6 +961,10 @@ public class BanHang extends javax.swing.JFrame {
         dtmHDCT = (DefaultTableModel) tblHDCT.getModel();
 
         int choice = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hoá đơn không ?");
+        if (txtKhachhang.getText().equals("") || cbKH.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Nhập thông tin khách hàng");
+            return;
+        }
         if (choice == JOptionPane.YES_OPTION) {
             String path = tbHD.getValueAt(rowhd, 0).toString();
             JFileChooser j = new JFileChooser();
