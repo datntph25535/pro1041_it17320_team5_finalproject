@@ -19,7 +19,6 @@ import view.FrameKhachHang;
 import view.FrameNhanVien;
 import view.FrameQuanLySanPham;
 import view.JFrameThongKe;
-import view.QLDoiTra;
 
 import view.QLHoaDon;
 
@@ -100,11 +99,6 @@ public class Controler {
                 case "THỐNG KÊ":
                     JFrameThongKe tk = new JFrameThongKe();
                     node = (JPanel) tk.getContentPane();
-//                    node = new HH();
-                    break;
-                case "ĐỔI TRẢ":
-                    QLDoiTra dtra = new QLDoiTra();
-                    node = (JPanel) dtra.getContentPane();
 //                    node = new HH();
                     break;
                 case "ĐĂNG XUẤT":

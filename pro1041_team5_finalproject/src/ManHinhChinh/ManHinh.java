@@ -31,7 +31,6 @@ public class ManHinh extends javax.swing.JFrame {
         listDMuc.add(new DanhMuc("NHÂN VIÊN", pnNhanVien, lblNhanVien));
         listDMuc.add(new DanhMuc("KHÁCH HÀNG", pnKhachHang, lblKhachHang));
         listDMuc.add(new DanhMuc("THỐNG KÊ", pnThongKe, lblThongKe));
-        listDMuc.add(new DanhMuc("ĐỔI TRẢ", pnDoiTra, lblDoiTra));
         listDMuc.add(new DanhMuc("ĐĂNG XUẤT", pnDangXuat, lblDangXuat));
         controler.setEvent(listDMuc);
 
@@ -61,8 +60,6 @@ public class ManHinh extends javax.swing.JFrame {
         lblKhachHang = new javax.swing.JLabel();
         pnThongKe = new javax.swing.JPanel();
         lblThongKe = new javax.swing.JLabel();
-        pnDoiTra = new javax.swing.JPanel();
-        lblDoiTra = new javax.swing.JLabel();
         pnSanPham = new javax.swing.JPanel();
         lblSanPham = new javax.swing.JLabel();
         pnBanHang = new javax.swing.JPanel();
@@ -236,45 +233,19 @@ public class ManHinh extends javax.swing.JFrame {
         pnThongKeLayout.setHorizontalGroup(
             pnThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnThongKeLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(48, 48, 48)
                 .addComponent(lblThongKe)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         pnThongKeLayout.setVerticalGroup(
             pnThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnThongKeLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnThongKeLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblThongKe)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnMenu.add(pnThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 432, -1, 50));
-
-        pnDoiTra.setBackground(new java.awt.Color(51, 51, 51));
-
-        lblDoiTra.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblDoiTra.setForeground(new java.awt.Color(255, 255, 255));
-        lblDoiTra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/currencies.png"))); // NOI18N
-        lblDoiTra.setText("        ĐỔI TRẢ");
-
-        javax.swing.GroupLayout pnDoiTraLayout = new javax.swing.GroupLayout(pnDoiTra);
-        pnDoiTra.setLayout(pnDoiTraLayout);
-        pnDoiTraLayout.setHorizontalGroup(
-            pnDoiTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnDoiTraLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(lblDoiTra)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnDoiTraLayout.setVerticalGroup(
-            pnDoiTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnDoiTraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblDoiTra)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnMenu.add(pnDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 482, 230, 50));
 
         pnSanPham.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -340,9 +311,9 @@ public class ManHinh extends javax.swing.JFrame {
         pnDangXuatLayout.setHorizontalGroup(
             pnDangXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnDangXuatLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(48, 48, 48)
                 .addComponent(lblDangXuat)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         pnDangXuatLayout.setVerticalGroup(
             pnDangXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +323,7 @@ public class ManHinh extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnMenu.add(pnDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 532, -1, 50));
+        pnMenu.add(pnDangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, -1, 50));
 
         pnManHinh.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnManHinh.setPreferredSize(new java.awt.Dimension(1600, 0));
@@ -438,7 +409,6 @@ public class ManHinh extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblBanHang;
     private javax.swing.JLabel lblDangXuat;
-    private javax.swing.JLabel lblDoiTra;
     private javax.swing.JLabel lblHoaDon;
     private javax.swing.JLabel lblKhachHang;
     private javax.swing.JLabel lblNhanVien;
@@ -447,7 +417,6 @@ public class ManHinh extends javax.swing.JFrame {
     private javax.swing.JLabel lblTrangchu;
     private javax.swing.JPanel pnBanHang;
     private javax.swing.JPanel pnDangXuat;
-    private javax.swing.JPanel pnDoiTra;
     private javax.swing.JPanel pnHoaDon;
     private javax.swing.JPanel pnKhachHang;
     private javax.swing.JPanel pnManHinh;
