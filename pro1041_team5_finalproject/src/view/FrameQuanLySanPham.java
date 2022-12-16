@@ -224,7 +224,7 @@ public class FrameQuanLySanPham extends javax.swing.JFrame {
         dftb.setRowCount(0);
         for (CTSPViewModel sp : qlctsp.getListCTSPViewModel()) {
             dftb.addRow(new Object[]{
-                sp.getMaSP(), sp.getTen(), sp.getDongsp(), sp.getOCung(), sp.getCongKetNoi(), sp.getPin(), sp.getGiaBan(), sp.getSoLuongTon(),
+                sp.getMaSP(), sp.getTen(), sp.getDongsp(), sp.getOCung(), sp.getCongKetNoi(), sp.getPin(), String.format("%.0f", sp.getGiaBan()), sp.getSoLuongTon(),
                 sp.getSerial(), sp.getHeDH(), sp.getTrangThai(), sp.getCPU(), sp.getRam(), sp.getCardMH(), sp.getMauSac()
             });
         }
@@ -917,22 +917,20 @@ public class FrameQuanLySanPham extends javax.swing.JFrame {
             dftb.setRowCount(0);
             for (CTSPViewModel sp : listByTen) {
                 dftb.addRow(new Object[]{
-                    sp.getMaSP(), sp.getTen(), sp.getDongsp(), sp.getOCung(), sp.getCongKetNoi(), sp.getPin(), sp.getGiaBan(), sp.getSoLuongTon(),
+                    sp.getMaSP(), sp.getTen(), sp.getDongsp(), sp.getOCung(), sp.getCongKetNoi(), sp.getPin(), String.format("%.0f", sp.getGiaBan()), sp.getSoLuongTon(),
                     sp.getSerial(), sp.getHeDH(), sp.getTrangThai(), sp.getCPU(), sp.getRam(), sp.getCardMH(), sp.getMauSac()
                 });
             }
-        } 
-        else if (!listByMa.isEmpty()) {
+        } else if (!listByMa.isEmpty()) {
             dftb = (DefaultTableModel) tb.getModel();
             dftb.setRowCount(0);
             for (CTSPViewModel sp : listByMa) {
                 dftb.addRow(new Object[]{
-                    sp.getMaSP(), sp.getTen(), sp.getDongsp(), sp.getOCung(), sp.getCongKetNoi(), sp.getPin(), sp.getGiaBan(), sp.getSoLuongTon(),
+                    sp.getMaSP(), sp.getTen(), sp.getDongsp(), sp.getOCung(), sp.getCongKetNoi(), sp.getPin(), String.format("%.0f", sp.getGiaBan()), sp.getSoLuongTon(),
                     sp.getSerial(), sp.getHeDH(), sp.getTrangThai(), sp.getCPU(), sp.getRam(), sp.getCardMH(), sp.getMauSac()
                 });
             }
-        } 
-        else {
+        } else {
             JOptionPane.showMessageDialog(this, "không tìm thấy sản phẩm");
             txtTimKiem.setText("");
             loadTable();
